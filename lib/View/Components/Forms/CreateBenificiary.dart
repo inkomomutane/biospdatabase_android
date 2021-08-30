@@ -1,7 +1,9 @@
 import 'package:biospdatabase/View/Components/LabelComponent.dart';
 import 'package:biospdatabase/View/Components/NumberComponent.dart';
+import 'package:biospdatabase/View/Components/RadioComponent.dart';
 import 'package:biospdatabase/View/Components/SelectComponent.dart';
 import 'package:biospdatabase/View/Components/TextComponent.dart';
+import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -41,43 +43,14 @@ class _CreateBenificiaryState extends State<CreateBenificiary> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Form(
-          child: ListView(
-        children: <Widget>[
-          LabelComponent(labelText: "Nome completo"),
-          TextComponent(
-            hintText: "Nome Completo",
-            onChanged: (value) {
-              setState(() {
-                this.name = value;
-                this.debug();
-              });
-            },
-          ),
-          LabelComponent(labelText: "Options"),
-          SelectComponent(
-            items: _items,
-            titulo: "titulo",
-            hintText: "hintText",
-            onChanged: (value) {
-              setState(() {
-                _items.forEach((element) {
-                  if (element['value'] == value) {
-                    element['icon'] = Icon(Icons.check_box_rounded);
-                  } else {
-                    element['icon'] = Icon(Icons.check_box_outline_blank);
-                  }
-                });
-              });
-            },
-          ),
-          NumberComponent(),
-        ],
-      )),
+      body: RadioComponent(
+        labels: ["ddsdd", "Ddd"],
+        values: ["ddd", "Ddd"],
+        onSetValue: (value) {},
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           this.debug();
-
           /*  Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => CreateForm()),
