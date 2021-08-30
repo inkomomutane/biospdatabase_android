@@ -7,18 +7,18 @@ part 'Provenace.g.dart';
 @HiveType(typeId: 6)
 class Provenace extends HiveObject {
   @HiveField(0)
-  final String uuid;
+  late String uuid;
 
   @HiveField(1)
-  final String name;
+  late String name;
 
   @HiveField(2)
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  late DateTime createdAt;
 
   @HiveField(3)
   @JsonKey(name: 'update_at')
-  final DateTime updatedAt;
+  late DateTime updatedAt;
   Provenace(
       {required this.uuid,
       required this.name,

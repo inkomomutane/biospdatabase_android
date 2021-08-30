@@ -17,7 +17,7 @@ class BenificiaryAdapter extends TypeAdapter<Benificiary> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Benificiary(
-      uuid: fields[0] as String?,
+      uuid: fields[0] as String,
       fullName: fields[1] as String?,
       numberOfVisits: fields[2] as String?,
       birthDate: fields[3] as DateTime?,
@@ -94,7 +94,7 @@ class BenificiaryAdapter extends TypeAdapter<Benificiary> {
 
 Benificiary _$BenificiaryFromJson(Map<String, dynamic> json) {
   return Benificiary(
-    uuid: json['uuid'] as String?,
+    uuid: json['uuid'] as String,
     fullName: json['full_name'] as String?,
     numberOfVisits: json['number_of_visits'] as String?,
     birthDate: json['birth_date'] == null

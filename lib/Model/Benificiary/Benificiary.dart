@@ -8,74 +8,74 @@ part 'Benificiary.g.dart';
 @JsonSerializable()
 class Benificiary extends Model {
   @HiveField(0)
-  String? uuid;
+  final String uuid;
 
   @HiveField(1)
   @JsonKey(name: 'full_name')
-  String? fullName;
+  late final String? fullName;
 
   @HiveField(2)
   @JsonKey(name: 'number_of_visits')
-  final String? numberOfVisits;
+  late String? numberOfVisits;
 
   @HiveField(3)
   @JsonKey(name: 'birth_date')
-  final DateTime? birthDate;
+  late DateTime? birthDate;
 
   @HiveField(4)
   @JsonKey(name: 'phone')
-  final String? phone;
+  late String? phone;
 
   @HiveField(5)
   @JsonKey(name: 'service_date')
-  final DateTime? serviceDate;
+  late DateTime? serviceDate;
 
   @HiveField(6)
   @JsonKey(name: 'home_care')
-  final String? homeCare;
+  late String? homeCare;
 
   @HiveField(7)
   @JsonKey(name: 'purpose_of_visit')
-  final String? purposeOfVisit;
+  late String? purposeOfVisit;
 
   @HiveField(8)
   @JsonKey(name: 'date_received')
-  final DateTime? dateReceived;
+  late DateTime? dateReceived;
 
   @HiveField(9)
   @JsonKey(name: 'status')
-  final bool? status;
+  late bool? status;
 
   @HiveField(10)
   @JsonKey(name: 'neighborhood_uuid')
-  final String? neighborhoodUuid;
+  late String? neighborhoodUuid;
 
   @HiveField(11)
   @JsonKey(name: 'genre_uuid')
-  final String? genreUuid;
+  late String? genreUuid;
 
   @HiveField(12)
   @JsonKey(name: 'provenace_uuid')
-  final String? provenaceUuid;
+  late String? provenaceUuid;
 
   @HiveField(13)
   @JsonKey(name: 'reason_opening_case_uuid')
-  final String? reasonOpeningCaseUuid;
+  late String? reasonOpeningCaseUuid;
 
   @HiveField(14)
   @JsonKey(name: 'document_type_uuid')
-  final String? documentTypeUuid;
+  late String? documentTypeUuid;
 
   @HiveField(15)
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  late DateTime createdAt;
 
   @HiveField(16)
   @JsonKey(name: 'update_at')
-  final DateTime updatedAt;
+  late DateTime updatedAt;
 
   Benificiary(
-      {this.uuid,
+      {required this.uuid,
       this.fullName,
       this.numberOfVisits,
       this.birthDate,

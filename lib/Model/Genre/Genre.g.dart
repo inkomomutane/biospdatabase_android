@@ -17,7 +17,7 @@ class GenreAdapter extends TypeAdapter<Genre> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Genre(
-      uuid: fields[0] as String,
+      uuid: fields[0] as String?,
       name: fields[1] as String,
       createdAt: fields[2] as DateTime,
       updatedAt: fields[3] as DateTime,
@@ -55,7 +55,7 @@ class GenreAdapter extends TypeAdapter<Genre> {
 
 Genre _$GenreFromJson(Map<String, dynamic> json) {
   return Genre(
-    uuid: json['uuid'] as String,
+    uuid: json['uuid'] as String?,
     name: json['name'] as String,
     createdAt: DateTime.parse(json['created_at'] as String),
     updatedAt: DateTime.parse(json['update_at'] as String),

@@ -7,18 +7,18 @@ part 'Province.g.dart';
 @HiveType(typeId: 7)
 class Province extends HiveObject {
   @HiveField(0)
-  final String uuid;
+  late String uuid;
 
   @HiveField(1)
-  final String name;
+  late String name;
 
   @HiveField(2)
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  late DateTime createdAt;
 
   @HiveField(3)
   @JsonKey(name: 'update_at')
-  final DateTime updatedAt;
+  late DateTime updatedAt;
   Province(
       {required this.uuid,
       required this.name,

@@ -7,27 +7,27 @@ part 'SpecifyTheService.g.dart';
 @HiveType(typeId: 11)
 class SpecifyTheService extends HiveObject {
   @HiveField(1)
-  final String uuid;
+  late String uuid;
 
   @HiveField(2)
   @JsonKey(name: 'benificiary_uuid')
-  final String benificiaryUuid;
+  late String benificiaryUuid;
 
   @HiveField(3)
   @JsonKey(name: 'forwarded_service_uuid')
-  final String forwardedServiceUuid;
+  late String forwardedServiceUuid;
 
   @HiveField(4)
   @JsonKey(name: 'specify_the_service')
-  final String specifyTheService;
+  late String specifyTheService;
 
   @HiveField(5)
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  late DateTime createdAt;
 
   @HiveField(6)
   @JsonKey(name: 'update_at')
-  final DateTime updatedAt;
+  late DateTime updatedAt;
   SpecifyTheService(
       {required this.benificiaryUuid,
       required this.forwardedServiceUuid,

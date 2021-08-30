@@ -2,7 +2,11 @@ import 'package:biospdatabase/View/TabMenuUI.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(Main());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(Main());
+}
 
 class Main extends StatefulWidget {
   const Main({Key? key}) : super(key: key);

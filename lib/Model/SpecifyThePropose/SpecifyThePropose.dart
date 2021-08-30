@@ -7,27 +7,27 @@ part 'SpecifyThePropose.g.dart';
 @HiveType(typeId: 10)
 class SpecifyThePropose extends HiveObject {
   @HiveField(0)
-  final String uuid;
+  late String uuid;
 
   @HiveField(1)
   @JsonKey(name: 'purpose_of_visit_uuid')
-  final String purposeOfVisitUuid;
+  late String purposeOfVisitUuid;
 
   @HiveField(2)
   @JsonKey(name: 'benificiary_uuid')
-  final String benificiaryUuid;
+  late String benificiaryUuid;
 
   @HiveField(4)
   @JsonKey(name: 'specify_the_propose')
-  final String specifyThePropose;
+  late String specifyThePropose;
 
   @HiveField(5)
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  late DateTime createdAt;
 
   @HiveField(6)
   @JsonKey(name: 'update_at')
-  final DateTime updatedAt;
+  late DateTime updatedAt;
 
   SpecifyThePropose(
       {required this.purposeOfVisitUuid,
