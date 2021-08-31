@@ -1,9 +1,5 @@
-import 'package:biospdatabase/View/Components/LabelComponent.dart';
-import 'package:biospdatabase/View/Components/NumberComponent.dart';
+
 import 'package:biospdatabase/View/Components/RadioComponent.dart';
-import 'package:biospdatabase/View/Components/SelectComponent.dart';
-import 'package:biospdatabase/View/Components/TextComponent.dart';
-import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

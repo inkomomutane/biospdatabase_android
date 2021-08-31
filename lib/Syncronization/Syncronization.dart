@@ -1,6 +1,5 @@
 import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:uuid/uuid.dart';
 
 class Syncronization {
   static Box<Benificiary> getCreatedBeneficiaries() =>
@@ -16,9 +15,10 @@ class Syncronization {
       Hive.box<Benificiary>('benificiaries');
 
   ///Initialization of box storage
-  static boot() async {
-    Hive.registerAdapter(BenificiaryAdapter());
+  static Future<void> boot() async {
     await Hive.initFlutter();
+    Hive.registerAdapter(BenificiaryAdapter());
+    //
     await Hive.openBox<Benificiary>('createdBenificiaries');
     await Hive.openBox<Benificiary>('updatedBenificiaries');
     await Hive.openBox<Benificiary>('deletedBenificiaries');
@@ -31,7 +31,7 @@ class Syncronization {
     return null;
   }
 
-  bool addCreated(Benificiary benificiary) {
+  static bool addCreated(Benificiary benificiary) {
     try {
       getBeneficiaries().put(benificiary.uuid, benificiary);
       var mirror = Benificiary.fromJson(benificiary.toJson());
@@ -42,7 +42,7 @@ class Syncronization {
     }
   }
 
-  bool addUdated(Benificiary benificiary) {
+  static bool addUdated(Benificiary benificiary) {
     if (getCreatedBeneficiaries().containsKey(benificiary.uuid)) {
       try {
         var boxBen = getBeneficiaries().get(benificiary.uuid);
@@ -87,7 +87,7 @@ class Syncronization {
     }
   }
 
-  bool addDeleted(Benificiary benificiary) {
+  static bool addDeleted(Benificiary benificiary) {
     var benificiaries = getBeneficiaries().get(benificiary.uuid);
     var inserted = getCreatedBeneficiaries().get(benificiary.uuid);
     var updated = getUpdatedBeneficiaries().get(benificiary.uuid);
