@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:select_form_field/select_form_field.dart';
+//import 'dart:collection';
 
 class SelectComponent extends StatelessWidget {
-  const SelectComponent(
+  SelectComponent(
       {Key? key,
       required this.items,
       required this.titulo,
@@ -11,7 +12,7 @@ class SelectComponent extends StatelessWidget {
       this.onSubmitted,
       this.onSaved})
       : super(key: key);
-  final List<Map<String, dynamic>> items;
+  List<Map<String, dynamic>> items;
   final String titulo;
   final String hintText;
   final void Function(String value)? onChanged;
@@ -20,13 +21,14 @@ class SelectComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var itemsArray = mappedItems(items);
     return Padding(
         child: SelectFormField(
           type: SelectFormFieldType.dialog,
           dialogSearchHint: 'Pesquisar',
-          dialogCancelBtn: 'CANCELAR',
+          dialogCancelBtn: 'Ok',
           dialogTitle: titulo,
-          items: items,
+          items: itemsArray,
           decoration: InputDecoration(
               border: OutlineInputBorder(),
               focusColor: Colors.black,
@@ -39,10 +41,31 @@ class SelectComponent extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.black, width: 1.3),
               )),
-          onChanged: onChanged,
+          onChanged: (value) {
+            itemsArray
+                .where((element) => element['value'] != value)
+                .forEach((element) {
+              element['icon'] = Icon(Icons.check_box_outline_blank);
+            });
+            itemsArray
+                .where((element) => element['value'] == value)
+                .forEach((element) {
+              element['icon'] = Icon(Icons.check_box_outlined);
+            });
+          },
           onFieldSubmitted: onSubmitted,
           onSaved: onSaved,
         ),
         padding: EdgeInsets.only(left: 35, right: 35, top: 10));
+  }
+
+  List<Map<String, dynamic>> mappedItems(List<Map<String, dynamic>> items) {
+    return List.generate(items.length, (index) {
+      return {
+        'value': items.elementAt(index).keys.first,
+        'label': items.elementAt(index).values.first,
+        'icon': Icon(Icons.check_box_outline_blank)
+      };
+    });
   }
 }

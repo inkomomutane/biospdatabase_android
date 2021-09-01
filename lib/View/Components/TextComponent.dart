@@ -21,6 +21,10 @@ class TextComponent extends StatelessWidget {
         decoration: InputDecoration(
             border: OutlineInputBorder(),
             hintText: hintText,
+            hintStyle: TextStyle(
+              fontSize: 15,
+              color: Colors.black54,
+            ),
             focusColor: Colors.black,
             fillColor: Colors.white,
             filled: true,

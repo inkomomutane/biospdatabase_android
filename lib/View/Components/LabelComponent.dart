@@ -9,9 +9,14 @@ class LabelComponent extends StatelessWidget {
     return Padding(
       child: Text(
         labelText,
-        style: TextStyle(fontSize: 20, color: Colors.black54),
+        style: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.w600,
+          color: Colors.black54,
+        ),
+        textAlign: TextAlign.start,
       ),
-      padding: EdgeInsets.only(top: 25, bottom: 0, left: 35, right: 35),
+      padding: EdgeInsets.only(top: 15, bottom: 0, left: 35, right: 35),
     );
   }
 }

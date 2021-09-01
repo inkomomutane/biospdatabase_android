@@ -1,7 +1,6 @@
-import 'dart:html';
-
 import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
 import 'package:biospdatabase/Syncronization/Syncronization.dart';
+import 'package:biospdatabase/View/Benificiary/Benificiary.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -15,83 +14,92 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _currentIndex = 0;
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Biosp Database",
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Text(
-            "Biosp Database",
-            style: TextStyle(color: Colors.black54),
+      home: MainComponent(),
+    );
+  }
+}
+
+class MainComponent extends StatefulWidget {
+  const MainComponent({Key? key}) : super(key: key);
+
+  @override
+  _MainComponentState createState() => _MainComponentState();
+}
+
+class _MainComponentState extends State<MainComponent> {
+  int _currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Text(
+          "Biosp Database",
+          style: TextStyle(color: Colors.black54),
+        ),
+        elevation: 0,
+      ),
+      body: ValueListenableBuilder<Box<Benificiary>>(
+        valueListenable: Syncronization.getBeneficiaries().listenable(),
+        builder: (context, box, _) {
+          final benificiaries = box.values.toList().cast<Benificiary>();
+          return ListView.builder(
+              itemCount: benificiaries.length,
+              itemBuilder: (context, int index) {
+                return benificiaryCard(context, benificiaries.elementAt(index));
+              });
+          //return Text("${benificiaries.length}");
+        },
+      ),
+      bottomNavigationBar: BottomNavyBar(
+        selectedIndex: _currentIndex,
+        showElevation: true,
+        itemCornerRadius: 24,
+        curve: Curves.easeIn,
+        onItemSelected: (index) => setState(() => _currentIndex = index),
+        items: <BottomNavyBarItem>[
+          BottomNavyBarItem(
+            icon: Icon(Icons.apps),
+            title: Text('Benificiarios'),
+            activeColor: Colors.red,
+            textAlign: TextAlign.center,
           ),
-          elevation: 0,
-        ),
-        body: ValueListenableBuilder<Box<Benificiary>>(
-          valueListenable: Syncronization.getBeneficiaries().listenable(),
-          builder: (context, box, _) {
-            final benificiaries = box.values.toList().cast<Benificiary>();
-            return ListView.builder(
-                itemCount: benificiaries.length,
-                itemBuilder: (context, int index) {
-                  return BenificiaryCard(
-                      context, benificiaries.elementAt(index));
-                });
-            //return Text("${benificiaries.length}");
-          },
-        ),
-        bottomNavigationBar: BottomNavyBar(
-          selectedIndex: _currentIndex,
-          showElevation: true,
-          itemCornerRadius: 24,
-          curve: Curves.easeIn,
-          onItemSelected: (index) => setState(() => _currentIndex = index),
-          items: <BottomNavyBarItem>[
-            BottomNavyBarItem(
-              icon: Icon(Icons.apps),
-              title: Text('Benificiarios'),
-              activeColor: Colors.red,
-              textAlign: TextAlign.center,
+          BottomNavyBarItem(
+            icon: Icon(Icons.cloud_off),
+            title: Text('Sincronizar'),
+            activeColor: Colors.blueAccent,
+            textAlign: TextAlign.center,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.print),
+            title: Text('Relatórios'),
+            activeColor: Colors.blue,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => BenificiaryForm(),
+              fullscreenDialog: true,
             ),
-            BottomNavyBarItem(
-              icon: Icon(Icons.cloud_off),
-              title: Text('Sincronizar'),
-              activeColor: Colors.blueAccent,
-              textAlign: TextAlign.center,
-            ),
-            BottomNavyBarItem(
-              icon: Icon(Icons.print),
-              title: Text('Relatórios'),
-              activeColor: Colors.blue,
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Syncronization.addCreated(Benificiary(
-                uuid: Uuid().v4(),
-                createdAt: DateTime.now(),
-                updatedAt: DateTime.now()));
-          },
-          child: Icon(Icons.add),
-        ),
+          );
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
 
-  Widget BenificiaryCard(BuildContext context, Benificiary benificiary) {
+  Widget benificiaryCard(BuildContext context, Benificiary benificiary) {
     return GestureDetector(
       child: Card(
         child: ListTile(
@@ -145,38 +153,7 @@ class _HomeState extends State<Home> {
                   ],
                   actionsPadding: EdgeInsets.all(10),
                 ));
-
-        /* print(benificiary.toJson());
-        Navigator.push(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => FullScreenDialog(),
-            fullscreenDialog: true,
-          ),
-        );*/
       },
-    );
-  }
-}
-
-class FullScreenDialog extends StatefulWidget {
-  const FullScreenDialog({Key? key}) : super(key: key);
-
-  @override
-  _FullScreenDialogState createState() => _FullScreenDialogState();
-}
-
-class _FullScreenDialogState extends State<FullScreenDialog> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.amber,
-        title: Text('Full-screen Dialog'),
-      ),
-      body: Center(
-        child: Text("Full-screen dialog"),
-      ),
     );
   }
 }

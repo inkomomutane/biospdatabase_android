@@ -16,29 +16,24 @@ class DateComponent extends StatelessWidget {
                 context: context,
                 firstDate: DateTime(1900),
                 initialDate: currentValue ?? DateTime.now(),
-                lastDate: DateTime(2100));
+                lastDate: DateTime.now());
             if (date != null) {
-              final time = await showTimePicker(
-                context: context,
-                initialTime:
-                    TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-              );
-              return DateTimeField.combine(date, time);
+              return DateTimeField.combine(date, null);
             } else {
               return currentValue;
             }
           },
           decoration: InputDecoration(
               border: OutlineInputBorder(),
-              focusColor: Colors.black,
+              focusColor: Colors.black45,
               fillColor: Colors.white,
-              hintText: "test",
+              suffixIcon: Icon(Icons.date_range),
               filled: true,
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.black45, width: 1.0),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.black, width: 1.3),
+                borderSide: const BorderSide(color: Colors.black54, width: 1.3),
               )),
         ));
   }
