@@ -211,6 +211,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  dropdown_search2:
+    dependency: "direct main"
+    description:
+      name: dropdown_search2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.10"
   fake_async:
     dependency: transitive
     description:

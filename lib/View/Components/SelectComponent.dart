@@ -1,3 +1,4 @@
+import 'package:dropdown_search2/dropdown_search2.dart';
 import 'package:flutter/material.dart';
 import 'package:select_form_field/select_form_field.dart';
 //import 'dart:collection';
@@ -5,67 +6,47 @@ import 'package:select_form_field/select_form_field.dart';
 class SelectComponent extends StatelessWidget {
   SelectComponent(
       {Key? key,
-      required this.items,
-      required this.titulo,
       required this.hintText,
-      this.onChanged,
-      this.onSubmitted,
-      this.onSaved})
+      required this.items,
+      this.showSearchBox = false,
+      this.mode = Mode.MENU})
       : super(key: key);
-  List<Map<String, dynamic>> items;
-  final String titulo;
   final String hintText;
-  final void Function(String value)? onChanged;
-  final void Function(String)? onSubmitted;
-  final void Function(String?)? onSaved;
-
+  final List<String> items;
+  final bool showSearchBox;
+  final Mode mode;
   @override
   Widget build(BuildContext context) {
-    var itemsArray = mappedItems(items);
     return Padding(
-        child: SelectFormField(
-          type: SelectFormFieldType.dialog,
-          dialogSearchHint: 'Pesquisar',
-          dialogCancelBtn: 'Ok',
-          dialogTitle: titulo,
-          items: itemsArray,
-          decoration: InputDecoration(
+        padding: EdgeInsets.only(left: 35, right: 35, top: 10),
+        child: DropdownSearch<String>(
+          mode: mode,
+          showSelectedItem: true,
+          items: items,
+          showSearchBox: showSearchBox,
+          selectedItem: items.first,
+          hint: hintText,
+          onChanged: print,
+          searchBoxDecoration: InputDecoration(
+              hintText: "Pesquisar " + hintText,
               border: OutlineInputBorder(),
+              hintStyle: TextStyle(
+                fontSize: 15,
+                color: Colors.black54,
+              ),
               focusColor: Colors.black,
               fillColor: Colors.white,
-              hintText: hintText,
               filled: true,
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.black45, width: 1.0),
               ),
+              errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.red, width: 2.0),
+              ),
               focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.black, width: 1.3),
+                borderSide:
+                    const BorderSide(color: Color(0xFF311b92), width: 2),
               )),
-          onChanged: (value) {
-            itemsArray
-                .where((element) => element['value'] != value)
-                .forEach((element) {
-              element['icon'] = Icon(Icons.check_box_outline_blank);
-            });
-            itemsArray
-                .where((element) => element['value'] == value)
-                .forEach((element) {
-              element['icon'] = Icon(Icons.check_box_outlined);
-            });
-          },
-          onFieldSubmitted: onSubmitted,
-          onSaved: onSaved,
-        ),
-        padding: EdgeInsets.only(left: 35, right: 35, top: 10));
-  }
-
-  List<Map<String, dynamic>> mappedItems(List<Map<String, dynamic>> items) {
-    return List.generate(items.length, (index) {
-      return {
-        'value': items.elementAt(index).keys.first,
-        'label': items.elementAt(index).values.first,
-        'icon': Icon(Icons.check_box_outline_blank)
-      };
-    });
+        ));
   }
 }

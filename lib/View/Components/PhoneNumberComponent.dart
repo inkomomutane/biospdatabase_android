@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class NumberComponent extends StatelessWidget {
-  const NumberComponent(
+class PhoneNumberComponent extends StatelessWidget {
+  const PhoneNumberComponent(
       {Key? key, this.hintText, this.onChanged, this.onSaved, this.onSubmited})
       : super(key: key);
   final String? hintText;
@@ -14,7 +14,7 @@ class NumberComponent extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.only(left: 35, right: 35, top: 10),
         child: TextFormField(
-          keyboardType: TextInputType.number,
+          keyboardType: TextInputType.phone,
           decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: hintText,
@@ -29,7 +29,7 @@ class NumberComponent extends StatelessWidget {
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide:
-                    const BorderSide(color: Color(0xFF311b92), width: 2),
+                    const BorderSide(color: Color(0xFF311b92), width: 2.0),
               )),
           onChanged: onChanged,
           onSaved: onSaved,

@@ -19,21 +19,25 @@ class TextComponent extends StatelessWidget {
     return Padding(
       child: TextFormField(
         decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: hintText,
-            hintStyle: TextStyle(
-              fontSize: 15,
-              color: Colors.black54,
-            ),
-            focusColor: Colors.black,
-            fillColor: Colors.white,
-            filled: true,
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.black45, width: 1.0),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.black, width: 1.3),
-            )),
+          border: OutlineInputBorder(),
+          hintText: hintText,
+          hintStyle: TextStyle(
+            fontSize: 15,
+            color: Colors.black54,
+          ),
+          focusColor: Colors.black,
+          fillColor: Colors.white,
+          filled: true,
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.black45, width: 1.0),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Color(0xFF311b92), width: 2),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.red, width: 2.0),
+          ),
+        ),
         onChanged: onChanged,
         onSaved: onSaved,
         onFieldSubmitted: onSubmited,

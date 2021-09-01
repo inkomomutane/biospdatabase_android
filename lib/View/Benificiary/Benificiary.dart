@@ -1,6 +1,8 @@
+import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
 import 'package:biospdatabase/View/Benificiary/FormComponent.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class BenificiaryForm extends StatefulWidget {
   const BenificiaryForm({Key? key}) : super(key: key);
@@ -11,9 +13,12 @@ class BenificiaryForm extends StatefulWidget {
 
 class _BenificiaryFormState extends State<BenificiaryForm> {
   int _currentIndex = 1;
-  //var benificiary = new Benificiary(uuid: Uuid().v4(), createdAt: DateTime.now(), updatedAt: DateTime.now());
+  var benificiary = new Benificiary(
+      uuid: Uuid().v4(), createdAt: DateTime.now(), updatedAt: DateTime.now());
+
   @override
   Widget build(BuildContext context) {
+    print(benificiary.toJson());
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

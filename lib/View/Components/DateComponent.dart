@@ -33,7 +33,8 @@ class DateComponent extends StatelessWidget {
                 borderSide: const BorderSide(color: Colors.black45, width: 1.0),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.black54, width: 1.3),
+                borderSide:
+                    const BorderSide(color: Color(0xFF311b92), width: 2),
               )),
         ));
   }

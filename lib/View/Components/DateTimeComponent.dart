@@ -33,13 +33,17 @@ class DateTimeComponent extends StatelessWidget {
               border: OutlineInputBorder(),
               focusColor: Colors.black,
               fillColor: Colors.white,
-              hintText: "test",
               filled: true,
+              suffixIcon: Icon(Icons.date_range),
+              errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.red, width: 2.0),
+              ),
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.black45, width: 1.0),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.black, width: 1.3),
+                borderSide:
+                    const BorderSide(color: Color(0xFF311b92), width: 2),
               )),
         ));
   }

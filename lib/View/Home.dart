@@ -17,6 +17,15 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      themeMode: ThemeMode.system,
+      theme: ThemeData.light().copyWith(
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: Colors.deepPurple,
+          primaryColorDark: Colors.deepPurple,
+          accentColor: Colors.deepPurple,
+        ),
+        focusColor: Colors.deepPurple,
+      ),
       debugShowCheckedModeBanner: false,
       title: "Biosp Database",
       home: MainComponent(),
@@ -38,12 +47,12 @@ class _MainComponentState extends State<MainComponent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         title: Text(
           "Biosp Database",
           style: TextStyle(color: Colors.black54),
         ),
-        elevation: 0,
+        elevation: 1,
       ),
       body: ValueListenableBuilder<Box<Benificiary>>(
         valueListenable: Syncronization.getBeneficiaries().listenable(),

@@ -2,6 +2,7 @@ import 'package:biospdatabase/View/Components/DateComponent.dart';
 import 'package:biospdatabase/View/Components/DateTimeComponent.dart';
 import 'package:biospdatabase/View/Components/LabelComponent.dart';
 import 'package:biospdatabase/View/Components/NumberComponent.dart';
+import 'package:biospdatabase/View/Components/PhoneNumberComponent.dart';
 import 'package:biospdatabase/View/Components/SelectComponent.dart';
 import 'package:biospdatabase/View/Components/TextComponent.dart';
 import 'package:flutter/material.dart';
@@ -24,45 +25,72 @@ class _FormComponentState extends State<FormComponent> {
           LabelComponent(labelText: "Nome completo"),
           TextComponent(hintText: "Nome completo"),
           LabelComponent(labelText: "Bairro"),
-          SelectComponent(items: [
-            {
-              "1": "Macuti",
-            },
-          ], titulo: "Bairro", hintText: "Bairro"),
+          SelectComponent(
+            hintText: "Bairro",
+            items: ["Macuti"],
+          ),
           LabelComponent(labelText: "Sexo"),
-          SelectComponent(items: [
-            {
-              "1": "Masculino",
-            },
-            {
-              "2": "Feminino",
-            },
-          ], titulo: "Sexo", hintText: "Sexo"),
+          SelectComponent(
+            hintText: "Sexo",
+            items: ["Masculino", "Feminino"],
+          ),
           LabelComponent(labelText: "1⁰ visita ou frequência"),
           NumberComponent(
             hintText: "1⁰ visita ou frequência",
           ),
           LabelComponent(labelText: "Proviniência"),
-          SelectComponent(items: [
-            {
-              "1": "Vikings",
-            },
-            {
-              "2": "Vikings 23",
-            },
-            {
-              "3": "Vikings 45",
-            },
-            {
-              "4": "Vikings 47",
-            }
-          ], titulo: "Proviniência", hintText: "Proviniência"),
+          SelectComponent(
+            hintText: "Proviniência",
+            items: ["Comunidade"],
+          ),
           LabelComponent(labelText: "Data de nascimento"),
           DateComponent(),
-          LabelComponent(labelText: "Bairro"),
-          LabelComponent(labelText: "Bairro"),
-          LabelComponent(labelText: "Bairro"),
-          LabelComponent(labelText: "Bairro"),
+          LabelComponent(labelText: "Contacto"),
+          PhoneNumberComponent(
+            hintText: "Contacto",
+          ),
+          LabelComponent(labelText: "Data de atendimento"),
+          DateTimeComponent(),
+          LabelComponent(labelText: "Objectivo da visita"),
+          SelectComponent(
+            hintText: "Objectivo da visita",
+            items: ["1. Welma"],
+          ),
+          LabelComponent(
+              labelText: "Se tiver formação profissional Especificar"),
+          TextComponent(hintText: "Se tiver formação profissional Especificar"),
+          LabelComponent(labelText: "Motivo de abertura de processo"),
+          SelectComponent(
+            hintText: "Motivo de abertura de processo",
+            items: ["1. Welma"],
+          ),
+          LabelComponent(labelText: "Documentos necessários"),
+          SelectComponent(
+            hintText: "Documentos necessários",
+            items: ["1. Welma"],
+          ),
+          LabelComponent(labelText: "Serviço encaminhado"),
+          SelectComponent(
+            hintText: "Serviço encaminhado",
+            items: ["1. FIP"],
+          ),
+          LabelComponent(labelText: "Especificar Serviço"),
+          TextComponent(hintText: "Especificar Serviço"),
+          LabelComponent(labelText: "Necessita de acompanhamento domiciliar?"),
+          SelectComponent(
+            hintText: "Necessita de acompanhamento domiciliar?",
+            items: ["1. Sim", "2. Não"],
+          ),
+          LabelComponent(labelText: "Objectivo da(s)  visita(s)"),
+          TextComponent(hintText: "Objectivo da(s)  visita(s)"),
+          LabelComponent(labelText: "Data que foi recebida pelo serviço"),
+          DateTimeComponent(),
+          LabelComponent(labelText: "Resolveu o seu problema?"),
+          SelectComponent(
+            hintText: "Resolveu o seu problema?",
+            items: ["1. Sim", "2. Não"],
+          ),
+          LabelComponent(labelText: ""),
         ],
       ),
     );
