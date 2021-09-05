@@ -14,11 +14,11 @@ class ForwardedService extends HiveObject {
 
   @HiveField(2)
   @JsonKey(name: 'created_at')
-  late DateTime createdAt;
+  late DateTime? createdAt;
 
   @HiveField(3)
-  @JsonKey(name: 'update_at')
-  late DateTime updatedAt;
+  @JsonKey(name: 'updated_at')
+  late DateTime? updatedAt;
 
   ForwardedService(
       {required this.uuid,
@@ -28,4 +28,19 @@ class ForwardedService extends HiveObject {
   factory ForwardedService.fromJson(Map<String, dynamic> json) =>
       _$ForwardedServiceFromJson(json);
   Map<String, dynamic> toJson() => _$ForwardedServiceToJson(this);
+
+  ///this method will prevent the override of toString
+  String asDropdownString() {
+    return '${this.name}';
+  }
+
+  ///this method will prevent the override of toString
+
+  ///custom comparing function to check if two users are equal
+  bool isEqual(ForwardedService model) {
+    return this.uuid == model.uuid;
+  }
+
+  @override
+  String toString() => name;
 }

@@ -15,83 +15,119 @@ class Benificiary extends Model {
   late final String? fullName;
 
   @HiveField(2)
-  @JsonKey(name: 'number_of_visits')
-  late String? numberOfVisits;
-
-  @HiveField(3)
-  @JsonKey(name: 'birth_date')
-  late DateTime? birthDate;
-
-  @HiveField(4)
-  @JsonKey(name: 'phone')
-  late String? phone;
-
-  @HiveField(5)
-  @JsonKey(name: 'service_date')
-  late DateTime? serviceDate;
-
-  @HiveField(6)
-  @JsonKey(name: 'home_care')
-  late String? homeCare;
-
-  @HiveField(7)
-  @JsonKey(name: 'purpose_of_visit')
-  late String? purposeOfVisit;
-
-  @HiveField(8)
-  @JsonKey(name: 'date_received')
-  late DateTime? dateReceived;
-
-  @HiveField(9)
-  @JsonKey(name: 'status')
-  late bool? status;
-
-  @HiveField(10)
   @JsonKey(name: 'neighborhood_uuid')
   late String? neighborhoodUuid;
 
-  @HiveField(11)
+  @HiveField(3)
   @JsonKey(name: 'genre_uuid')
   late String? genreUuid;
 
-  @HiveField(12)
+  @HiveField(4)
+  @JsonKey(name: 'number_of_visits')
+  late String? numberOfVisits;
+
+  @HiveField(5)
   @JsonKey(name: 'provenace_uuid')
   late String? provenaceUuid;
 
-  @HiveField(13)
+  @HiveField(6)
+  @JsonKey(name: 'birth_date')
+  late DateTime? birthDate;
+
+  @HiveField(7)
+  @JsonKey(name: 'phone')
+  late String? phone;
+
+  @HiveField(8)
+  @JsonKey(name: 'service_date')
+  late DateTime? serviceDate;
+
+  @HiveField(9)
+  @JsonKey(name: 'purpose_of_visit')
+  late String? purposeOfVisit;
+
+  @HiveField(10)
+  @JsonKey(name: 'specify_purpose_of_visit')
+  late String? specifyPurposeOfVisit;
+
+  @HiveField(11)
   @JsonKey(name: 'reason_opening_case_uuid')
   late String? reasonOpeningCaseUuid;
 
-  @HiveField(14)
+  @HiveField(12)
+  @JsonKey(name: 'other_reason_opening_case')
+  late String? otherReasonOpeningCase;
+
+  @HiveField(13)
   @JsonKey(name: 'document_type_uuid')
   late String? documentTypeUuid;
 
+  @HiveField(14)
+  @JsonKey(name: 'other_document_type')
+  late String? otherDocumentType;
+
   @HiveField(15)
-  @JsonKey(name: 'created_at')
-  late DateTime createdAt;
+  @JsonKey(name: 'forwarded_service_uuid')
+  late String? forwardedServiceUuid;
 
   @HiveField(16)
-  @JsonKey(name: 'update_at')
-  late DateTime updatedAt;
+  @JsonKey(name: 'other_forwarded_service')
+  late String? otherForwardedService;
 
-  Benificiary(
-      {required this.uuid,
-      this.fullName,
-      this.numberOfVisits,
-      this.birthDate,
-      this.phone,
-      this.serviceDate,
-      this.homeCare,
-      this.purposeOfVisit,
-      this.dateReceived,
-      this.status,
-      this.neighborhoodUuid,
-      this.genreUuid,
-      this.provenaceUuid,
-      this.reasonOpeningCaseUuid,
-      this.documentTypeUuid,
-      required this.createdAt,
-      required this.updatedAt});
+  @HiveField(17)
+  @JsonKey(name: 'specify_forwarded_service')
+  late String? specifyForwardedService;
+
+  @HiveField(18)
+  @JsonKey(name: 'home_care')
+  late bool? homeCare;
+
+  @HiveField(19)
+  @JsonKey(name: 'visit_proposes')
+  late bool? visitProposes;
+
+  @HiveField(20)
+  @JsonKey(name: 'date_received')
+  late DateTime? dateReceived;
+
+  @HiveField(21)
+  @JsonKey(name: 'status')
+  late bool? status;
+
+  @HiveField(22)
+  @JsonKey(name: 'created_at')
+  late DateTime? createdAt;
+
+  @HiveField(23)
+  @JsonKey(name: 'updated_at')
+  late DateTime? updatedAt;
+
+  Benificiary({
+    required this.uuid,
+    this.fullName,
+    this.numberOfVisits,
+    this.birthDate,
+    this.phone,
+    this.serviceDate,
+    this.homeCare,
+    this.purposeOfVisit,
+    this.specifyPurposeOfVisit,
+    this.dateReceived,
+    this.neighborhoodUuid,
+    this.genreUuid,
+    this.provenaceUuid,
+    this.forwardedServiceUuid,
+    this.otherForwardedService,
+    this.specifyForwardedService,
+    this.reasonOpeningCaseUuid,
+    this.otherReasonOpeningCase,
+    this.documentTypeUuid,
+    this.otherDocumentType,
+    this.visitProposes,
+    this.status,
+    required this.createdAt,
+    required this.updatedAt,
+  });
   factory Benificiary.fromJson(Map<String, dynamic> json) =>
       _$BenificiaryFromJson(json);
   Map<String, dynamic> toJson() => _$BenificiaryToJson(this);

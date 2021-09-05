@@ -2,9 +2,19 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class DateTimeComponent extends StatelessWidget {
-  const DateTimeComponent({Key? key}) : super(key: key);
-
+  DateTimeComponent(
+      {Key? key,
+      this.onSubmited,
+      this.onChanged,
+      this.onSaved,
+      this.controller})
+      : super(key: key);
+  void Function(DateTime?)? onSubmited;
+  void Function(DateTime?)? onChanged;
+  void Function(DateTime?)? onSaved;
+  TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     final format = DateFormat("dd-MM-yyyy HH:mm");
@@ -12,6 +22,10 @@ class DateTimeComponent extends StatelessWidget {
         padding: EdgeInsets.only(left: 35, right: 35, top: 10),
         child: DateTimeField(
           format: format,
+          onChanged: onChanged,
+          onSaved: onSaved,
+          controller: controller,
+          onFieldSubmitted: onSubmited,
           onShowPicker: (context, currentValue) async {
             final date = await showDatePicker(
                 context: context,

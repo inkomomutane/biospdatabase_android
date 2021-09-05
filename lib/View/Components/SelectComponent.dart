@@ -1,32 +1,46 @@
 import 'package:dropdown_search2/dropdown_search2.dart';
 import 'package:flutter/material.dart';
-import 'package:select_form_field/select_form_field.dart';
 //import 'dart:collection';
 
-class SelectComponent extends StatelessWidget {
+// ignore: must_be_immutable
+class SelectComponent<T> extends StatelessWidget {
   SelectComponent(
       {Key? key,
       required this.hintText,
       required this.items,
       this.showSearchBox = false,
-      this.mode = Mode.MENU})
+      this.onSaved,
+      this.onChanged,
+      this.controller,
+      this.mode = Mode.MENU,
+      this.label,
+      this.itemAsString})
       : super(key: key);
   final String hintText;
-  final List<String> items;
+  final List<T> items;
   final bool showSearchBox;
   final Mode mode;
+  final String? label;
+  void Function(T?)? onSaved;
+  void Function(T?)? onChanged;
+  TextEditingController? controller;
+  String Function(T)? itemAsString;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.only(left: 35, right: 35, top: 10),
-        child: DropdownSearch<String>(
+        child: DropdownSearch<T>(
           mode: mode,
-          showSelectedItem: true,
           items: items,
           showSearchBox: showSearchBox,
-          selectedItem: items.first,
+          // selectedItem: items.first,
           hint: hintText,
-          onChanged: print,
+          label: label,
+          onChanged: onChanged,
+          onSaved: onSaved,
+          itemAsString: itemAsString,
+          searchBoxController: controller,
           searchBoxDecoration: InputDecoration(
               hintText: "Pesquisar " + hintText,
               border: OutlineInputBorder(),

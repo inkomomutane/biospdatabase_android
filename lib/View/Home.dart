@@ -4,7 +4,6 @@ import 'package:biospdatabase/View/Benificiary/Benificiary.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:uuid/uuid.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -116,7 +115,7 @@ class _MainComponentState extends State<MainComponent> {
             Icons.person,
             color: Colors.amber,
           ),
-          title: Text(benificiary.createdAt.year.toString()),
+          title: Text(benificiary.createdAt!.year.toString()),
         ),
         elevation: 0,
       ),

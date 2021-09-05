@@ -1,18 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class TextComponent extends StatelessWidget {
-  const TextComponent(
+  TextComponent(
       {Key? key,
       required this.hintText,
       this.onChanged,
       this.onSaved,
+      this.controller,
       this.onSubmited})
       : super(key: key);
   final String hintText;
-  final void Function(String string)? onChanged;
-  final void Function(String? string)? onSaved;
-  final void Function(String)? onSubmited;
+  void Function(String string)? onChanged;
+  void Function(String? string)? onSaved;
+  void Function(String)? onSubmited;
+  TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +41,8 @@ class TextComponent extends StatelessWidget {
             borderSide: const BorderSide(color: Colors.red, width: 2.0),
           ),
         ),
+        initialValue: "",
+        controller: controller,
         onChanged: onChanged,
         onSaved: onSaved,
         onFieldSubmitted: onSubmited,

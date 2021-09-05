@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class PhoneNumberComponent extends StatelessWidget {
-  const PhoneNumberComponent(
-      {Key? key, this.hintText, this.onChanged, this.onSaved, this.onSubmited})
+  PhoneNumberComponent(
+      {Key? key,
+      this.hintText,
+      this.onChanged,
+      this.onSaved,
+      this.onSubmited,
+      this.controller})
       : super(key: key);
   final String? hintText;
-  final void Function(String string)? onChanged;
-  final void Function(String? string)? onSaved;
+  void Function(String string)? onChanged;
+  Function(String? string)? onSaved;
   final void Function(String)? onSubmited;
+  TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +22,7 @@ class PhoneNumberComponent extends StatelessWidget {
         padding: EdgeInsets.only(left: 35, right: 35, top: 10),
         child: TextFormField(
           keyboardType: TextInputType.phone,
+          initialValue: "",
           decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: hintText,
@@ -32,6 +40,7 @@ class PhoneNumberComponent extends StatelessWidget {
                     const BorderSide(color: Color(0xFF311b92), width: 2.0),
               )),
           onChanged: onChanged,
+          controller: controller,
           onSaved: onSaved,
           onFieldSubmitted: onSubmited,
         ));

@@ -14,11 +14,11 @@ class PurposeOfVisit extends HiveObject {
 
   @HiveField(2)
   @JsonKey(name: 'created_at')
-  late DateTime createdAt;
+  late DateTime? createdAt;
 
   @HiveField(3)
-  @JsonKey(name: 'update_at')
-  late DateTime updatedAt;
+  @JsonKey(name: 'updated_at')
+  late DateTime? updatedAt;
   PurposeOfVisit(
       {required this.uuid,
       required this.name,
@@ -27,4 +27,19 @@ class PurposeOfVisit extends HiveObject {
   factory PurposeOfVisit.fromJson(Map<String, dynamic> json) =>
       _$PurposeOfVisitFromJson(json);
   Map<String, dynamic> toJson() => _$PurposeOfVisitToJson(this);
+
+  ///this method will prevent the override of toString
+  String asDropdownString() {
+    return '${this.name}';
+  }
+
+  ///this method will prevent the override of toString
+
+  ///custom comparing function to check if two users are equal
+  bool isEqual(PurposeOfVisit model) {
+    return this.uuid == model.uuid;
+  }
+
+  @override
+  String toString() => name;
 }

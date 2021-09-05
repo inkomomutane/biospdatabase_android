@@ -19,61 +19,82 @@ class BenificiaryAdapter extends TypeAdapter<Benificiary> {
     return Benificiary(
       uuid: fields[0] as String,
       fullName: fields[1] as String?,
-      numberOfVisits: fields[2] as String?,
-      birthDate: fields[3] as DateTime?,
-      phone: fields[4] as String?,
-      serviceDate: fields[5] as DateTime?,
-      homeCare: fields[6] as String?,
-      purposeOfVisit: fields[7] as String?,
-      dateReceived: fields[8] as DateTime?,
-      status: fields[9] as bool?,
-      neighborhoodUuid: fields[10] as String?,
-      genreUuid: fields[11] as String?,
-      provenaceUuid: fields[12] as String?,
-      reasonOpeningCaseUuid: fields[13] as String?,
-      documentTypeUuid: fields[14] as String?,
-      createdAt: fields[15] as DateTime,
-      updatedAt: fields[16] as DateTime,
+      numberOfVisits: fields[4] as String?,
+      birthDate: fields[6] as DateTime?,
+      phone: fields[7] as String?,
+      serviceDate: fields[8] as DateTime?,
+      homeCare: fields[18] as bool?,
+      purposeOfVisit: fields[9] as String?,
+      specifyPurposeOfVisit: fields[10] as String?,
+      dateReceived: fields[20] as DateTime?,
+      neighborhoodUuid: fields[2] as String?,
+      genreUuid: fields[3] as String?,
+      provenaceUuid: fields[5] as String?,
+      forwardedServiceUuid: fields[15] as String?,
+      otherForwardedService: fields[16] as String?,
+      specifyForwardedService: fields[17] as String?,
+      reasonOpeningCaseUuid: fields[11] as String?,
+      otherReasonOpeningCase: fields[12] as String?,
+      documentTypeUuid: fields[13] as String?,
+      otherDocumentType: fields[14] as String?,
+      visitProposes: fields[19] as bool?,
+      status: fields[21] as bool?,
+      createdAt: fields[22] as DateTime?,
+      updatedAt: fields[23] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Benificiary obj) {
     writer
-      ..writeByte(17)
+      ..writeByte(24)
       ..writeByte(0)
       ..write(obj.uuid)
       ..writeByte(1)
       ..write(obj.fullName)
       ..writeByte(2)
-      ..write(obj.numberOfVisits)
-      ..writeByte(3)
-      ..write(obj.birthDate)
-      ..writeByte(4)
-      ..write(obj.phone)
-      ..writeByte(5)
-      ..write(obj.serviceDate)
-      ..writeByte(6)
-      ..write(obj.homeCare)
-      ..writeByte(7)
-      ..write(obj.purposeOfVisit)
-      ..writeByte(8)
-      ..write(obj.dateReceived)
-      ..writeByte(9)
-      ..write(obj.status)
-      ..writeByte(10)
       ..write(obj.neighborhoodUuid)
-      ..writeByte(11)
+      ..writeByte(3)
       ..write(obj.genreUuid)
-      ..writeByte(12)
+      ..writeByte(4)
+      ..write(obj.numberOfVisits)
+      ..writeByte(5)
       ..write(obj.provenaceUuid)
-      ..writeByte(13)
+      ..writeByte(6)
+      ..write(obj.birthDate)
+      ..writeByte(7)
+      ..write(obj.phone)
+      ..writeByte(8)
+      ..write(obj.serviceDate)
+      ..writeByte(9)
+      ..write(obj.purposeOfVisit)
+      ..writeByte(10)
+      ..write(obj.specifyPurposeOfVisit)
+      ..writeByte(11)
       ..write(obj.reasonOpeningCaseUuid)
-      ..writeByte(14)
+      ..writeByte(12)
+      ..write(obj.otherReasonOpeningCase)
+      ..writeByte(13)
       ..write(obj.documentTypeUuid)
+      ..writeByte(14)
+      ..write(obj.otherDocumentType)
       ..writeByte(15)
-      ..write(obj.createdAt)
+      ..write(obj.forwardedServiceUuid)
       ..writeByte(16)
+      ..write(obj.otherForwardedService)
+      ..writeByte(17)
+      ..write(obj.specifyForwardedService)
+      ..writeByte(18)
+      ..write(obj.homeCare)
+      ..writeByte(19)
+      ..write(obj.visitProposes)
+      ..writeByte(20)
+      ..write(obj.dateReceived)
+      ..writeByte(21)
+      ..write(obj.status)
+      ..writeByte(22)
+      ..write(obj.createdAt)
+      ..writeByte(23)
       ..write(obj.updatedAt);
   }
 
@@ -104,19 +125,30 @@ Benificiary _$BenificiaryFromJson(Map<String, dynamic> json) {
     serviceDate: json['service_date'] == null
         ? null
         : DateTime.parse(json['service_date'] as String),
-    homeCare: json['home_care'] as String?,
+    homeCare: json['home_care'] as bool?,
     purposeOfVisit: json['purpose_of_visit'] as String?,
+    specifyPurposeOfVisit: json['specify_purpose_of_visit'] as String?,
     dateReceived: json['date_received'] == null
         ? null
         : DateTime.parse(json['date_received'] as String),
-    status: json['status'] as bool?,
     neighborhoodUuid: json['neighborhood_uuid'] as String?,
     genreUuid: json['genre_uuid'] as String?,
     provenaceUuid: json['provenace_uuid'] as String?,
+    forwardedServiceUuid: json['forwarded_service_uuid'] as String?,
+    otherForwardedService: json['other_forwarded_service'] as String?,
+    specifyForwardedService: json['specify_forwarded_service'] as String?,
     reasonOpeningCaseUuid: json['reason_opening_case_uuid'] as String?,
+    otherReasonOpeningCase: json['other_reason_opening_case'] as String?,
     documentTypeUuid: json['document_type_uuid'] as String?,
-    createdAt: DateTime.parse(json['created_at'] as String),
-    updatedAt: DateTime.parse(json['update_at'] as String),
+    otherDocumentType: json['other_document_type'] as String?,
+    visitProposes: json['visit_proposes'] as bool?,
+    status: json['status'] as bool?,
+    createdAt: json['created_at'] == null
+        ? null
+        : DateTime.parse(json['created_at'] as String),
+    updatedAt: json['updated_at'] == null
+        ? null
+        : DateTime.parse(json['updated_at'] as String),
   );
 }
 
@@ -124,19 +156,26 @@ Map<String, dynamic> _$BenificiaryToJson(Benificiary instance) =>
     <String, dynamic>{
       'uuid': instance.uuid,
       'full_name': instance.fullName,
+      'neighborhood_uuid': instance.neighborhoodUuid,
+      'genre_uuid': instance.genreUuid,
       'number_of_visits': instance.numberOfVisits,
+      'provenace_uuid': instance.provenaceUuid,
       'birth_date': instance.birthDate?.toIso8601String(),
       'phone': instance.phone,
       'service_date': instance.serviceDate?.toIso8601String(),
-      'home_care': instance.homeCare,
       'purpose_of_visit': instance.purposeOfVisit,
+      'specify_purpose_of_visit': instance.specifyPurposeOfVisit,
+      'reason_opening_case_uuid': instance.reasonOpeningCaseUuid,
+      'other_reason_opening_case': instance.otherReasonOpeningCase,
+      'document_type_uuid': instance.documentTypeUuid,
+      'other_document_type': instance.otherDocumentType,
+      'forwarded_service_uuid': instance.forwardedServiceUuid,
+      'other_forwarded_service': instance.otherForwardedService,
+      'specify_forwarded_service': instance.specifyForwardedService,
+      'home_care': instance.homeCare,
+      'visit_proposes': instance.visitProposes,
       'date_received': instance.dateReceived?.toIso8601String(),
       'status': instance.status,
-      'neighborhood_uuid': instance.neighborhoodUuid,
-      'genre_uuid': instance.genreUuid,
-      'provenace_uuid': instance.provenaceUuid,
-      'reason_opening_case_uuid': instance.reasonOpeningCaseUuid,
-      'document_type_uuid': instance.documentTypeUuid,
-      'created_at': instance.createdAt.toIso8601String(),
-      'update_at': instance.updatedAt.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
     };

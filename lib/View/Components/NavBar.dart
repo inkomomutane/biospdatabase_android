@@ -1,3 +1,4 @@
+// ignore: library_names
 library navBar;
 
 import 'package:flutter/material.dart';

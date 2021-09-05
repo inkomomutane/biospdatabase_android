@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class NumberComponent extends StatelessWidget {
-  const NumberComponent(
-      {Key? key, this.hintText, this.onChanged, this.onSaved, this.onSubmited})
+  NumberComponent(
+      {Key? key,
+      this.hintText,
+      this.onChanged,
+      this.onSaved,
+      this.onSubmited,
+      this.controller})
       : super(key: key);
   final String? hintText;
-  final void Function(String string)? onChanged;
-  final void Function(String? string)? onSaved;
-  final void Function(String)? onSubmited;
+  void Function(String string)? onChanged;
+  void Function(String? string)? onSaved;
+  void Function(String)? onSubmited;
+  TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +22,7 @@ class NumberComponent extends StatelessWidget {
         padding: EdgeInsets.only(left: 35, right: 35, top: 10),
         child: TextFormField(
           keyboardType: TextInputType.number,
+          initialValue: "",
           decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: hintText,
@@ -33,6 +41,7 @@ class NumberComponent extends StatelessWidget {
               )),
           onChanged: onChanged,
           onSaved: onSaved,
+          controller: controller,
           onFieldSubmitted: onSubmited,
         ));
   }

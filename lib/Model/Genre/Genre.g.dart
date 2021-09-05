@@ -19,8 +19,8 @@ class GenreAdapter extends TypeAdapter<Genre> {
     return Genre(
       uuid: fields[0] as String?,
       name: fields[1] as String,
-      createdAt: fields[2] as DateTime,
-      updatedAt: fields[3] as DateTime,
+      createdAt: fields[2] as DateTime?,
+      updatedAt: fields[3] as DateTime?,
     );
   }
 
@@ -57,14 +57,18 @@ Genre _$GenreFromJson(Map<String, dynamic> json) {
   return Genre(
     uuid: json['uuid'] as String?,
     name: json['name'] as String,
-    createdAt: DateTime.parse(json['created_at'] as String),
-    updatedAt: DateTime.parse(json['update_at'] as String),
+    createdAt: json['created_at'] == null
+        ? null
+        : DateTime.parse(json['created_at'] as String),
+    updatedAt: json['updated_at'] == null
+        ? null
+        : DateTime.parse(json['updated_at'] as String),
   );
 }
 
 Map<String, dynamic> _$GenreToJson(Genre instance) => <String, dynamic>{
       'uuid': instance.uuid,
       'name': instance.name,
-      'created_at': instance.createdAt.toIso8601String(),
-      'update_at': instance.updatedAt.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
     };
