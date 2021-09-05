@@ -7,6 +7,7 @@ class PhoneNumberComponent extends StatelessWidget {
       this.hintText,
       this.onChanged,
       this.onSaved,
+      this.initialValue,
       this.onSubmited,
       this.controller})
       : super(key: key);
@@ -15,6 +16,7 @@ class PhoneNumberComponent extends StatelessWidget {
   Function(String? string)? onSaved;
   final void Function(String)? onSubmited;
   TextEditingController? controller;
+  String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class PhoneNumberComponent extends StatelessWidget {
         padding: EdgeInsets.only(left: 35, right: 35, top: 10),
         child: TextFormField(
           keyboardType: TextInputType.phone,
-          initialValue: "",
+          initialValue: initialValue != null ? initialValue : "",
           decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: hintText,

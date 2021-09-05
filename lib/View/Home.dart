@@ -2,8 +2,10 @@ import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
 import 'package:biospdatabase/Syncronization/Syncronization.dart';
 import 'package:biospdatabase/View/Benificiary/Benificiary.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -60,7 +62,10 @@ class _MainComponentState extends State<MainComponent> {
           return ListView.builder(
               itemCount: benificiaries.length,
               itemBuilder: (context, int index) {
-                return benificiaryCard(context, benificiaries.elementAt(index));
+                return benificiaryCard(
+                    context,
+                    Benificiary.fromJson(
+                        benificiaries.elementAt(index).toJson()));
               });
           //return Text("${benificiaries.length}");
         },
@@ -111,13 +116,24 @@ class _MainComponentState extends State<MainComponent> {
     return GestureDetector(
       child: Card(
         child: ListTile(
-          leading: Icon(
-            Icons.person,
-            color: Colors.amber,
+          leading: CircleAvatar(
+            backgroundColor: Colors.amberAccent,
+            child: Text(
+              benificiary.fullName != ""
+                  ? "${benificiary.fullName!.substring(0, 2).toUpperCase()}"
+                  : "",
+              style:
+                  TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+            ),
           ),
-          title: Text(benificiary.createdAt!.year.toString()),
+          title: Text(
+            "${benificiary.fullName!.toUpperCase()}",
+            style: TextStyle(fontWeight: FontWeight.w500),
+          ),
+          subtitle: Text("${benificiary.phone}"),
         ),
-        elevation: 0,
+        elevation: 0.4,
+        margin: EdgeInsets.all(0.1),
       ),
       onTap: () {
         showDialog<void>(
@@ -127,35 +143,99 @@ class _MainComponentState extends State<MainComponent> {
                       RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                   contentPadding: EdgeInsets.all(0),
                   title: Container(
-                    padding: EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFdffdf),
-                    ),
-                    child: Text("Data",
-                        textAlign: TextAlign.start,
-                        style: TextStyle(fontWeight: FontWeight.w800)),
-                  ),
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFdffdf),
+                      ),
+                      child: Container(
+                        child: Text("${benificiary.fullName!.toUpperCase()}"),
+                      )),
                   titlePadding: EdgeInsets.all(0),
                   actions: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
-                          Icons.phone,
-                          color: Colors.blueGrey,
+                        GestureDetector(
+                          child: Icon(
+                            Icons.phone,
+                            color: Colors.blueGrey,
+                          ),
+                          onTap: () {
+                            launch("tel:${benificiary.phone}");
+                          },
                         ),
-                        Icon(
-                          Icons.message,
-                          color: Colors.blueGrey,
+                        GestureDetector(
+                          child: Icon(
+                            Icons.message,
+                            color: Colors.blueGrey,
+                          ),
+                          onTap: () {
+                            launch("sms:${benificiary.phone}");
+                          },
                         ),
-                        Icon(
-                          Icons.edit,
-                          color: Colors.blueGrey,
+                        GestureDetector(
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.blueGrey,
+                          ),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    BenificiaryForm(
+                                        benificiaryForEdit: benificiary),
+                                fullscreenDialog: true,
+                              ),
+                            );
+                          },
                         ),
-                        Icon(
-                          Icons.delete_outlined,
-                          color: Colors.blueGrey,
-                        )
+                        GestureDetector(
+                          child: Icon(
+                            Icons.delete_outlined,
+                            color: Colors.blueGrey,
+                          ),
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: ListTile(
+                                        leading: Icon(
+                                          Icons.warning_amber,
+                                          color: Colors.amber,
+                                        ),
+                                        title: Text(
+                                            "Deseja apagar esse benificiario"),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          child: Text("Não"),
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                        ),
+                                        TextButton(
+                                            child: Text("Sim"),
+                                            onPressed: () {
+                                              if (Syncronization.addDeleted(
+                                                  benificiary)) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                  content: Text(
+                                                    'Benificiario deletado com sucesso',
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                  backgroundColor: Colors.green,
+                                                ));
+                                                Navigator.of(context).pop();
+                                              }
+                                              Navigator.of(context).pop();
+                                            }),
+                                      ],
+                                    ));
+                          },
+                        ),
                       ],
                     )
                   ],

@@ -37,7 +37,7 @@ class BenificiaryAdapter extends TypeAdapter<Benificiary> {
       otherReasonOpeningCase: fields[12] as String?,
       documentTypeUuid: fields[13] as String?,
       otherDocumentType: fields[14] as String?,
-      visitProposes: fields[19] as bool?,
+      visitProposes: fields[19] as String?,
       status: fields[21] as bool?,
       createdAt: fields[22] as DateTime?,
       updatedAt: fields[23] as DateTime?,
@@ -141,7 +141,7 @@ Benificiary _$BenificiaryFromJson(Map<String, dynamic> json) {
     otherReasonOpeningCase: json['other_reason_opening_case'] as String?,
     documentTypeUuid: json['document_type_uuid'] as String?,
     otherDocumentType: json['other_document_type'] as String?,
-    visitProposes: json['visit_proposes'] as bool?,
+    visitProposes: json['visit_proposes'] as String?,
     status: json['status'] as bool?,
     createdAt: json['created_at'] == null
         ? null

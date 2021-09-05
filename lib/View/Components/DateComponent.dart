@@ -9,12 +9,14 @@ class DateComponent extends StatelessWidget {
       this.onSubmited,
       this.onChanged,
       this.onSaved,
+      this.initialValue,
       this.controller})
       : super(key: key);
   void Function(DateTime?)? onSubmited;
   void Function(DateTime?)? onChanged;
   void Function(DateTime?)? onSaved;
   TextEditingController? controller;
+  DateTime? initialValue;
   @override
   Widget build(BuildContext context) {
     final format = DateFormat("dd-MM-yyyy");
@@ -27,6 +29,7 @@ class DateComponent extends StatelessWidget {
           onFieldSubmitted: onSubmited,
           onChanged: onChanged,
           onSaved: onSaved,
+          initialValue: initialValue!=null ? initialValue :DateTime.now(),
           onShowPicker: (context, currentValue) async {
             final date = await showDatePicker(
                 context: context,

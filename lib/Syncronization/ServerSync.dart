@@ -24,8 +24,6 @@ class ServerSync {
   Future settingsOnServer() async {
     var request = http.Request('GET', Uri.parse('${this.baseUrl}/settings'));
     request.headers.addAll(headers);
-    print(headers);
-
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
@@ -201,10 +199,7 @@ class ServerSync {
         });
   }
 
-//asset
   syncSettings() {
-    settingsOnServer().then((value) {
-      print(value);
-    });
+    settingsOnServer().then((value) {});
   }
 }

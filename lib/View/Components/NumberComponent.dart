@@ -7,6 +7,7 @@ class NumberComponent extends StatelessWidget {
       this.hintText,
       this.onChanged,
       this.onSaved,
+      this.initialValue,
       this.onSubmited,
       this.controller})
       : super(key: key);
@@ -14,6 +15,8 @@ class NumberComponent extends StatelessWidget {
   void Function(String string)? onChanged;
   void Function(String? string)? onSaved;
   void Function(String)? onSubmited;
+  String? initialValue;
+
   TextEditingController? controller;
 
   @override
@@ -22,7 +25,7 @@ class NumberComponent extends StatelessWidget {
         padding: EdgeInsets.only(left: 35, right: 35, top: 10),
         child: TextFormField(
           keyboardType: TextInputType.number,
-          initialValue: "",
+          initialValue: initialValue != null ? initialValue : "",
           decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: hintText,

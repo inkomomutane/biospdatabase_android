@@ -93,15 +93,11 @@ class Syncronization {
       try {
         var boxBen = getBeneficiaries().get(benificiary.uuid);
         var boxCreatedBen = getCreatedBeneficiaries().get(benificiary.uuid);
-
         var benificiaryCopy = Benificiary.fromJson(benificiary.toJson());
-
         boxCreatedBen = benificiary;
         boxBen = benificiaryCopy;
-
-        boxBen.save();
-        boxCreatedBen.save();
-
+        getBeneficiaries().put(boxBen.uuid, boxBen);
+        getCreatedBeneficiaries().put(boxCreatedBen.uuid, boxCreatedBen);
         return true;
       } catch (e) {
         return false;
@@ -116,8 +112,8 @@ class Syncronization {
         boxUpdatedBen = benificiary;
         boxBen = benificiaryCopy;
 
-        boxBen.save();
-        boxUpdatedBen.save();
+        getBeneficiaries().put(boxBen.uuid, boxBen);
+        getUpdatedBeneficiaries().put(boxUpdatedBen.uuid, boxUpdatedBen);
 
         return true;
       } catch (e) {

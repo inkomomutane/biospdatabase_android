@@ -9,14 +9,17 @@ class TextComponent extends StatelessWidget {
       this.onChanged,
       this.onSaved,
       this.controller,
-      this.onSubmited})
+      this.onSubmited,
+      this.initialValue,
+      this.validator})
       : super(key: key);
   final String hintText;
   void Function(String string)? onChanged;
   void Function(String? string)? onSaved;
   void Function(String)? onSubmited;
   TextEditingController? controller;
-
+  String? initialValue;
+  String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -41,11 +44,12 @@ class TextComponent extends StatelessWidget {
             borderSide: const BorderSide(color: Colors.red, width: 2.0),
           ),
         ),
-        initialValue: "",
+        initialValue: initialValue != null ? initialValue : "",
         controller: controller,
         onChanged: onChanged,
         onSaved: onSaved,
         onFieldSubmitted: onSubmited,
+        validator: validator,
       ),
       padding: EdgeInsets.only(left: 35, right: 35, top: 10),
     );

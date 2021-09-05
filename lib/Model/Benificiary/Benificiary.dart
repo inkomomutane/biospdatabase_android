@@ -84,7 +84,7 @@ class Benificiary extends Model {
 
   @HiveField(19)
   @JsonKey(name: 'visit_proposes')
-  late bool? visitProposes;
+  late String? visitProposes;
 
   @HiveField(20)
   @JsonKey(name: 'date_received')

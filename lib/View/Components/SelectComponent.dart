@@ -14,7 +14,8 @@ class SelectComponent<T> extends StatelessWidget {
       this.controller,
       this.mode = Mode.MENU,
       this.label,
-      this.itemAsString})
+      this.itemAsString,
+      this.selectedItem})
       : super(key: key);
   final String hintText;
   final List<T> items;
@@ -25,6 +26,7 @@ class SelectComponent<T> extends StatelessWidget {
   void Function(T?)? onChanged;
   TextEditingController? controller;
   String Function(T)? itemAsString;
+  var selectedItem;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class SelectComponent<T> extends StatelessWidget {
           mode: mode,
           items: items,
           showSearchBox: showSearchBox,
-          // selectedItem: items.first,
+          selectedItem: selectedItem != null ? selectedItem : null,
           hint: hintText,
           label: label,
           onChanged: onChanged,

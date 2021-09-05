@@ -42,6 +42,7 @@ dependencies:
   uuid: ^3.0.4
   bottom_navy_bar: ^6.0.0
   dropdown_search2: ^0.6.10
+  url_launcher: ^6.0.10
 
 
 dev_dependencies:
