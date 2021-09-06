@@ -43,7 +43,7 @@ class Benificiary extends Model {
   late DateTime? serviceDate;
 
   @HiveField(9)
-  @JsonKey(name: 'purpose_of_visit')
+  @JsonKey(name: 'purpose_of_visit_uuid')
   late String? purposeOfVisit;
 
   @HiveField(10)

@@ -9,6 +9,7 @@ class PhoneNumberComponent extends StatelessWidget {
       this.onSaved,
       this.initialValue,
       this.onSubmited,
+      this.validator,
       this.controller})
       : super(key: key);
   final String? hintText;
@@ -17,6 +18,7 @@ class PhoneNumberComponent extends StatelessWidget {
   final void Function(String)? onSubmited;
   TextEditingController? controller;
   String? initialValue;
+  String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class PhoneNumberComponent extends StatelessWidget {
           onChanged: onChanged,
           controller: controller,
           onSaved: onSaved,
+          validator: validator,
           onFieldSubmitted: onSubmited,
         ));
   }

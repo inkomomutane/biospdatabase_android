@@ -36,8 +36,6 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
   int _currentIndex = 1;
   @override
   void initState() {
-    // TODO: implement initState
-
     if (benificiaryForEdit != null) {
       benificiary = benificiaryForEdit!.toJson();
     } else {
@@ -79,7 +77,7 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
               TextComponent(
                 hintText: "Nome completo",
                 initialValue: benificiaryForEdit != null
-                    ? "${benificiaryForEdit!.fullName}"
+                    ? benificiaryForEdit!.fullName
                     : "",
                 onChanged: (nomeCompleto) {
                   setState(() {
@@ -183,7 +181,7 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
               NumberComponent(
                 hintText: "1⁰ visita ou frequência",
                 initialValue: benificiaryForEdit != null
-                    ? "${benificiaryForEdit!.numberOfVisits}"
+                    ? benificiaryForEdit!.numberOfVisits
                     : "",
                 onChanged: (frequencia) {
                   setState(() {
@@ -266,9 +264,8 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
               LabelComponent(labelText: "Contacto"),
               PhoneNumberComponent(
                 hintText: "Contacto",
-                initialValue: benificiaryForEdit != null
-                    ? "${benificiaryForEdit!.phone}"
-                    : "",
+                initialValue:
+                    benificiaryForEdit != null ? benificiaryForEdit!.phone : "",
                 onChanged: (contacto) {
                   setState(() {
                     this.benificiary['phone'] = contacto;
@@ -358,7 +355,7 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
               TextComponent(
                 hintText: "Se tiver formação profissional Especificar",
                 initialValue: benificiaryForEdit != null
-                    ? "${benificiaryForEdit!.specifyPurposeOfVisit}"
+                    ? benificiaryForEdit!.specifyPurposeOfVisit
                     : "",
                 onChanged: (specifyPurposeOfVisit) {
                   setState(() {
@@ -526,7 +523,7 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
               TextComponent(
                 hintText: "Especificar Serviço",
                 initialValue: benificiaryForEdit != null
-                    ? "${benificiaryForEdit!.specifyForwardedService}"
+                    ? benificiaryForEdit!.specifyForwardedService
                     : "",
                 onChanged: (value) {
                   this.benificiary['specify_forwarded_service'] = value;
@@ -566,7 +563,7 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
               TextComponent(
                 hintText: "Objectivo da(s)  visita(s)",
                 initialValue: benificiaryForEdit != null
-                    ? "${benificiaryForEdit!.visitProposes}"
+                    ? benificiaryForEdit!.visitProposes
                     : "",
                 onChanged: (value) {
                   this.benificiary['visit_proposes'] = value;

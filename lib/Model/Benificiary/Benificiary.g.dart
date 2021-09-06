@@ -126,7 +126,7 @@ Benificiary _$BenificiaryFromJson(Map<String, dynamic> json) {
         ? null
         : DateTime.parse(json['service_date'] as String),
     homeCare: json['home_care'] as bool?,
-    purposeOfVisit: json['purpose_of_visit'] as String?,
+    purposeOfVisit: json['purpose_of_visit_uuid'] as String?,
     specifyPurposeOfVisit: json['specify_purpose_of_visit'] as String?,
     dateReceived: json['date_received'] == null
         ? null
@@ -163,7 +163,7 @@ Map<String, dynamic> _$BenificiaryToJson(Benificiary instance) =>
       'birth_date': instance.birthDate?.toIso8601String(),
       'phone': instance.phone,
       'service_date': instance.serviceDate?.toIso8601String(),
-      'purpose_of_visit': instance.purposeOfVisit,
+      'purpose_of_visit_uuid': instance.purposeOfVisit,
       'specify_purpose_of_visit': instance.specifyPurposeOfVisit,
       'reason_opening_case_uuid': instance.reasonOpeningCaseUuid,
       'other_reason_opening_case': instance.otherReasonOpeningCase,

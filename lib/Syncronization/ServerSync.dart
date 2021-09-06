@@ -114,92 +114,115 @@ class ServerSync {
         Syncronization.getReasonsOfOpeningCases().put(element.uuid, element);
       });
 
+      //benificiaries
+
+      var benificiaries = data['benificiaries'];
+
+      var listBenificiaries = List.generate(benificiaries.length, (index) {
+        return Benificiary.fromJson(benificiaries[index]);
+      });
+      Syncronization.getBeneficiaries()
+          .deleteAll(Syncronization.getBeneficiaries().keys);
+
+      listBenificiaries.forEach((element) {
+        Syncronization.getBeneficiaries().put(element.uuid, element);
+      });
+
       return data;
     }
     return false;
   }
 
-  Future<bool> storingCratedOnServer(Benificiary benificiary) async {
+  Future<bool> storingCratedOnServer() async {
     var request = http.Request('POST', Uri.parse('${this.baseUrl}/create'));
-    request.body = json.encode(benificiary.toJson());
+    var created = Syncronization.getCreatedBeneficiaries()
+        .values
+        .map((e) => e.toJson())
+        .toList();
+
+    request.body = json.encode(created);
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
-
     if (response.statusCode == 200) {
-      return true;
-    }
-    return false;
-  }
+      try {
+        Syncronization.getCreatedBeneficiaries()
+            .deleteAll(Syncronization.getCreatedBeneficiaries().keys);
+        var result = await response.stream.bytesToString();
 
-  Future<bool> storingUpdatedOnServer(Benificiary benificiary) async {
-    var request = http.Request(
-        'POST', Uri.parse('${this.baseUrl}/update/${benificiary.uuid}'));
-    request.body = json.encode(benificiary.toJson());
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      return true;
-    }
-    return false;
-  }
-
-  Future<bool> deletingOnServer(Benificiary benificiary) async {
-    var request = http.Request(
-        'POST', Uri.parse('${this.baseUrl}/delete/${benificiary.uuid}'));
-    request.body = json.encode(benificiary.toJson());
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      return true;
-    }
-    return false;
-  }
-
-  Future storinAll() async {
-    var toAdd = Syncronization.getCreatedBeneficiaries();
-    toAdd.values.toList().forEach((element) async {
-      final bool success = await storingCratedOnServer(element);
-      if (success &&
-          Syncronization.getCreatedBeneficiaries().get(element.uuid) != null) {
-        Syncronization.getCreatedBeneficiaries().get(element.uuid)!.delete();
-      }
-    });
-  }
-
-  Future<void> updatingAll() async {
-    var toUpdate = Syncronization.getUpdatedBeneficiaries();
-    toUpdate.values.toList().forEach((element) async {
-      final bool success = await storingUpdatedOnServer(element);
-      if (success &&
-          Syncronization.getUpdatedBeneficiaries().get(element.uuid) != null) {
-        Syncronization.getUpdatedBeneficiaries().get(element.uuid)!.delete();
-      }
-    });
-  }
-
-  Future deletingAll() async {
-    var toDelete = Syncronization.getDeletedBeneficiaries();
-    toDelete.values.toList().forEach((element) async {
-      final bool success = await deletingOnServer(element);
-      if (success &&
-          Syncronization.getDeletedBeneficiaries().get(element.uuid) != null) {
-        Syncronization.getDeletedBeneficiaries().get(element.uuid)!.delete();
-      }
-    });
-  }
-
-  sync() {
-    storinAll().then((value) => {
-          updatingAll().then((value) => {deletingAll().then((value) => {})})
+        (json.decode(result) as List<Map<String, dynamic>>).forEach((element) {
+          Syncronization.getCreatedBeneficiaries()
+              .put(element['uuid'], Benificiary.fromJson(element));
         });
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+    return false;
   }
 
-  syncSettings() {
-    settingsOnServer().then((value) {});
+  Future<bool> storingUpdatedOnServer() async {
+    var request = http.Request('POST', Uri.parse('${this.baseUrl}/update'));
+    var updated = Syncronization.getUpdatedBeneficiaries()
+        .values
+        .map((e) => e.toJson())
+        .toList();
+
+    request.body = json.encode(updated);
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      try {
+        Syncronization.getUpdatedBeneficiaries()
+            .deleteAll(Syncronization.getUpdatedBeneficiaries().keys);
+        var result = await response.stream.bytesToString();
+
+        (json.decode(result) as List<Map<String, dynamic>>).forEach((element) {
+          Syncronization.getUpdatedBeneficiaries()
+              .put(element['uuid'], Benificiary.fromJson(element));
+        });
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+    return false;
+  }
+
+  Future<bool> deletingOnServer() async {
+    var request = http.Request('POST', Uri.parse('${this.baseUrl}/delete'));
+    var deleted = Syncronization.getDeletedBeneficiaries()
+        .values
+        .map((e) => e.toJson())
+        .toList();
+
+    request.body = json.encode(deleted);
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      try {
+        Syncronization.getDeletedBeneficiaries()
+            .deleteAll(Syncronization.getDeletedBeneficiaries().keys);
+        var result = await response.stream.bytesToString();
+        (json.decode(result) as List<Map<String, dynamic>>).forEach((element) {
+          Syncronization.getDeletedBeneficiaries()
+              .put(element['uuid'], Benificiary.fromJson(element));
+        });
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+    return false;
+  }
+
+  Future syncSettings() async {
+    await storingCratedOnServer();
+    await storingUpdatedOnServer();
+    await deletingOnServer();
+    await settingsOnServer();
   }
 }

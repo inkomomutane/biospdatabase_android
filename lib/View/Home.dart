@@ -1,4 +1,5 @@
 import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
+import 'package:biospdatabase/Syncronization/ServerSync.dart';
 import 'package:biospdatabase/Syncronization/Syncronization.dart';
 import 'package:biospdatabase/View/Benificiary/Benificiary.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
@@ -8,13 +9,16 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({Key? key, this.index = 0}) : super(key: key);
+  final int index;
 
   @override
-  _HomeState createState() => _HomeState();
+  _HomeState createState() => _HomeState(index);
 }
 
 class _HomeState extends State<Home> {
+  _HomeState(this.index);
+  final int index;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,20 +33,22 @@ class _HomeState extends State<Home> {
       ),
       debugShowCheckedModeBanner: false,
       title: "Biosp Database",
-      home: MainComponent(),
+      home: MainComponent(index),
     );
   }
 }
 
 class MainComponent extends StatefulWidget {
-  const MainComponent({Key? key}) : super(key: key);
+  const MainComponent(this.index, {Key? key}) : super(key: key);
+  final int index;
 
   @override
-  _MainComponentState createState() => _MainComponentState();
+  _MainComponentState createState() => _MainComponentState(index);
 }
 
 class _MainComponentState extends State<MainComponent> {
-  int _currentIndex = 0;
+  _MainComponentState(this._currentIndex);
+  int _currentIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +81,13 @@ class _MainComponentState extends State<MainComponent> {
         showElevation: true,
         itemCornerRadius: 24,
         curve: Curves.easeIn,
-        onItemSelected: (index) => setState(() => _currentIndex = index),
+        onItemSelected: (index) => setState(() {
+          _currentIndex = index;
+          if (index == 1) {
+            ServerSync data = ServerSync();
+            data.syncSettings().then((value) => null);
+          }
+        }),
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
             icon: Icon(Icons.apps),
@@ -88,13 +100,7 @@ class _MainComponentState extends State<MainComponent> {
             title: Text('Sincronizar'),
             activeColor: Colors.blueAccent,
             textAlign: TextAlign.center,
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.print),
-            title: Text('Relatórios'),
-            activeColor: Colors.blue,
-            textAlign: TextAlign.center,
-          ),
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -119,18 +125,22 @@ class _MainComponentState extends State<MainComponent> {
           leading: CircleAvatar(
             backgroundColor: Colors.amberAccent,
             child: Text(
-              benificiary.fullName != ""
-                  ? "${benificiary.fullName!.substring(0, 2).toUpperCase()}"
+              (benificiary.fullName != "" && benificiary.fullName != null)
+                  ? "${benificiary.fullName!.substring(0, 1).toUpperCase()}"
                   : "",
               style:
                   TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
             ),
           ),
-          title: Text(
-            "${benificiary.fullName!.toUpperCase()}",
-            style: TextStyle(fontWeight: FontWeight.w500),
-          ),
-          subtitle: Text("${benificiary.phone}"),
+          title: benificiary.fullName != null
+              ? Text(
+                  "${benificiary.fullName!.toUpperCase()}",
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                )
+              : Text(""),
+          subtitle: benificiary.phone != null
+              ? Text("${benificiary.phone}")
+              : Text(""),
         ),
         elevation: 0.4,
         margin: EdgeInsets.all(0.1),
@@ -148,7 +158,9 @@ class _MainComponentState extends State<MainComponent> {
                         color: Color(0xFFFdffdf),
                       ),
                       child: Container(
-                        child: Text("${benificiary.fullName!.toUpperCase()}"),
+                        child: benificiary.fullName != null
+                            ? Text("${benificiary.fullName!.toUpperCase()}")
+                            : Text(""),
                       )),
                   titlePadding: EdgeInsets.all(0),
                   actions: [

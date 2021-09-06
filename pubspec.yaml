@@ -43,6 +43,9 @@ dependencies:
   bottom_navy_bar: ^6.0.0
   dropdown_search2: ^0.6.10
   url_launcher: ^6.0.10
+  percent_indicator: ^3.0.1
+  sn_progress_dialog: ^1.0.3
+  connectivity_plus: ^1.1.0
 
 
 dev_dependencies:

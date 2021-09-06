@@ -7,6 +7,7 @@ import 'package:biospdatabase/Model/Provenace/Provenace.dart';
 import 'package:biospdatabase/Model/PurposeOfVisit/PurposeOfVisit.dart';
 import 'package:biospdatabase/Model/ReasonOpeningCase/ReasonOpeningCase.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:http/http.dart';
 
 class Syncronization {
   static getToken() => Hive.box('token');
@@ -91,37 +92,27 @@ class Syncronization {
   static bool addUdated(Benificiary benificiary) {
     if (getCreatedBeneficiaries().containsKey(benificiary.uuid)) {
       try {
-        var boxBen = getBeneficiaries().get(benificiary.uuid);
-        var boxCreatedBen = getCreatedBeneficiaries().get(benificiary.uuid);
         var benificiaryCopy = Benificiary.fromJson(benificiary.toJson());
-        boxCreatedBen = benificiary;
-        boxBen = benificiaryCopy;
-        getBeneficiaries().put(boxBen.uuid, boxBen);
-        getCreatedBeneficiaries().put(boxCreatedBen.uuid, boxCreatedBen);
+        getBeneficiaries().put(benificiary.uuid, benificiary);
+        getCreatedBeneficiaries().put(benificiaryCopy.uuid, benificiaryCopy);
         return true;
       } catch (e) {
         return false;
       }
     } else if (getUpdatedBeneficiaries().containsKey(benificiary.uuid)) {
       try {
-        var boxBen = getBeneficiaries().get(benificiary.uuid);
-        var boxUpdatedBen = getUpdatedBeneficiaries().get(benificiary.uuid);
-
         var benificiaryCopy = Benificiary.fromJson(benificiary.toJson());
-
-        boxUpdatedBen = benificiary;
-        boxBen = benificiaryCopy;
-
-        getBeneficiaries().put(boxBen.uuid, boxBen);
-        getUpdatedBeneficiaries().put(boxUpdatedBen.uuid, boxUpdatedBen);
-
+        getBeneficiaries().put(benificiary.uuid, benificiary);
+        getUpdatedBeneficiaries().put(benificiaryCopy.uuid, benificiaryCopy);
         return true;
       } catch (e) {
         return false;
       }
     } else {
       try {
-        getUpdatedBeneficiaries().put(benificiary.uuid, benificiary);
+        var benificiaryCopy = Benificiary.fromJson(benificiary.toJson());
+        getBeneficiaries().put(benificiary.uuid, benificiary);
+        getUpdatedBeneficiaries().put(benificiaryCopy.uuid, benificiaryCopy);
         return true;
       } catch (e) {
         return false;
