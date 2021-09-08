@@ -9,6 +9,7 @@ import 'package:biospdatabase/Model/Provenace/Provenace.dart';
 import 'package:biospdatabase/Model/PurposeOfVisit/PurposeOfVisit.dart';
 import 'package:biospdatabase/Model/ReasonOpeningCase/ReasonOpeningCase.dart';
 import 'package:biospdatabase/Syncronization/Syncronization.dart';
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,115 +21,139 @@ class ServerSync {
   };
   final baseUrl = "https://www.biosp.sumburero.org/api/sync";
 
-  Future settingsOnServer() async {
+  Future<bool> settingsOnServer() async {
     var request = http.Request('GET', Uri.parse('${this.baseUrl}/settings'));
     request.headers.addAll(headers);
-    http.StreamedResponse response = await request.send();
+    try {
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var data = jsonDecode(await response.stream.bytesToString());
+        try {
+          ///genres sync database
+          var genres = data['genres'];
+          var listGenres = List.generate(genres.length, (index) {
+            return Genre.fromJson(genres[index]);
+          });
+          Syncronization.getGenres().deleteAll(Syncronization.getGenres().keys);
+          listGenres.forEach((element) {
+            Syncronization.getGenres().put(element.uuid, element);
+          });
 
-    if (response.statusCode == 200) {
-      var data = jsonDecode(await response.stream.bytesToString());
+          ///Document type sync database
+          var documentTypes = data['document_types'];
+          var listDocumentTypes = List.generate(documentTypes.length, (index) {
+            return DocumentType.fromJson(documentTypes[index]);
+          });
+          Syncronization.getDocumentTypes()
+              .deleteAll(Syncronization.getDocumentTypes().keys);
+          listDocumentTypes.forEach((element) {
+            Syncronization.getDocumentTypes().put(element.uuid, element);
+          });
 
-      ///genres sync database
-      var genres = data['genres'];
-      var listGenres = List.generate(genres.length, (index) {
-        return Genre.fromJson(genres[index]);
-      });
-      Syncronization.getGenres().deleteAll(Syncronization.getGenres().keys);
-      listGenres.forEach((element) {
-        Syncronization.getGenres().put(element.uuid, element);
-      });
+          ///forwarded_services  sync database
+          var forwardedServices = data['forwarded_services'];
+          var listForwardedServices =
+              List.generate(forwardedServices.length, (index) {
+            return ForwardedService.fromJson(forwardedServices[index]);
+          });
+          Syncronization.getForwardedServices()
+              .deleteAll(Syncronization.getForwardedServices().keys);
 
-      ///Document type sync database
-      var documentTypes = data['document_types'];
-      var listDocumentTypes = List.generate(documentTypes.length, (index) {
-        return DocumentType.fromJson(documentTypes[index]);
-      });
-      Syncronization.getDocumentTypes()
-          .deleteAll(Syncronization.getDocumentTypes().keys);
-      listDocumentTypes.forEach((element) {
-        Syncronization.getDocumentTypes().put(element.uuid, element);
-      });
+          listForwardedServices.forEach((element) {
+            Syncronization.getForwardedServices().put(element.uuid, element);
+          });
 
-      ///forwarded_services  sync database
-      var forwardedServices = data['forwarded_services'];
-      var listForwardedServices =
-          List.generate(forwardedServices.length, (index) {
-        return ForwardedService.fromJson(forwardedServices[index]);
-      });
-      Syncronization.getForwardedServices()
-          .deleteAll(Syncronization.getForwardedServices().keys);
+          ///neighborhoods  sync database
+          var neighborhoods = data['neighborhoods'];
+          var listNeighborhoods = List.generate(neighborhoods.length, (index) {
+            return Neighborhood.fromJson(neighborhoods[index]);
+          });
+          Syncronization.getNeighborhoods()
+              .deleteAll(Syncronization.getNeighborhoods().keys);
 
-      listForwardedServices.forEach((element) {
-        Syncronization.getForwardedServices().put(element.uuid, element);
-      });
+          listNeighborhoods.forEach((element) {
+            Syncronization.getNeighborhoods().put(element.uuid, element);
+          });
 
-      ///neighborhoods  sync database
-      var neighborhoods = data['neighborhoods'];
-      var listNeighborhoods = List.generate(neighborhoods.length, (index) {
-        return Neighborhood.fromJson(neighborhoods[index]);
-      });
-      Syncronization.getNeighborhoods()
-          .deleteAll(Syncronization.getNeighborhoods().keys);
+          ///provenances  sync database
+          var provenances = data['provenances'];
+          var listProvenances = List.generate(provenances.length, (index) {
+            return Provenace.fromJson(provenances[index]);
+          });
+          Syncronization.getProvenances()
+              .deleteAll(Syncronization.getProvenances().keys);
 
-      listNeighborhoods.forEach((element) {
-        Syncronization.getNeighborhoods().put(element.uuid, element);
-      });
+          listProvenances.forEach((element) {
+            Syncronization.getProvenances().put(element.uuid, element);
+          });
 
-      ///provenances  sync database
-      var provenances = data['provenances'];
-      var listProvenances = List.generate(provenances.length, (index) {
-        return Provenace.fromJson(provenances[index]);
-      });
-      Syncronization.getProvenances()
-          .deleteAll(Syncronization.getProvenances().keys);
+          ///provenances  sync database
+          var propusesOfVisits = data['propuses_of_visits'];
+          var listPropusesOfVisits =
+              List.generate(propusesOfVisits.length, (index) {
+            return PurposeOfVisit.fromJson(propusesOfVisits[index]);
+          });
+          Syncronization.getProposeOfVisits()
+              .deleteAll(Syncronization.getProposeOfVisits().keys);
 
-      listProvenances.forEach((element) {
-        Syncronization.getProvenances().put(element.uuid, element);
-      });
+          listPropusesOfVisits.forEach((element) {
+            Syncronization.getProposeOfVisits().put(element.uuid, element);
+          });
 
-      ///provenances  sync database
-      var propusesOfVisits = data['propuses_of_visits'];
-      var listPropusesOfVisits =
-          List.generate(propusesOfVisits.length, (index) {
-        return PurposeOfVisit.fromJson(propusesOfVisits[index]);
-      });
-      Syncronization.getProposeOfVisits()
-          .deleteAll(Syncronization.getProposeOfVisits().keys);
+          //reason_of_opening_cases
 
-      listPropusesOfVisits.forEach((element) {
-        Syncronization.getProposeOfVisits().put(element.uuid, element);
-      });
+          var reasonOfOpeningCases = data['reason_of_opening_cases'];
+          var listReasonOfOpeningCases =
+              List.generate(reasonOfOpeningCases.length, (index) {
+            return ReasonOpeningCase.fromJson(reasonOfOpeningCases[index]);
+          });
+          Syncronization.getReasonsOfOpeningCases()
+              .deleteAll(Syncronization.getReasonsOfOpeningCases().keys);
 
-      //reason_of_opening_cases
+          listReasonOfOpeningCases.forEach((element) {
+            Syncronization.getReasonsOfOpeningCases()
+                .put(element.uuid, element);
+          });
 
-      var reasonOfOpeningCases = data['reason_of_opening_cases'];
-      var listReasonOfOpeningCases =
-          List.generate(reasonOfOpeningCases.length, (index) {
-        return ReasonOpeningCase.fromJson(reasonOfOpeningCases[index]);
-      });
-      Syncronization.getReasonsOfOpeningCases()
-          .deleteAll(Syncronization.getReasonsOfOpeningCases().keys);
+          //benificiaries
 
-      listReasonOfOpeningCases.forEach((element) {
-        Syncronization.getReasonsOfOpeningCases().put(element.uuid, element);
-      });
+          var benificiaries = data['benificiaries'];
 
-      //benificiaries
+          var listBenificiaries = List.generate(benificiaries.length, (index) {
+            try {
+              print(benificiaries[index]);
+              benificiaries[index]['number_of_visits'] =
+                  benificiaries[index]['number_of_visits'] != null
+                      ? "${benificiaries[index]['number_of_visits']}"
+                      : "";
 
-      var benificiaries = data['benificiaries'];
+              benificiaries[index]['phone'] =
+                  benificiaries[index]['phone'] != null
+                      ? '${benificiaries[index]["phone"]}'
+                      : ""; //
+              return Benificiary.fromJson(benificiaries[index]);
+            } catch (e) {
+              print("debuh: $e");
+              throw e;
+            }
+          });
+          Syncronization.getBeneficiaries()
+              .deleteAll(Syncronization.getBeneficiaries().keys);
 
-      var listBenificiaries = List.generate(benificiaries.length, (index) {
-        return Benificiary.fromJson(benificiaries[index]);
-      });
-      Syncronization.getBeneficiaries()
-          .deleteAll(Syncronization.getBeneficiaries().keys);
-
-      listBenificiaries.forEach((element) {
-        Syncronization.getBeneficiaries().put(element.uuid, element);
-      });
-
-      return data;
+          listBenificiaries.forEach((element) {
+            Syncronization.getBeneficiaries().put(element.uuid, element);
+          });
+          return true;
+        } catch (e) {
+          print("1. $e");
+          return false;
+        }
+      }
+    } catch (e) {
+      print("2. $e");
+      return false;
     }
+
     return false;
   }
 
@@ -142,24 +167,29 @@ class ServerSync {
     request.body = json.encode(created);
     request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
-    print(response.statusCode);
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      try {
-        Syncronization.getCreatedBeneficiaries()
-            .deleteAll(Syncronization.getCreatedBeneficiaries().keys);
-        var result = await response.stream.bytesToString();
-        print("result: $result");
-
-        (json.decode(result) as List<Map<String, dynamic>>).forEach((element) {
+    try {
+      http.StreamedResponse response = await request.send();
+      print(response.statusCode);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        try {
           Syncronization.getCreatedBeneficiaries()
-              .put(element['uuid'], Benificiary.fromJson(element));
-        });
-        return true;
-      } catch (e) {
-        print("erro: $e");
-        return false;
+              .deleteAll(Syncronization.getCreatedBeneficiaries().keys);
+          var result = await response.stream.bytesToString();
+          print("result: $result");
+
+          (json.decode(result)).forEach((element) {
+            Syncronization.getCreatedBeneficiaries()
+                .put(element['uuid'], Benificiary.fromJson(element));
+          });
+          return true;
+        } catch (e) {
+          print("3: $e");
+          return false;
+        }
       }
+    } catch (e) {
+      print("4. $e");
+      return false;
     }
     return false;
   }
@@ -174,21 +204,27 @@ class ServerSync {
     request.body = json.encode(updated);
     request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
-      try {
-        Syncronization.getUpdatedBeneficiaries()
-            .deleteAll(Syncronization.getUpdatedBeneficiaries().keys);
-        var result = await response.stream.bytesToString();
-
-        (json.decode(result) as List<Map<String, dynamic>>).forEach((element) {
+    try {
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        try {
           Syncronization.getUpdatedBeneficiaries()
-              .put(element['uuid'], Benificiary.fromJson(element));
-        });
-        return true;
-      } catch (e) {
-        return false;
+              .deleteAll(Syncronization.getUpdatedBeneficiaries().keys);
+          var result = await response.stream.bytesToString();
+
+          (json.decode(result)).forEach((element) {
+            Syncronization.getUpdatedBeneficiaries()
+                .put(element['uuid'], Benificiary.fromJson(element));
+          });
+          return true;
+        } catch (e) {
+          print("5. $e");
+          return false;
+        }
       }
+    } catch (e) {
+      print("6. $e");
+      return false;
     }
     return false;
   }
@@ -203,28 +239,41 @@ class ServerSync {
     request.body = json.encode(deleted);
     request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
-      try {
-        Syncronization.getDeletedBeneficiaries()
-            .deleteAll(Syncronization.getDeletedBeneficiaries().keys);
-        var result = await response.stream.bytesToString();
-        (json.decode(result) as List<Map<String, dynamic>>).forEach((element) {
+    try {
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        try {
           Syncronization.getDeletedBeneficiaries()
-              .put(element['uuid'], Benificiary.fromJson(element));
-        });
-        return true;
-      } catch (e) {
-        return false;
+              .deleteAll(Syncronization.getDeletedBeneficiaries().keys);
+          var result = await response.stream.bytesToString();
+          (json.decode(result)).forEach((element) {
+            Syncronization.getDeletedBeneficiaries()
+                .put(element['uuid'], Benificiary.fromJson(element));
+          });
+          return true;
+        } catch (e) {
+          print("7. $e");
+          return false;
+        }
       }
+    } catch (e) {
+      print("8. $e");
+      return false;
     }
     return false;
   }
 
-  Future syncSettings() async {
-    await storingCratedOnServer();
-    await storingUpdatedOnServer();
-    await deletingOnServer();
-    await settingsOnServer();
+  Future<bool> syncSettings() async {
+    var test = await storingCratedOnServer();
+    var test1 = await storingUpdatedOnServer();
+    var test2 = await deletingOnServer();
+    var test3 = await settingsOnServer();
+
+    if (test == true && test1 == true && test2 == true && test3 == true) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

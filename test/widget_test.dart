@@ -5,12 +5,20 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'dart:math';
+
 import 'package:biospdatabase/Syncronization/Syncronization.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Syncronization.boot();
-
+//  WidgetsFlutterBinding.ensureInitialized();
+  // await Syncronization.boot();
+  integer().listen((event) {
+    print(event);
+  });
   // created.containsKey('key');
+}
+
+Stream<int> integer() async* {
+  yield Random().nextInt(50);
 }

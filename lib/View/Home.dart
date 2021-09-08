@@ -3,6 +3,7 @@ import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
 import 'package:biospdatabase/Syncronization/ServerSync.dart';
 import 'package:biospdatabase/Syncronization/Syncronization.dart';
 import 'package:biospdatabase/View/Benificiary/Benificiary.dart';
+import 'package:biospdatabase/View/BenificiaryTile/BenificiaryTile.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,9 @@ class MainComponent extends StatefulWidget {
 class _MainComponentState extends State<MainComponent> {
   _MainComponentState(this._currentIndex);
   int _currentIndex;
+  int _syncLength = Syncronization.getCreatedBeneficiaries().values.length +
+      Syncronization.getUpdatedBeneficiaries().values.length +
+      Syncronization.getDeletedBeneficiaries().values.length;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +90,28 @@ class _MainComponentState extends State<MainComponent> {
           _currentIndex = index;
           if (index == 1) {
             ServerSync data = ServerSync();
-            data.syncSettings().then((value) => null);
+            data.syncSettings().then((value) {
+              setState(() {
+                _currentIndex = 0;
+              });
+              if (value) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                    'Syncronização feita com sucesso',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  backgroundColor: Colors.green,
+                ));
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                    'Ocorreu um ao sincronizar. tente de novo! Caso o erro persista por favor contacte o administrador',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  backgroundColor: Colors.red,
+                ));
+              }
+            });
           }
         }),
         items: <BottomNavyBarItem>[
@@ -97,14 +122,27 @@ class _MainComponentState extends State<MainComponent> {
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
-            icon: Badge(
-              badgeContent: Text(
-                '2',
-                style: TextStyle(color: Colors.white, fontSize: 11),
-              ),
-              elevation: 2,
-              badgeColor: Colors.deepPurple,
-              child: Icon(Icons.cloud_off),
+            icon: ValueListenableBuilder<Box<Benificiary>>(
+              valueListenable: Syncronization.getBeneficiaries().listenable(),
+              builder: (context, asc, _) {
+                int size = Syncronization.getCreatedBeneficiaries().length +
+                    Syncronization.getUpdatedBeneficiaries().length +
+                    Syncronization.getDeletedBeneficiaries().length;
+                return Badge(
+                  badgeColor:
+                      size > 0 ? Colors.orange.shade500 : Colors.green.shade500,
+                  badgeContent: Text(
+                    size > 0 ? "$size" : "",
+                    style: TextStyle(fontSize: 11),
+                  ),
+                  child: size > 0
+                      ? Icon(Icons.cloud_upload_outlined)
+                      : Icon(
+                          Icons.cloud_done_outlined,
+                          color: Colors.green.shade500,
+                        ),
+                );
+              },
             ),
             title: Text('Sincronizar'),
             activeColor: Colors.blueAccent,
@@ -114,13 +152,23 @@ class _MainComponentState extends State<MainComponent> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => BenificiaryForm(),
-              fullscreenDialog: true,
-            ),
-          );
+          if (Syncronization.getNeighborhoods().isNotEmpty) {
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => BenificiaryForm(),
+                fullscreenDialog: true,
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                'Por favor Syncronize primeiro',
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.blueGrey,
+            ));
+          }
         },
         child: Icon(Icons.add),
       ),
@@ -155,113 +203,14 @@ class _MainComponentState extends State<MainComponent> {
         margin: EdgeInsets.all(0.1),
       ),
       onTap: () {
-        showDialog<void>(
-            context: context,
-            builder: (context) => AlertDialog(
-                  shape:
-                      RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                  contentPadding: EdgeInsets.all(0),
-                  title: Container(
-                      padding: EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFdffdf),
-                      ),
-                      child: Container(
-                        child: benificiary.fullName != null
-                            ? Text("${benificiary.fullName!.toUpperCase()}")
-                            : Text(""),
-                      )),
-                  titlePadding: EdgeInsets.all(0),
-                  actions: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          child: Icon(
-                            Icons.phone,
-                            color: Colors.blueGrey,
-                          ),
-                          onTap: () {
-                            launch("tel:${benificiary.phone}");
-                          },
-                        ),
-                        GestureDetector(
-                          child: Icon(
-                            Icons.message,
-                            color: Colors.blueGrey,
-                          ),
-                          onTap: () {
-                            launch("sms:${benificiary.phone}");
-                          },
-                        ),
-                        GestureDetector(
-                          child: Icon(
-                            Icons.edit,
-                            color: Colors.blueGrey,
-                          ),
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (BuildContext context) =>
-                                    BenificiaryForm(
-                                        benificiaryForEdit: benificiary),
-                                fullscreenDialog: true,
-                              ),
-                            );
-                          },
-                        ),
-                        GestureDetector(
-                          child: Icon(
-                            Icons.delete_outlined,
-                            color: Colors.blueGrey,
-                          ),
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                      title: ListTile(
-                                        leading: Icon(
-                                          Icons.warning_amber,
-                                          color: Colors.amber,
-                                        ),
-                                        title: Text(
-                                            "Deseja apagar esse benificiario"),
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          child: Text("Não"),
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(),
-                                        ),
-                                        TextButton(
-                                            child: Text("Sim"),
-                                            onPressed: () {
-                                              if (Syncronization.addDeleted(
-                                                  benificiary)) {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(SnackBar(
-                                                  content: Text(
-                                                    'Benificiario deletado com sucesso',
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                  backgroundColor: Colors.green,
-                                                ));
-                                                Navigator.of(context).pop();
-                                              }
-                                              Navigator.of(context).pop();
-                                            }),
-                                      ],
-                                    ));
-                          },
-                        ),
-                      ],
-                    )
-                  ],
-                  actionsPadding: EdgeInsets.all(10),
-                ));
+        Navigator.push(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) =>
+                BenificiaryTile(benificiary: benificiary),
+            fullscreenDialog: true,
+          ),
+        );
       },
     );
   }

@@ -143,7 +143,10 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                                 return "${benificiaryForEdit!.neighborhoodUuid}" ==
                                     "${element.uuid}";
                               }).first
-                            : Syncronization.getNeighborhoods().values.toList().first)
+                            : Syncronization.getNeighborhoods()
+                                .values
+                                .toList()
+                                .first)
                         : null,
                 items:
                     Syncronization.getNeighborhoods().values.toList().isNotEmpty
@@ -364,7 +367,7 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                 onChanged: (PurposeOfVisit? objectivoDaVisita) {
                   setState(() {
                     if (objectivoDaVisita != null) {
-                      this.benificiary['purpose_of_visit'] =
+                      this.benificiary['purpose_of_visit_uuid'] =
                           objectivoDaVisita.uuid;
                     }
                   });
@@ -372,7 +375,7 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                 onSaved: (PurposeOfVisit? objectivoDaVisita) {
                   setState(() {
                     if (objectivoDaVisita != null) {
-                      this.benificiary['purpose_of_visit'] =
+                      this.benificiary['purpose_of_visit_uuid'] =
                           objectivoDaVisita.uuid;
                     }
                   });
@@ -449,6 +452,27 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                   });
                 },
               ),
+              LabelComponent(labelText: "Outro Motivo"),
+              TextComponent(
+                hintText: "Outro Motivo",
+                initialValue: benificiaryForEdit != null
+                    ? benificiaryForEdit!.otherReasonOpeningCase
+                    : "",
+                onChanged: (otherReasonOpeningCase) {
+                  setState(() {
+                    this.benificiary['other_reason_opening_case'] =
+                        otherReasonOpeningCase;
+                  });
+                },
+                onSaved: (otherReasonOpeningCase) {
+                  setState(() {
+                    if (otherReasonOpeningCase != null) {
+                      this.benificiary['other_reason_opening_case'] =
+                          otherReasonOpeningCase;
+                    }
+                  });
+                },
+              ),
               LabelComponent(labelText: "Documentos necessários"),
               SelectComponent(
                 hintText: "Documentos necessários",
@@ -492,6 +516,26 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                     if (documentoNecessarios != null) {
                       this.benificiary['document_type_uuid'] =
                           documentoNecessarios.uuid;
+                    }
+                  });
+                },
+              ),
+              LabelComponent(labelText: "Outro documento"),
+              TextComponent(
+                hintText: "Outro documento",
+                initialValue: benificiaryForEdit != null
+                    ? benificiaryForEdit!.otherDocumentType
+                    : "",
+                onChanged: (otherDocumentType) {
+                  setState(() {
+                    this.benificiary['other_document_type'] = otherDocumentType;
+                  });
+                },
+                onSaved: (otherDocumentType) {
+                  setState(() {
+                    if (otherDocumentType != null) {
+                      this.benificiary['other_document_type'] =
+                          otherDocumentType;
                     }
                   });
                 },
@@ -543,6 +587,27 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                     if (forwardedService != null) {
                       this.benificiary['forwarded_service_uuid'] =
                           forwardedService.uuid;
+                    }
+                  });
+                },
+              ),
+              LabelComponent(labelText: "Outro serviço"),
+              TextComponent(
+                hintText: "Outro serviço",
+                initialValue: benificiaryForEdit != null
+                    ? benificiaryForEdit!.otherForwardedService
+                    : "",
+                onChanged: (otherForwardedService) {
+                  setState(() {
+                    this.benificiary['other_forwarded_service'] =
+                        otherForwardedService;
+                  });
+                },
+                onSaved: (otherForwardedService) {
+                  setState(() {
+                    if (otherForwardedService != null) {
+                      this.benificiary['other_forwarded_service'] =
+                          otherForwardedService;
                     }
                   });
                 },
