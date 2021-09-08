@@ -1,5 +1,3 @@
-import 'package:biospdatabase/Model/Auth/Auth.dart';
-import 'package:biospdatabase/Syncronization/ServerSync.dart';
 import 'package:biospdatabase/Syncronization/Syncronization.dart';
 import 'package:biospdatabase/View/Home.dart';
 import 'package:biospdatabase/View/login/login_page.dart';

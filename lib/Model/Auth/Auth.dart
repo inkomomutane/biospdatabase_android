@@ -6,11 +6,10 @@ class Auth {
   static Future<bool> connection() async {
     final headers = {
       'Accept': 'application/json',
-      'Accept-Encoding': 'application/json',
       'Content-Type': 'application/json'
     };
-    var request =
-        http.Request('GET', Uri.parse('http://127.0.0.1:8000/api/connected'));
+    var request = http.Request(
+        'GET', Uri.parse('https://www.biosp.sumburero.org/api/connected'));
     request.headers.addAll(headers);
 
     try {
@@ -31,11 +30,10 @@ class Auth {
   static Future<bool> session(String email, String password) async {
     final headers = {
       'Accept': 'application/json',
-      'Accept-Encoding': 'application/json',
       'Content-Type': 'application/json'
     };
-    var request =
-        http.Request('POST', Uri.parse('http://127.0.0.1:8000/api/login'));
+    var request = http.Request(
+        'POST', Uri.parse('https://www.biosp.sumburero.org/api/login'));
     request.body = json.encode({"email": email, "password": password});
     request.headers.addAll(headers);
 

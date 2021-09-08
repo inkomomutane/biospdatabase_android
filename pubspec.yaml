@@ -46,6 +46,7 @@ dependencies:
   percent_indicator: ^3.0.1
   sn_progress_dialog: ^1.0.3
   connectivity_plus: ^1.1.0
+  badges: ^2.0.1
 
 
 dev_dependencies:

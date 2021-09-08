@@ -51,6 +51,35 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
 
   @override
   Widget build(BuildContext context) {
+    var provenaces = Syncronization.getProvenances().values.toList();
+    if (provenaces.isNotEmpty) {
+      provenaces
+          .sort((a, b) => a.name.codeUnitAt(0).compareTo(b.name.codeUnitAt(0)));
+    }
+    var proposeVisits = Syncronization.getProposeOfVisits().values.toList();
+
+    if (proposeVisits.isNotEmpty) {
+      proposeVisits
+          .sort((a, b) => a.name.codeUnitAt(0).compareTo(b.name.codeUnitAt(0)));
+    }
+
+    var openingCase = Syncronization.getReasonsOfOpeningCases().values.toList();
+    if (openingCase.isNotEmpty) {
+      openingCase
+          .sort((a, b) => a.name.codeUnitAt(0).compareTo(b.name.codeUnitAt(0)));
+    }
+
+    var documents = Syncronization.getDocumentTypes().values.toList();
+    if (documents.isNotEmpty) {
+      documents
+          .sort((a, b) => a.name.codeUnitAt(0).compareTo(b.name.codeUnitAt(0)));
+    }
+
+    var forwarded = Syncronization.getForwardedServices().values.toList();
+    if (forwarded.isNotEmpty) {
+      forwarded.sort((a, b) => a.name.compareTo(b.name));
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -114,7 +143,7 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                                 return "${benificiaryForEdit!.neighborhoodUuid}" ==
                                     "${element.uuid}";
                               }).first
-                            : null)
+                            : Syncronization.getNeighborhoods().values.toList().first)
                         : null,
                 items:
                     Syncronization.getNeighborhoods().values.toList().isNotEmpty
@@ -199,30 +228,29 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                 hintText: "Proviniência",
                 showSearchBox: true,
                 mode: Mode.DIALOG,
-                selectedItem:
-                    Syncronization.getProvenances().values.toList().isNotEmpty
-                        ? (Syncronization.getProvenances()
-                                .values
-                                .toList()
-                                .where((element) {
-                            if (benificiaryForEdit != null) {
-                              return "${benificiaryForEdit!.provenaceUuid}" ==
-                                  "${element.uuid}";
-                            }
-                            return false;
-                          }).isNotEmpty
-                            ? Syncronization.getProvenances()
-                                .values
-                                .toList()
-                                .where((element) {
-                                return "${benificiaryForEdit!.provenaceUuid}" ==
-                                    "${element.uuid}";
-                              }).first
-                            : null)
-                        : null,
+                selectedItem: provenaces.isNotEmpty
+                    ? (Syncronization.getProvenances()
+                            .values
+                            .toList()
+                            .where((element) {
+                        if (benificiaryForEdit != null) {
+                          return "${benificiaryForEdit!.provenaceUuid}" ==
+                              "${element.uuid}";
+                        }
+                        return false;
+                      }).isNotEmpty
+                        ? Syncronization.getProvenances()
+                            .values
+                            .toList()
+                            .where((element) {
+                            return "${benificiaryForEdit!.provenaceUuid}" ==
+                                "${element.uuid}";
+                          }).first
+                        : null)
+                    : null,
                 items:
                     Syncronization.getProvenances().values.toList().isNotEmpty
-                        ? Syncronization.getProvenances().values.toList()
+                        ? provenaces
                         : <Provenace>[],
                 onChanged: (Provenace? proviniencia) {
                   setState(() {
@@ -331,7 +359,7 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                         .values
                         .toList()
                         .isNotEmpty
-                    ? Syncronization.getProposeOfVisits().values.toList()
+                    ? proposeVisits
                     : <PurposeOfVisit>[],
                 onChanged: (PurposeOfVisit? objectivoDaVisita) {
                   setState(() {
@@ -402,7 +430,7 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                         .values
                         .toList()
                         .isNotEmpty
-                    ? Syncronization.getReasonsOfOpeningCases().values.toList()
+                    ? openingCase
                     : <ReasonOpeningCase>[],
                 onChanged: (ReasonOpeningCase? motivoDeAberturaDeProcesso) {
                   setState(() {
@@ -449,7 +477,7 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                 mode: Mode.DIALOG,
                 items:
                     Syncronization.getDocumentTypes().values.toList().isNotEmpty
-                        ? Syncronization.getDocumentTypes().values.toList()
+                        ? documents
                         : <DocumentType>[],
                 onChanged: (DocumentType? documentoNecessarios) {
                   setState(() {
@@ -500,7 +528,7 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                         .values
                         .toList()
                         .isNotEmpty
-                    ? Syncronization.getForwardedServices().values.toList()
+                    ? forwarded
                     : <ForwardedService>[],
                 onChanged: (ForwardedService? forwardedService) {
                   setState(() {

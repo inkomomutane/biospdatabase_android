@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
 import 'package:biospdatabase/Syncronization/ServerSync.dart';
 import 'package:biospdatabase/Syncronization/Syncronization.dart';
@@ -96,7 +97,15 @@ class _MainComponentState extends State<MainComponent> {
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
-            icon: Icon(Icons.cloud_off),
+            icon: Badge(
+              badgeContent: Text(
+                '2',
+                style: TextStyle(color: Colors.white, fontSize: 11),
+              ),
+              elevation: 2,
+              badgeColor: Colors.deepPurple,
+              child: Icon(Icons.cloud_off),
+            ),
             title: Text('Sincronizar'),
             activeColor: Colors.blueAccent,
             textAlign: TextAlign.center,

@@ -15,11 +15,10 @@ import 'package:http/http.dart' as http;
 class ServerSync {
   final headers = {
     'Accept': 'application/json',
-    'Accept-Encoding': 'application/json',
     'Authorization': 'Bearer ' + Hive.box('token').get('token').toString(),
     'Content-Type': 'application/json'
   };
-  final baseUrl = "http://127.0.0.1:8000/api/sync";
+  final baseUrl = "https://www.biosp.sumburero.org/api/sync";
 
   Future settingsOnServer() async {
     var request = http.Request('GET', Uri.parse('${this.baseUrl}/settings'));
@@ -144,11 +143,13 @@ class ServerSync {
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
+    print(response.statusCode);
+    if (response.statusCode == 200 || response.statusCode == 201) {
       try {
         Syncronization.getCreatedBeneficiaries()
             .deleteAll(Syncronization.getCreatedBeneficiaries().keys);
         var result = await response.stream.bytesToString();
+        print("result: $result");
 
         (json.decode(result) as List<Map<String, dynamic>>).forEach((element) {
           Syncronization.getCreatedBeneficiaries()
@@ -156,6 +157,7 @@ class ServerSync {
         });
         return true;
       } catch (e) {
+        print("erro: $e");
         return false;
       }
     }
