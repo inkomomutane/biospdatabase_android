@@ -18,16 +18,18 @@ class _BenificiaryTileState extends State<BenificiaryTile> {
   _BenificiaryTileState(this.benificiary);
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth <= 600) {
-          return MobileTile(
-            benificiary: this.benificiary,
-          );
-        } else {
-          return DesktopTile(benificiary: this.benificiary);
-        }
-      },
+    return Scaffold(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth <= 600) {
+            return MobileTile(
+              benificiary: this.benificiary,
+            );
+          } else {
+            return DesktopTile(benificiary: this.benificiary);
+          }
+        },
+      ),
     );
   }
 }

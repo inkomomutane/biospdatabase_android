@@ -6,6 +6,7 @@ import 'package:biospdatabase/Model/Neighborhood/Neighborhood.dart';
 import 'package:biospdatabase/Model/Provenace/Provenace.dart';
 import 'package:biospdatabase/Model/PurposeOfVisit/PurposeOfVisit.dart';
 import 'package:biospdatabase/Model/ReasonOpeningCase/ReasonOpeningCase.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class Syncronization {
@@ -136,5 +137,27 @@ class Syncronization {
     } catch (e) {
       return false;
     }
+  }
+
+  static List<Benificiary> sortedBenificiaries() {
+    if (getBeneficiaries().isEmpty) return <Benificiary>[];
+    var benificiaries = getBeneficiaries().values.toList();
+    mergeSort(benificiaries, compare: (a, b) {
+      a = a as Benificiary;
+      b = b as Benificiary;
+      return -a.createdAt.compareTo(b.createdAt);
+    });
+    return benificiaries;
+  }
+
+  static List<Benificiary> sortedList(List<Benificiary> list) {
+    if (list.isEmpty) return <Benificiary>[];
+    List<Benificiary> benificiaries = list;
+    mergeSort(benificiaries, compare: (a, b) {
+      a = a as Benificiary;
+      b = b as Benificiary;
+      return a.createdAt.compareTo(b.createdAt);
+    });
+    return benificiaries;
   }
 }

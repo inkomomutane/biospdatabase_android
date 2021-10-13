@@ -39,8 +39,8 @@ class BenificiaryAdapter extends TypeAdapter<Benificiary> {
       otherDocumentType: fields[14] as String?,
       visitProposes: fields[19] as String?,
       status: fields[21] as bool?,
-      createdAt: fields[22] as DateTime?,
-      updatedAt: fields[23] as DateTime?,
+      createdAt: fields[22] as DateTime,
+      updatedAt: fields[23] as DateTime,
     );
   }
 
@@ -143,12 +143,9 @@ Benificiary _$BenificiaryFromJson(Map<String, dynamic> json) {
     otherDocumentType: json['other_document_type'] as String?,
     visitProposes: json['visit_proposes'] as String?,
     status: json['status'] as bool?,
-    createdAt: json['created_at'] == null
-        ? null
-        : DateTime.parse(json['created_at'] as String),
-    updatedAt: json['updated_at'] == null
-        ? null
-        : DateTime.parse(json['updated_at'] as String),
+    createdAt: 
+         DateTime.parse(json['created_at'] as String),
+    updatedAt: DateTime.parse(json['updated_at'] as String),
   );
 }
 
@@ -176,6 +173,6 @@ Map<String, dynamic> _$BenificiaryToJson(Benificiary instance) =>
       'visit_proposes': instance.visitProposes,
       'date_received': instance.dateReceived?.toIso8601String(),
       'status': instance.status,
-      'created_at': instance.createdAt?.toIso8601String(),
-      'updated_at': instance.updatedAt?.toIso8601String(),
+      'created_at': instance.createdAt.toIso8601String(),
+      'updated_at': instance.updatedAt.toIso8601String(),
     };

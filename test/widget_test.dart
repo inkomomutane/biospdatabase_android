@@ -7,8 +7,6 @@
 
 import 'dart:math';
 
-import 'package:biospdatabase/Syncronization/Syncronization.dart';
-import 'package:flutter/material.dart';
 
 void main() async {
 //  WidgetsFlutterBinding.ensureInitialized();

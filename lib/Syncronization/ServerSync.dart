@@ -9,7 +9,6 @@ import 'package:biospdatabase/Model/Provenace/Provenace.dart';
 import 'package:biospdatabase/Model/PurposeOfVisit/PurposeOfVisit.dart';
 import 'package:biospdatabase/Model/ReasonOpeningCase/ReasonOpeningCase.dart';
 import 'package:biospdatabase/Syncronization/Syncronization.dart';
-import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,6 +25,7 @@ class ServerSync {
     request.headers.addAll(headers);
     try {
       http.StreamedResponse response = await request.send();
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         var data = jsonDecode(await response.stream.bytesToString());
         try {
@@ -119,9 +119,12 @@ class ServerSync {
 
           var benificiaries = data['benificiaries'];
 
+          print('break');
           var listBenificiaries = List.generate(benificiaries.length, (index) {
+            print(benificiaries[index]['created_at'] +
+                " n:" +
+                benificiaries[index]['full_name']);
             try {
-              print(benificiaries[index]);
               benificiaries[index]['number_of_visits'] =
                   benificiaries[index]['number_of_visits'] != null
                       ? "${benificiaries[index]['number_of_visits']}"
@@ -148,10 +151,12 @@ class ServerSync {
           print("1. $e");
           return false;
         }
+      } else {
+        print(json.decode(await response.stream.bytesToString()));
       }
     } catch (e) {
-      print("2. $e");
-      return false;
+      throw e;
+      //return false;
     }
 
     return false;
@@ -159,23 +164,24 @@ class ServerSync {
 
   Future<bool> storingCratedOnServer() async {
     var request = http.Request('POST', Uri.parse('${this.baseUrl}/create'));
-    var created = Syncronization.getCreatedBeneficiaries()
-        .values
+
+    var created = Syncronization.sortedList(
+            Syncronization.getCreatedBeneficiaries().values.toList())
         .map((e) => e.toJson())
         .toList();
 
+    for (var item in created) {
+      print(item['created_at'] + " n: " + item['full_name']);
+    }
     request.body = json.encode(created);
     request.headers.addAll(headers);
-
     try {
       http.StreamedResponse response = await request.send();
-      print(response.statusCode);
       if (response.statusCode == 200 || response.statusCode == 201) {
         try {
           Syncronization.getCreatedBeneficiaries()
               .deleteAll(Syncronization.getCreatedBeneficiaries().keys);
           var result = await response.stream.bytesToString();
-          print("result: $result");
 
           (json.decode(result)).forEach((element) {
             Syncronization.getCreatedBeneficiaries()
@@ -196,8 +202,8 @@ class ServerSync {
 
   Future<bool> storingUpdatedOnServer() async {
     var request = http.Request('POST', Uri.parse('${this.baseUrl}/update'));
-    var updated = Syncronization.getUpdatedBeneficiaries()
-        .values
+    var updated = Syncronization.sortedList(
+            Syncronization.getUpdatedBeneficiaries().values.toList())
         .map((e) => e.toJson())
         .toList();
 

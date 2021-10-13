@@ -3,7 +3,6 @@ import 'package:biospdatabase/Syncronization/Syncronization.dart';
 import 'package:biospdatabase/View/Benificiary/Benificiary.dart';
 import 'package:biospdatabase/View/BenificiaryTile/ContentTile.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DesktopTile extends StatefulWidget {
   const DesktopTile({Key? key, required this.benificiary}) : super(key: key);
@@ -21,7 +20,7 @@ class _DesktopTileState extends State<DesktopTile> {
   Widget build(BuildContext context) {
     return Card(
         elevation: 9,
-        margin: EdgeInsets.all(0),
+        margin: EdgeInsets.only(top: 8),
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,

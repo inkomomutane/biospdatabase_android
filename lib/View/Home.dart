@@ -4,11 +4,12 @@ import 'package:biospdatabase/Syncronization/ServerSync.dart';
 import 'package:biospdatabase/Syncronization/Syncronization.dart';
 import 'package:biospdatabase/View/Benificiary/Benificiary.dart';
 import 'package:biospdatabase/View/BenificiaryTile/BenificiaryTile.dart';
+import 'package:biospdatabase/View/Relatorio/RelatorioDiario.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key, this.index = 0}) : super(key: key);
@@ -51,25 +52,102 @@ class MainComponent extends StatefulWidget {
 class _MainComponentState extends State<MainComponent> {
   _MainComponentState(this._currentIndex);
   int _currentIndex;
-  int _syncLength = Syncronization.getCreatedBeneficiaries().values.length +
-      Syncronization.getUpdatedBeneficiaries().values.length +
-      Syncronization.getDeletedBeneficiaries().values.length;
+  String biospName = "";
+
+  @override
+  void initState() {
+    if (Syncronization.getNeighborhoods().isNotEmpty) {
+      biospName =
+          "Bairro de " + Syncronization.getNeighborhoods().values.first.name;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black54),
         title: Text(
           "Biosp Database",
           style: TextStyle(color: Colors.black54),
         ),
         elevation: 1,
       ),
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            UserAccountsDrawerHeader(
+                accountName: Text("Biosp Database"),
+                accountEmail: Text(biospName),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('images/drawer.jpg'),
+                )),
+                currentAccountPicture: Padding(
+                  padding: EdgeInsets.all(4),
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage('images/logo.png'),
+                  ),
+                )),
+            ListTile(
+              leading: Icon(
+                Icons.add_chart,
+                color: Colors.grey.shade600,
+              ),
+              title: const Text(
+                'Relatório diário',
+                style: TextStyle(
+                    color: Colors.black87, fontWeight: FontWeight.w800),
+              ),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => RelatorioDiario(),
+                  fullscreenDialog: true,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.print,
+                color: Colors.grey.shade600,
+              ),
+              title: const Text(
+                'Relatório mensal',
+                style: TextStyle(
+                    color: Colors.black87, fontWeight: FontWeight.w800),
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.info,
+                color: Colors.grey.shade600,
+              ),
+              title: const Text(
+                'Sobre o aplicativo',
+                style: TextStyle(
+                    color: Colors.black87, fontWeight: FontWeight.w800),
+              ),
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
       body: ValueListenableBuilder<Box<Benificiary>>(
         valueListenable: Syncronization.getBeneficiaries().listenable(),
         builder: (context, box, _) {
           final benificiaries = box.values.toList().cast<Benificiary>();
+          mergeSort(benificiaries, compare: (a, b) {
+            a = a as Benificiary;
+            b = b as Benificiary;
+            return -a.createdAt.compareTo(b.createdAt);
+          });
           return ListView.builder(
               itemCount: benificiaries.length,
               itemBuilder: (context, int index) {

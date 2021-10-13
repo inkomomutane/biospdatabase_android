@@ -96,11 +96,11 @@ class Benificiary extends Model {
 
   @HiveField(22)
   @JsonKey(name: 'created_at')
-  late DateTime? createdAt;
+  late DateTime createdAt;
 
   @HiveField(23)
   @JsonKey(name: 'updated_at')
-  late DateTime? updatedAt;
+  late DateTime updatedAt;
 
   Benificiary({
     required this.uuid,
