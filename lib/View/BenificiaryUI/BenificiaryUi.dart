@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'DesktopTile.dart';
 import 'MobileTile.dart';
 
-class BenificiaryTile extends StatefulWidget {
+class BenificiaryUi extends StatefulWidget {
   final Benificiary benificiary;
-  const BenificiaryTile({Key? key, required this.benificiary})
+  const BenificiaryUi({Key? key, required this.benificiary})
       : super(key: key);
   @override
-  _BenificiaryTileState createState() =>
-      _BenificiaryTileState(this.benificiary);
+  _BenificiaryUiState createState() =>
+      _BenificiaryUiState(this.benificiary);
 }
 
-class _BenificiaryTileState extends State<BenificiaryTile> {
+class _BenificiaryUiState extends State<BenificiaryUi> {
   final Benificiary benificiary;
 
-  _BenificiaryTileState(this.benificiary);
+  _BenificiaryUiState(this.benificiary);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

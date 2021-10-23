@@ -47,6 +47,8 @@ dependencies:
   sn_progress_dialog: ^1.0.3
   connectivity_plus: ^1.1.0
   badges: ^2.0.1
+  material_floating_search_bar: ^0.3.6
+  syncfusion_flutter_charts: ^19.3.46
 
 
 dev_dependencies:

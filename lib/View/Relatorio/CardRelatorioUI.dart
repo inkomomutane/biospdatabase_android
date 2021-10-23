@@ -1,14 +1,15 @@
-
 import 'package:flutter/material.dart';
 
 class CardRelatorioUI extends StatelessWidget {
   const CardRelatorioUI(
-      {Key? key, required this.letter, this.onTap, this.subtitle, this.title})
+      {Key? key,required this.color ,required this.letter, this.onTap, this.subtitle, this.title})
       : super(key: key);
 
   final Widget? subtitle;
-  final String letter;
+  final Widget letter;
   final Widget? title;
+  final Color color;
+  
   final void Function()? onTap;
 
   @override
@@ -20,12 +21,8 @@ class CardRelatorioUI extends StatelessWidget {
             color: Colors.white,
             child: ListTile(
               leading: CircleAvatar(
-                backgroundColor: Colors.amberAccent,
-                child: Text(
-                  letter,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600, color: Colors.white),
-                ),
+                backgroundColor: color,
+                child: letter
               ),
               title: title,
               subtitle: subtitle,

@@ -1,7 +1,7 @@
 import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
-import 'package:biospdatabase/Syncronization/Syncronization.dart';
-import 'package:biospdatabase/View/Benificiary/Benificiary.dart';
-import 'package:biospdatabase/View/BenificiaryTile/ContentTile.dart';
+import 'package:biospdatabase/Controller/BenificiaryController.dart';
+import 'package:biospdatabase/View/BenificiaryForm/BenificiaryForm.dart';
+import 'package:biospdatabase/View/BenificiaryUI/ContentTile.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 

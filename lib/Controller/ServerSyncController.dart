@@ -8,17 +8,35 @@ import 'package:biospdatabase/Model/Neighborhood/Neighborhood.dart';
 import 'package:biospdatabase/Model/Provenace/Provenace.dart';
 import 'package:biospdatabase/Model/PurposeOfVisit/PurposeOfVisit.dart';
 import 'package:biospdatabase/Model/ReasonOpeningCase/ReasonOpeningCase.dart';
-import 'package:biospdatabase/Syncronization/Syncronization.dart';
+import 'package:biospdatabase/Controller/BenificiaryController.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
-class ServerSync {
+class ServerSyncController {
   final headers = {
     'Accept': 'application/json',
     'Authorization': 'Bearer ' + Hive.box('token').get('token').toString(),
     'Content-Type': 'application/json'
   };
   final baseUrl = "https://www.biosp.sumburero.org/api/sync";
+
+  Future<bool> getRepport(String bairro) async {
+    var request =
+        http.Request('GET', Uri.parse('${this.baseUrl}/report/$bairro'));
+    request.headers.addAll(headers);
+    try {
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var data = await response.stream.bytesToString();
+        return await launch(data);
+      } else
+        return false;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
 
   Future<bool> settingsOnServer() async {
     var request = http.Request('GET', Uri.parse('${this.baseUrl}/settings'));
