@@ -151,6 +151,7 @@ class _HomeScaffoldState extends State<HomeScaffold> {
       openAxisAlignment: 0.0,
       width: MediaQuery.of(context).size.width,
       debounceDelay: const Duration(milliseconds: 200),
+
       onQueryChanged: (query) {
         setState(() {
           benificiaries = Syncronization.sortedBenificiaries()

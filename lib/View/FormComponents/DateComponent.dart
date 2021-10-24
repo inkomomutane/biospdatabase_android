@@ -26,6 +26,7 @@ class DateComponent extends StatelessWidget {
         child: DateTimeField(
           format: format,
           controller: controller,
+          autofocus: true,
           onFieldSubmitted: onSubmited,
           onChanged: onChanged,
           onSaved: onSaved,

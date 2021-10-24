@@ -34,6 +34,7 @@ class TextComponent extends StatelessWidget {
           focusColor: Colors.black,
           fillColor: Colors.white,
           filled: true,
+          
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.black45, width: 1.0),
           ),
@@ -44,6 +45,7 @@ class TextComponent extends StatelessWidget {
             borderSide: const BorderSide(color: Colors.red, width: 2.0),
           ),
         ),
+        autofocus: true,
         initialValue: initialValue != null ? initialValue : "",
         controller: controller,
         onChanged: onChanged,

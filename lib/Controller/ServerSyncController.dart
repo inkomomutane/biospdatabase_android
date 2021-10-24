@@ -173,8 +173,7 @@ class ServerSyncController {
         print(json.decode(await response.stream.bytesToString()));
       }
     } catch (e) {
-      throw e;
-      //return false;
+      return false;
     }
 
     return false;

@@ -26,6 +26,7 @@ class NumberComponent extends StatelessWidget {
         child: TextFormField(
           keyboardType: TextInputType.number,
           initialValue: initialValue != null ? initialValue : "",
+          autofocus: true,
           decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: hintText,
