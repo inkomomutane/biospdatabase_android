@@ -51,7 +51,7 @@ class HomeDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(
               Icons.sync_problem_rounded,
-              color: Colors.red.shade400,
+              color: Colors.grey.shade600,
             ),
             title: const Text(
               'Dados não sincronizados',

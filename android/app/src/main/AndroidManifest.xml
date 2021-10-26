@@ -23,7 +23,7 @@
 </intent>
 </queries>
    <application
-        android:label="Biosp Database"
+        android:label="Biosp"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"

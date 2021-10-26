@@ -71,7 +71,7 @@ class _HomeScaffoldState extends State<HomeScaffold> {
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(
-                    'Ocorreu um erro ao sincronizar. tente de novo! Caso o erro persista por favor contacte o administrador',
+                    'Ocorreu um erro ao sincronizar. tente de novo! caso o erro persista por favor contacte o administrador',
                     style: TextStyle(color: Colors.white),
                   ),
                   backgroundColor: Colors.red,

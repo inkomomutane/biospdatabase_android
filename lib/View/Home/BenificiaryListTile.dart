@@ -4,10 +4,12 @@ import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:flutter/material.dart';
 
 class BenificiaryListTile extends StatelessWidget {
-  const BenificiaryListTile({Key? key, required this.benificiary, this.icon})
+  const BenificiaryListTile(
+      {Key? key, required this.benificiary, this.icon, this.isDisabled = false})
       : super(key: key);
   final Benificiary benificiary;
   final Widget? icon;
+  final isDisabled;
 
   @override
   Widget build(BuildContext context) {
@@ -35,19 +37,21 @@ class BenificiaryListTile extends StatelessWidget {
         ),
         margin: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: isDisabled ? Colors.redAccent.shade100 : Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(5))),
       ),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) =>
-                BenificiaryUi(benificiary: benificiary),
-            fullscreenDialog: true,
-          ),
-        );
-      },
+      onTap: isDisabled
+          ? () {}
+          : () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) =>
+                      BenificiaryUi(benificiary: benificiary),
+                  fullscreenDialog: true,
+                ),
+              );
+            },
     );
   }
 }

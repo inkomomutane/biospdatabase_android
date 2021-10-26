@@ -33,12 +33,42 @@ class RelatorioDiario extends StatelessWidget {
               color: Colors.grey.shade500,
             ),
             title: Text(
-              'Total atendidos hoje',
+              'Total atendidos mês passado',
+              style: TextStyle(
+                  fontWeight: FontWeight.w800, color: Colors.grey.shade800),
+            ),
+            subtitle: Text(
+                ' ${Syncronization.getBeneficiaries().values.where((element) {
+              return element.serviceDate!.month == DateTime.now().month - 1;
+            }).length}'),
+          ),
+          CardRelatorioUI(
+            color: Colors.grey.shade300,
+            letter: Icon(
+              Icons.group,
+              color: Colors.grey.shade500,
+            ),
+            title: Text(
+              'Total inseridos hoje',
               style: TextStyle(
                   fontWeight: FontWeight.w800, color: Colors.grey.shade800),
             ),
             subtitle: Text(
                 ' ${Syncronization.getBeneficiaries().values.where((element) => element.createdAt.day == DateTime.now().day).length}'),
+          ),
+          CardRelatorioUI(
+            color: Colors.grey.shade300,
+            letter: Icon(
+              Icons.group,
+              color: Colors.grey.shade500,
+            ),
+            title: Text(
+              'Total atendidos hoje',
+              style: TextStyle(
+                  fontWeight: FontWeight.w800, color: Colors.grey.shade800),
+            ),
+            subtitle: Text(
+                ' ${Syncronization.getBeneficiaries().values.where((element) => element.serviceDate!.day == DateTime.now().day).length}'),
           ),
           CardRelatorioUI(
             color: Colors.grey.shade300,
@@ -81,7 +111,7 @@ class RelatorioDiario extends StatelessWidget {
                   fontWeight: FontWeight.w800, color: Colors.grey.shade800),
             ),
             subtitle: Text(
-                'Total atendidos este mês: ${Syncronization.getBeneficiaries().values.where((element) => element.createdAt.month == DateTime.now().month).length}'),
+                'Total atendidos este mês: ${Syncronization.getBeneficiaries().values.where((element) => element.serviceDate!.month == DateTime.now().month).length}'),
           ),
           graph()
         ],
