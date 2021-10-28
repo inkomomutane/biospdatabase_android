@@ -33,7 +33,7 @@ class ServerSyncController {
       } else
         return false;
     } catch (e) {
-      print(e);
+      //print(e);
       return false;
     }
   }
@@ -137,26 +137,17 @@ class ServerSyncController {
 
           var benificiaries = data['benificiaries'];
 
-          print('break');
           var listBenificiaries = List.generate(benificiaries.length, (index) {
-            print(benificiaries[index]['created_at'] +
-                " n:" +
-                benificiaries[index]['full_name']);
-            try {
-              benificiaries[index]['number_of_visits'] =
-                  benificiaries[index]['number_of_visits'] != null
-                      ? "${benificiaries[index]['number_of_visits']}"
-                      : "";
+            benificiaries[index]['number_of_visits'] =
+                benificiaries[index]['number_of_visits'] != null
+                    ? "${benificiaries[index]['number_of_visits']}"
+                    : "";
 
-              benificiaries[index]['phone'] =
-                  benificiaries[index]['phone'] != null
-                      ? '${benificiaries[index]["phone"]}'
-                      : ""; //
-              return Benificiary.fromJson(benificiaries[index]);
-            } catch (e) {
-              print("debuh: $e");
-              throw e;
-            }
+            benificiaries[index]['phone'] =
+                benificiaries[index]['phone'] != null
+                    ? '${benificiaries[index]["phone"]}'
+                    : ""; //
+            return Benificiary.fromJson(benificiaries[index]);
           });
           Syncronization.getBeneficiaries()
               .deleteAll(Syncronization.getBeneficiaries().keys);
@@ -166,17 +157,16 @@ class ServerSyncController {
           });
           return true;
         } catch (e) {
-          print("1. $e");
+          //print("1. $e");
           return false;
         }
       } else {
-        print(json.decode(await response.stream.bytesToString()));
+        // print(json.decode(await response.stream.bytesToString()));
+        return false;
       }
     } catch (e) {
       return false;
     }
-
-    return false;
   }
 
   Future<bool> storingCratedOnServer() async {
@@ -186,10 +176,6 @@ class ServerSyncController {
             Syncronization.getCreatedBeneficiaries().values.toList())
         .map((e) => e.toJson())
         .toList();
-
-    for (var item in created) {
-      print(item['created_at'] + " n: " + item['full_name']);
-    }
     request.body = json.encode(created);
     request.headers.addAll(headers);
     try {
@@ -206,12 +192,12 @@ class ServerSyncController {
           });
           return true;
         } catch (e) {
-          print("3: $e");
           return false;
         }
       }
     } catch (e) {
-      print("4. $e");
+      //throw e;
+      // print("4. $e");
       return false;
     }
     return false;
@@ -241,12 +227,12 @@ class ServerSyncController {
           });
           return true;
         } catch (e) {
-          print("5. $e");
+          //      print("5. $e");
           return false;
         }
       }
     } catch (e) {
-      print("6. $e");
+      // print("6. $e");
       return false;
     }
     return false;
@@ -276,12 +262,12 @@ class ServerSyncController {
           });
           return true;
         } catch (e) {
-          print("7. $e");
+          // print("7. $e");
           return false;
         }
       }
     } catch (e) {
-      print("8. $e");
+      //print("8. $e");
       return false;
     }
     return false;

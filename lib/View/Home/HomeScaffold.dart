@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:diacritic/diacritic.dart';
 
 class HomeScaffold extends StatefulWidget {
   const HomeScaffold(this.index, {Key? key}) : super(key: key);
@@ -151,17 +152,14 @@ class _HomeScaffoldState extends State<HomeScaffold> {
       openAxisAlignment: 0.0,
       width: MediaQuery.of(context).size.width,
       debounceDelay: const Duration(milliseconds: 200),
-
       onQueryChanged: (query) {
         setState(() {
           benificiaries = Syncronization.sortedBenificiaries()
               .where((element) =>
-                  element.fullName!
-                      .toLowerCase()
-                      .contains(query.toLowerCase()) ||
-                  element.fullName!
-                          .toLowerCase()
-                          .compareTo(query.toLowerCase()) ==
+                  removeDiacritics(element.fullName!.toLowerCase())
+                      .contains(removeDiacritics(query.toLowerCase())) ||
+                  removeDiacritics(element.fullName!.toLowerCase())
+                          .compareTo(removeDiacritics(query.toLowerCase())) ==
                       0)
               .toList();
         });

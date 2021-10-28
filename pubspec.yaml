@@ -49,6 +49,7 @@ dependencies:
   material_floating_search_bar: ^0.3.6
   syncfusion_flutter_charts: ^19.3.46
   bottom_navy_bar: ^6.0.0
+  diacritic: ^0.1.3
 
 
 dev_dependencies:

@@ -66,6 +66,16 @@ class About extends StatelessWidget {
                   color: Colors.grey.shade600,
                 )),
           ),
+          ListTile(
+            leading: CircleAvatar(
+                backgroundColor: Colors.transparent,
+                child: Icon(
+                  Icons.developer_mode,
+                  color: Colors.grey.shade600,
+                )),
+            title: Text("Contribuidores de desenvolvimento"),
+            subtitle: Text("Edson Meque"),
+          ),
           GestureDetector(
               child: ListTile(
             title: Text("Licença"),
@@ -86,7 +96,7 @@ class About extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          "Copyright 2021 Nelson Alexandre Mutane. All rights reserved."),
+                          "Copyright 2021 Nelson Alexandre Mutane and contributors. All rights reserved."),
                       Text(
                           "Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:"),
                       Text(" "),
@@ -99,7 +109,7 @@ class About extends StatelessWidget {
                           "* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer n the documentation and/or other materials provided with the distribution."),
                       Text(" "),
                       Text(
-                          "* Neither the name of Sumburero org. nor the names of its"),
+                          "* Neither the name of Sumburero. nor the names of its"),
                       Text(
                           "contributors may be used to endorse or promote products derived from this software without specific prior written permission."),
                       Text(" "),

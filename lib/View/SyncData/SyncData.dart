@@ -1,6 +1,7 @@
 import 'package:biospdatabase/Controller/BenificiaryController.dart';
 import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
 import 'package:biospdatabase/View/Home/BenificiaryListTile.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -126,14 +127,12 @@ class _SyncDataState extends State<SyncData> {
       debounceDelay: const Duration(milliseconds: 200),
       onQueryChanged: (query) {
         setState(() {
-          benificiaries = Syncronization.sortedBenificiaries()
+          this.benificiaries = Syncronization.sortedBenificiaries()
               .where((element) =>
-                  element.fullName!
-                      .toLowerCase()
-                      .contains(query.toLowerCase()) ||
-                  element.fullName!
-                          .toLowerCase()
-                          .compareTo(query.toLowerCase()) ==
+                  removeDiacritics(element.fullName!.toLowerCase())
+                      .contains(removeDiacritics(query.toLowerCase())) ||
+                  removeDiacritics(element.fullName!.toLowerCase())
+                          .compareTo(removeDiacritics(query.toLowerCase())) ==
                       0)
               .map((e) => BenificiaryListTile(
                     benificiary: e,
