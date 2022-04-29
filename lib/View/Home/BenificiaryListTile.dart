@@ -23,7 +23,7 @@ class BenificiaryListTile extends StatelessWidget {
           ),
           title: benificiary.fullName != null
               ? Text(
-                  "${capitalize(benificiary.fullName ?? "")}",
+                  "${benificiary.fullName ?? ""}".toLowerCase(),
                   style: TextStyle(
                       fontWeight: FontWeight.w800, color: Colors.grey.shade800),
                 )
