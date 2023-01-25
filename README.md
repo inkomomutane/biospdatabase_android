@@ -1,7 +1,5 @@
-# Biosp Database
+# Biosp
 
-É um aplicativo de recolha de dados dos atendimentos <br>
-realizados nos biop's.
-
+Mobile data collect app for all biosp's
 
 
