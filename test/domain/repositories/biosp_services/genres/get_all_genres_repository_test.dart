@@ -5,7 +5,7 @@ import "package:flutter_test/flutter_test.dart";
 import "package:mockito/annotations.dart";
 import "package:mockito/mockito.dart";
 import "package:ulid4d/ulid4d.dart";
-import 'get_genres_repository_test.mocks.dart';
+import 'get_all_genres_repository_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<GetAllGenresRepository>()])
 void main(){
