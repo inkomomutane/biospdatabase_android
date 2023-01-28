@@ -13,14 +13,15 @@ void main() {
     mockCreateBeneficiaryRepository = MockCreateBeneficiaryRepository();
   });
   test('it repository should return created beneficiary', () async {
-    
-    when(mockCreateBeneficiaryRepository(beneficiaryEntityTestTrait())).
-    thenAnswer((realInvocation) => Future(() => ErrorHandler.right(beneficiaryEntityTestTrait())));
-    
-    var task = await mockCreateBeneficiaryRepository(beneficiaryEntityTestTrait());
+    when(mockCreateBeneficiaryRepository(beneficiaryEntityTestTrait()))
+        .thenAnswer((realInvocation) =>
+            Future(() => ErrorHandler.right(beneficiaryEntityTestTrait())));
+
+    var task =
+        await mockCreateBeneficiaryRepository(beneficiaryEntityTestTrait());
 
     task.fold((l) => null, (r) {
-      expect(r == beneficiaryEntityTestTrait() , true);
+      expect(r == beneficiaryEntityTestTrait(), true);
     });
   });
 }
