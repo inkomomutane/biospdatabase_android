@@ -1,5 +1,5 @@
 # Biosp
 
-Mobile data collect app for all biosp's
+Mobile data collect app for all biosps
 
 

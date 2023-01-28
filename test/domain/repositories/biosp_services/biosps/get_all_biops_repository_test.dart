@@ -1,6 +1,6 @@
 import 'package:biosp/core/error_handler.dart';
 import 'package:biosp/domain/entity/biosps/biosp_entity.dart';
-import 'package:biosp/domain/repository/get_all_biops_repository.dart';
+import 'package:biosp/domain/repository/get_all_biosps_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
