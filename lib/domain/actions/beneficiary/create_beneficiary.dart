@@ -1,6 +1,6 @@
-import 'package:biosp/core/error_handler.dart';
-import 'package:biosp/domain/entity/beneficiaries/beneficiary_entity.dart';
-import 'package:biosp/domain/repository/create_beneficiary_repository.dart';
+import '../../../core/error_handler.dart';
+import '../../entity/beneficiaries/beneficiary_entity.dart';
+import '../../repository/create_beneficiary_repository.dart';
 
 class CreateBeneficiary {
   CreateBeneficiaryRepository createBeneficiaryRepository;

@@ -48,5 +48,6 @@ app.*.map.json
 #Tests mocks ignored
 /test/**/*.mocks.dart
 
-#Libs freezed ignore
+#Libs freezed .g files ignore
 /lib/**/*.freezed.dart
+/lib/**/*.g.dart

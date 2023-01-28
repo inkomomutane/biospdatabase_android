@@ -1,6 +1,6 @@
-import 'package:biosp/core/error_handler.dart';
-import 'package:biosp/domain/entity/genres/genre_entity.dart';
-import 'package:biosp/domain/repository/get_all_genres_repository.dart';
+import '../../../core/error_handler.dart';
+import '../../entity/genres/genre_entity.dart';
+import '../../repository/get_all_genres_repository.dart';
 
 class GetAllGenres {
   final GetAllGenresRepository _getAllGenresRepository;

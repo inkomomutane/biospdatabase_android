@@ -1,6 +1,6 @@
-import 'package:biosp/core/error_handler.dart';
-import 'package:biosp/domain/entity/reasons_of_opening_case/reason_of_opening_case_entity.dart';
-import 'package:biosp/domain/repository/get_all_reasons_of_opening_case_repository.dart';
+import '../../../core/error_handler.dart';
+import '../../entity/reasons_of_opening_case/reason_of_opening_case_entity.dart';
+import '../../repository/get_all_reasons_of_opening_case_repository.dart';
 
 class GetAllReasonOfOpeningCases {
   final GetAllReasonOfOpeningCasesRepository _allReasonOfOpeningCasesRepository;
