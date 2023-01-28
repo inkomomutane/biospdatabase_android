@@ -39,27 +39,29 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
 class MockGetBeneficiariesRepository extends _i1.Mock
     implements _i3.GetBeneficiariesRepository {
   @override
-  _i2.Either<String, _i4.Future<List<_i5.BeneficiaryEntity>>> call() =>
+  _i4.Future<_i2.Either<String, List<_i5.BeneficiaryEntity>>> call() =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [],
         ),
         returnValue:
-            _FakeEither_0<String, _i4.Future<List<_i5.BeneficiaryEntity>>>(
+            _i4.Future<_i2.Either<String, List<_i5.BeneficiaryEntity>>>.value(
+                _FakeEither_0<String, List<_i5.BeneficiaryEntity>>(
           this,
           Invocation.method(
             #call,
             [],
           ),
-        ),
+        )),
         returnValueForMissingStub:
-            _FakeEither_0<String, _i4.Future<List<_i5.BeneficiaryEntity>>>(
+            _i4.Future<_i2.Either<String, List<_i5.BeneficiaryEntity>>>.value(
+                _FakeEither_0<String, List<_i5.BeneficiaryEntity>>(
           this,
           Invocation.method(
             #call,
             [],
           ),
-        ),
-      ) as _i2.Either<String, _i4.Future<List<_i5.BeneficiaryEntity>>>);
+        )),
+      ) as _i4.Future<_i2.Either<String, List<_i5.BeneficiaryEntity>>>);
 }

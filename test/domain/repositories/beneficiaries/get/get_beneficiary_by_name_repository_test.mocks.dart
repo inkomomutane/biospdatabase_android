@@ -7,10 +7,10 @@ import 'dart:async' as _i4;
 
 import 'package:biosp/domain/entity/beneficiaries/beneficiary_entity.dart'
     as _i5;
+import 'package:biosp/domain/repository/get_beneficiary_by_name_repository.dart'
+    as _i3;
 import 'package:fpdart/src/either.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-
-import 'get_beneficiary_by_name_repository_test.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -39,26 +39,29 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
 class MockGetBeneficiaryByNameRepository extends _i1.Mock
     implements _i3.GetBeneficiaryByNameRepository {
   @override
-  _i2.Either<String, _i4.Future<_i5.BeneficiaryEntity>> call(String? name) =>
+  _i4.Future<_i2.Either<String, _i5.BeneficiaryEntity>> call(String? name) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [name],
         ),
-        returnValue: _FakeEither_0<String, _i4.Future<_i5.BeneficiaryEntity>>(
+        returnValue:
+            _i4.Future<_i2.Either<String, _i5.BeneficiaryEntity>>.value(
+                _FakeEither_0<String, _i5.BeneficiaryEntity>(
           this,
           Invocation.method(
             #call,
             [name],
           ),
-        ),
+        )),
         returnValueForMissingStub:
-            _FakeEither_0<String, _i4.Future<_i5.BeneficiaryEntity>>(
+            _i4.Future<_i2.Either<String, _i5.BeneficiaryEntity>>.value(
+                _FakeEither_0<String, _i5.BeneficiaryEntity>(
           this,
           Invocation.method(
             #call,
             [name],
           ),
-        ),
-      ) as _i2.Either<String, _i4.Future<_i5.BeneficiaryEntity>>);
+        )),
+      ) as _i4.Future<_i2.Either<String, _i5.BeneficiaryEntity>>);
 }

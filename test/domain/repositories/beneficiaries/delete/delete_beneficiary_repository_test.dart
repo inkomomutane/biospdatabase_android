@@ -14,12 +14,11 @@ void main() {
   setUp(() {
     mockDeleteBeneficiaryRepository = MockDeleteBeneficiaryRepository();
   });
-  test('it should return delete beneficiary by ulid.', (){
-    when(mockDeleteBeneficiaryRepository(ulid)).thenReturn(
-        ErrorHandler.right(Future.value(beneficiaryEntityTestTrait()))
+  test('it repository should return delete beneficiary by ulid.', () async{
+    when(mockDeleteBeneficiaryRepository(ulid)).thenAnswer( (answer) => 
+    Future(() => ErrorHandler.right(beneficiaryEntityTestTrait()))
     );
-    mockDeleteBeneficiaryRepository(ulid).fold((l) => null, (r) async {
-      expect((await r) == beneficiaryEntityTestTrait() ,true);
-    });
+      final beneficiaryEntity = await mockDeleteBeneficiaryRepository(ulid);
+      beneficiaryEntity.fold((l) => null, (r) => expect((r) == beneficiaryEntityTestTrait() ,true));
   });
 }

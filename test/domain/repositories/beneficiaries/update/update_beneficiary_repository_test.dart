@@ -12,12 +12,10 @@ void main() {
   setUp(() {
     mockUpdateBeneficiaryRepository = MockUpdateBeneficiaryRepository();
   });
-  test('it should return update beneficiary', (){
-    when(mockUpdateBeneficiaryRepository(beneficiaryEntityTestTrait())).thenReturn(
-        ErrorHandler.right(Future.value(beneficiaryEntityTestTrait()))
-    );
-    mockUpdateBeneficiaryRepository(beneficiaryEntityTestTrait()).fold((l) => null, (r) async {
-      expect((await r) == beneficiaryEntityTestTrait() ,true);
-    });
+  test('it repository should return update beneficiary', () async {
+    when(mockUpdateBeneficiaryRepository(beneficiaryEntityTestTrait())).
+    thenAnswer( (answer) => Future(() => ErrorHandler.right(beneficiaryEntityTestTrait())));
+    final beneficiaryEntity = await mockUpdateBeneficiaryRepository(beneficiaryEntityTestTrait());
+    beneficiaryEntity.fold((l) => null, (r) => expect((r) == beneficiaryEntityTestTrait() ,true));
   });
 }

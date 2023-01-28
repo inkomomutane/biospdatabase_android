@@ -39,27 +39,30 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
 class MockUpdateBeneficiaryRepository extends _i1.Mock
     implements _i3.UpdateBeneficiaryRepository {
   @override
-  _i2.Either<String, _i4.Future<_i5.BeneficiaryEntity>> call(
+  _i4.Future<_i2.Either<String, _i5.BeneficiaryEntity>> call(
           _i5.BeneficiaryEntity? beneficiaryEntity) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [beneficiaryEntity],
         ),
-        returnValue: _FakeEither_0<String, _i4.Future<_i5.BeneficiaryEntity>>(
+        returnValue:
+            _i4.Future<_i2.Either<String, _i5.BeneficiaryEntity>>.value(
+                _FakeEither_0<String, _i5.BeneficiaryEntity>(
           this,
           Invocation.method(
             #call,
             [beneficiaryEntity],
           ),
-        ),
+        )),
         returnValueForMissingStub:
-            _FakeEither_0<String, _i4.Future<_i5.BeneficiaryEntity>>(
+            _i4.Future<_i2.Either<String, _i5.BeneficiaryEntity>>.value(
+                _FakeEither_0<String, _i5.BeneficiaryEntity>(
           this,
           Invocation.method(
             #call,
             [beneficiaryEntity],
           ),
-        ),
-      ) as _i2.Either<String, _i4.Future<_i5.BeneficiaryEntity>>);
+        )),
+      ) as _i4.Future<_i2.Either<String, _i5.BeneficiaryEntity>>);
 }

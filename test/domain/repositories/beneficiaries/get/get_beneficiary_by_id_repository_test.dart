@@ -14,12 +14,11 @@ void main() {
   setUp(() {
     mockGetBeneficiaryByIdRepository = MockGetBeneficiaryByIdRepository();
   });
-  test('it should return get beneficiary by ulid.', (){
-    when(mockGetBeneficiaryByIdRepository(ulid)).thenReturn(
-        ErrorHandler.right(Future.value(beneficiaryEntityTestTrait()))
+  test('it repository should return get beneficiary by ulid.', () async {
+    when(mockGetBeneficiaryByIdRepository(ulid)).thenAnswer((answer) => 
+        Future(() =>  ErrorHandler.right(beneficiaryEntityTestTrait()))
     );
-    mockGetBeneficiaryByIdRepository(ulid).fold((l) => null, (r) async {
-      expect((await r) == beneficiaryEntityTestTrait() ,true);
-    });
+    final beneficiaryEntity = await mockGetBeneficiaryByIdRepository(ulid);
+    beneficiaryEntity.fold((l) => null, (r) => expect((r) == beneficiaryEntityTestTrait() ,true));
   });
 }

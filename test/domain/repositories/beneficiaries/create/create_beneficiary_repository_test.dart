@@ -1,6 +1,6 @@
+import 'package:biosp/core/error_handler.dart';
 import 'package:biosp/domain/repository/create_beneficiary_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import '../../../../helpers/helpers.dart';
@@ -12,12 +12,15 @@ void main() {
   setUp(() {
     mockCreateBeneficiaryRepository = MockCreateBeneficiaryRepository();
   });
-  test('it should return created beneficiary', (){
-    when(mockCreateBeneficiaryRepository(beneficiaryEntityTestTrait())).thenReturn(
-      Either.right(Future.value(beneficiaryEntityTestTrait()))
-    );
-    mockCreateBeneficiaryRepository(beneficiaryEntityTestTrait()).fold((l) => null, (r) async {
-      expect((await r) == beneficiaryEntityTestTrait() ,true);
+  test('it repository should return created beneficiary', () async {
+    
+    when(mockCreateBeneficiaryRepository(beneficiaryEntityTestTrait())).
+    thenAnswer((realInvocation) => Future(() => ErrorHandler.right(beneficiaryEntityTestTrait())));
+    
+    var task = await mockCreateBeneficiaryRepository(beneficiaryEntityTestTrait());
+
+    task.fold((l) => null, (r) {
+      expect(r == beneficiaryEntityTestTrait() , true);
     });
   });
 }

@@ -6,10 +6,9 @@
 import 'dart:async' as _i4;
 
 import 'package:biosp/domain/entity/genres/genre_entity.dart' as _i5;
-import 'package:fpdart/fpdart.dart' as _i2;
+import 'package:biosp/domain/repository/get_all_genres_repository.dart' as _i3;
+import 'package:fpdart/src/either.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-
-import 'get_genres_repository_test.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -38,26 +37,29 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
 class MockGetAllGenresRepository extends _i1.Mock
     implements _i3.GetAllGenresRepository {
   @override
-  _i2.Either<String, _i4.Future<List<_i5.GenreEntity>>> call() =>
+  _i4.Future<_i2.Either<String, List<_i5.GenreEntity>>> call() =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [],
         ),
-        returnValue: _FakeEither_0<String, _i4.Future<List<_i5.GenreEntity>>>(
+        returnValue:
+            _i4.Future<_i2.Either<String, List<_i5.GenreEntity>>>.value(
+                _FakeEither_0<String, List<_i5.GenreEntity>>(
           this,
           Invocation.method(
             #call,
             [],
           ),
-        ),
+        )),
         returnValueForMissingStub:
-            _FakeEither_0<String, _i4.Future<List<_i5.GenreEntity>>>(
+            _i4.Future<_i2.Either<String, List<_i5.GenreEntity>>>.value(
+                _FakeEither_0<String, List<_i5.GenreEntity>>(
           this,
           Invocation.method(
             #call,
             [],
           ),
-        ),
-      ) as _i2.Either<String, _i4.Future<List<_i5.GenreEntity>>>);
+        )),
+      ) as _i4.Future<_i2.Either<String, List<_i5.GenreEntity>>>);
 }

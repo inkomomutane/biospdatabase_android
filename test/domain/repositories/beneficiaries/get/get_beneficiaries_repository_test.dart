@@ -13,12 +13,11 @@ void main() {
   setUp(() {
     mockGetBeneficiariesRepository = MockGetBeneficiariesRepository();
   });
-  test('it should return all beneficiaries.', (){
-    when(mockGetBeneficiariesRepository()).thenReturn(
-        ErrorHandler.right(Future.value(listOfBeneficiaryEntityTestTrait()))
+  test('it repository should return all beneficiaries.', () async {
+    when(mockGetBeneficiariesRepository()).thenAnswer( (answer) =>
+      Future(() => ErrorHandler.right(listOfBeneficiaryEntityTestTrait())));
+    final beneficiaryEntities = await mockGetBeneficiariesRepository();
+    beneficiaryEntities.fold((l) => null, (r) => expect((r).first == listOfBeneficiaryEntityTestTrait().first ,true)
     );
-    mockGetBeneficiariesRepository().fold((l) => null, (r) async {
-      expect((await r).first == listOfBeneficiaryEntityTestTrait().first ,true);
-    });
   });
 }

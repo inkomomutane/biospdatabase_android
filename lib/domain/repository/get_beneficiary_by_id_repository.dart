@@ -1,7 +1,8 @@
-import 'package:biosp/core/error_handler.dart';
-import 'package:biosp/domain/entity/beneficiaries/beneficiary_entity.dart';
 import 'package:ulid4d/ulid4d.dart';
 
+import '../../core/error_handler.dart';
+import '../entity/beneficiaries/beneficiary_entity.dart';
+
 abstract class GetBeneficiaryByIdRepository{
-  ErrorHandler<Future<BeneficiaryEntity>> call(ULID ulid);
+  Future<ErrorHandler<BeneficiaryEntity>> call(ULID ulid);
 }
