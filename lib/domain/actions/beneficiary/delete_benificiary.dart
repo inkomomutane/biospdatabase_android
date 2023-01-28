@@ -1,7 +1,8 @@
+import 'package:ulid4d/ulid4d.dart';
+
 import '../../../core/error_handler.dart';
 import '../../entity/beneficiaries/beneficiary_entity.dart';
 import '../../repository/delete_beneficiary_repository.dart';
-import 'package:ulid4d/ulid4d.dart';
 
 class DeleteBeneficiary {
   final DeleteBeneficiaryRepository deleteBeneficiaryRepository;

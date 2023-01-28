@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+
 part 'biosp.g.dart';
 
 @collection
