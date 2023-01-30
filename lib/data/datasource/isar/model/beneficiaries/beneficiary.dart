@@ -1,4 +1,3 @@
-import 'package:biosp/core/inject.dart';
 import 'package:isar/isar.dart';
 
 import '../biosps/biosp.dart';

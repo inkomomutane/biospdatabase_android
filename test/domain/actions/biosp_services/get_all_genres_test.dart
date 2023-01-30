@@ -1,9 +1,7 @@
 import "package:biosp/core/error_handler.dart";
 import "package:biosp/domain/actions/biosp_services/get_all_genres.dart";
 import "package:biosp/domain/entity/genres/genre_entity.dart";
-import "package:biosp/domain/repository/get_all_genres_repository.dart";
 import "package:flutter_test/flutter_test.dart";
-import "package:mockito/annotations.dart";
 import "package:mockito/mockito.dart";
 import "package:ulid4d/ulid4d.dart";
 

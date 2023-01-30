@@ -1,7 +1,8 @@
 
-import '../../datasource/isar/model/document_types/document_type.dart';
-import '../../../domain/entity/document_types/document_type_entity.dart';
 import 'package:ulid4d/ulid4d.dart';
+
+import '../../../domain/entity/document_types/document_type_entity.dart';
+import '../../datasource/isar/model/document_types/document_type.dart';
 
 class DocumentTypeDto{
   static DocumentTypeEntity fromIsar(DocumentType? documentType)  =>

@@ -1,9 +1,7 @@
 import 'package:biosp/core/error_handler.dart';
 import 'package:biosp/domain/actions/biosp_services/get_all_purpuse_of_visits.dart';
 import 'package:biosp/domain/entity/purposes_of_visit/purpose_of_visit_entity.dart';
-import 'package:biosp/domain/repository/get_all_purpuse_of_visits_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:ulid4d/ulid4d.dart';
 
