@@ -7,9 +7,8 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:ulid4d/ulid4d.dart';
 
-import 'get_all_purpuse_of_visits_test.mocks.dart';
+import '../../repositories/biosp_services/purpose_of_visits/get_all_purpuse_of_visits_repository_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<GetAllPurposeOfVisitsRepository>()])
 void main() {
   late final MockGetAllPurposeOfVisitsRepository
       mockGetAllPurposeOfVisitsRepository;

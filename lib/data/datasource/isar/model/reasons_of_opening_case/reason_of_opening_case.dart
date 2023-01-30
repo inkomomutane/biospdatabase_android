@@ -4,7 +4,8 @@ part 'reason_of_opening_case.g.dart';
 
 @collection
 class ReasonOfOpeningCase {
-  Id id = Isar.autoIncrement;
+  Id? id;
+  @Index(unique: true)
   late String ulid;
   late String name;
 }

@@ -7,11 +7,12 @@ part 'biosp_entity.freezed.dart';
 class BiospEntity extends Equatable with _$BiospEntity{
   const BiospEntity._();
   const factory BiospEntity({
+    int? id,
     required ULID ulid,
     required String name,
     required String projectName,
   }) = _BiospEntity;
 
   @override
-  List<Object?> get props => [ulid,name,projectName];
+  List<Object?> get props => [id,ulid,name,projectName];
 }

@@ -7,11 +7,12 @@ part 'forwarded_service_entity.freezed.dart';
 class ForwardedServiceEntity extends Equatable with _$ForwardedServiceEntity {
 
   const factory ForwardedServiceEntity({
+    int? id,
     required ULID ulid,
     required String name
   }) = _ForwardedServiceEntity;
 
   const ForwardedServiceEntity._();
   @override
-  List<Object?> get props => [ulid,name];
+  List<Object?> get props => [id,ulid,name];
 }

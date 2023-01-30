@@ -7,11 +7,12 @@ part 'genre_entity.freezed.dart';
 @freezed
 class GenreEntity extends Equatable with _$GenreEntity {
   const factory GenreEntity({
+    int? id,
     required ULID ulid,
     required String name
   }) = _GenreEntity;
 
   const GenreEntity._();
   @override
-  List<Object?> get props => [ulid,name];
+  List<Object?> get props => [id,ulid,name];
 }

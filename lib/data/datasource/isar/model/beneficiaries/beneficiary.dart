@@ -1,3 +1,4 @@
+import 'package:biosp/core/inject.dart';
 import 'package:isar/isar.dart';
 
 import '../biosps/biosp.dart';
@@ -10,10 +11,10 @@ import '../reasons_of_opening_case/reason_of_opening_case.dart';
 
 part 'beneficiary.g.dart';
 
-@collection
+@Collection(accessor: 'beneficiaries')
 class Beneficiary {
-  Id id = Isar.autoIncrement;
-
+  Id? id;
+  @Index(unique: true)
   late String ulid;
   late String fullName;
   late int numberOfVisits;
@@ -28,7 +29,6 @@ class Beneficiary {
   late String specifyPurposeOfVisit;
   late String visitProposes;
   late bool status;
-
   final biosp = IsarLink<Biosp>();
   final genre = IsarLink<Genre>();
   final provenance = IsarLink<Provenance>();

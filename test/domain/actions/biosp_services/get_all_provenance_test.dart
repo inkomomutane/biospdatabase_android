@@ -7,9 +7,9 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:ulid4d/ulid4d.dart';
 
-import 'get_all_provenance_test.mocks.dart';
+import '../../repositories/biosp_services/provenances/get_all_provenance_repository_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<GetAllProvenancesRepository>()])
+
 void main() {
   late final MockGetAllProvenancesRepository mockGetAllProvenancesRepository;
   late final GetAllProvenances getAllProvenances;

@@ -7,11 +7,12 @@ part 'reason_of_opening_case_entity.freezed.dart';
 @freezed
 class ReasonOfOpeningCaseEntity extends Equatable with _$ReasonOfOpeningCaseEntity {
   const factory ReasonOfOpeningCaseEntity({
+    int? id,
     required ULID ulid,
     required String name
   }) = _ReasonOfOpeningCaseEntity;
 
   const ReasonOfOpeningCaseEntity._();
   @override
-  List<Object?> get props => [ulid,name];
+  List<Object?> get props => [id,ulid,name];
 }

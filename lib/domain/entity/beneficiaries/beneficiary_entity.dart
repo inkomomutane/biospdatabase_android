@@ -15,24 +15,25 @@ part 'beneficiary_entity.freezed.dart';
 class BeneficiaryEntity extends Equatable with _$BeneficiaryEntity {
   const BeneficiaryEntity._();
   const factory BeneficiaryEntity({
-    required BiospEntity biospEntity,
+    int? id,
+    required BiospEntity? biospEntity,
     required ULID ulid,
     @Default("") String fullName,
-    required GenreEntity genreEntity,
+    required GenreEntity? genreEntity,
     @Default(1) int numberOfVisits,
     required DateTime birthDate,
     @Default("") String phone,
     required DateTime serviceDate,
     @Default(true) bool homeCare,
     required DateTime dateReceived,
-    required ProvenanceEntity provenanceEntity,
-    required ReasonOfOpeningCaseEntity reasonOfOpeningCaseEntity,
+    required ProvenanceEntity? provenanceEntity,
+    required ReasonOfOpeningCaseEntity? reasonOfOpeningCaseEntity,
     @Default("") String otherReasonOfOpeningCase,
-    required DocumentTypeEntity documentTypeEntity,
+    required DocumentTypeEntity? documentTypeEntity,
     @Default("") String otherDocumentType,
-    required ForwardedServiceEntity forwardedServiceEntity,
+    required ForwardedServiceEntity? forwardedServiceEntity,
     @Default("") String otherForwardedService,
-    required PurposeOfVisitEntity purposeOfVisitEntity,
+    required PurposeOfVisitEntity? purposeOfVisitEntity,
     @Default("") String specifyPurposeOfVisit,
     @Default("") String visitProposes,
     @Default(true) bool status,
@@ -40,6 +41,7 @@ class BeneficiaryEntity extends Equatable with _$BeneficiaryEntity {
 
   @override
   List<Object?> get props => [
+    id,
         biospEntity,
         ulid,
         fullName,

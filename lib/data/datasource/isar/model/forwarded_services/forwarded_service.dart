@@ -3,7 +3,8 @@ part 'forwarded_service.g.dart';
 
 @collection
 class ForwardedService {
-  Id id = Isar.autoIncrement;
+  Id? id;
+  @Index(unique: true)
   late String ulid;
   late String name;
 }

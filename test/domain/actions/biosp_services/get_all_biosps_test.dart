@@ -3,13 +3,11 @@ import 'package:biosp/domain/actions/biosp_services/get_all_biosps.dart';
 import 'package:biosp/domain/entity/biosps/biosp_entity.dart';
 import 'package:biosp/domain/repository/get_all_biosps_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:ulid4d/ulid4d.dart';
 
-import 'get_all_biosps_test.mocks.dart';
+import '../../repositories/biosp_services/biosps/get_all_biops_repository_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<GetAllBiospsRepository>()])
 void main() {
   late final MockGetAllBiospsRepository mockGetAllBiospsRepository;
   late final GetAllBiosps getAllBiosps;

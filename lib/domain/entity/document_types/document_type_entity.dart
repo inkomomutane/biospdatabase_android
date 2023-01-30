@@ -8,10 +8,11 @@ part 'document_type_entity.freezed.dart';
 class DocumentTypeEntity extends Equatable with _$DocumentTypeEntity {
   const DocumentTypeEntity._();
   const factory DocumentTypeEntity({
+    int? id,
     required ULID ulid,
     required String name
   }) = _DocumentTypeEntity;
 
   @override
-  List<Object?> get props => [ulid,name];
+  List<Object?> get props => [id,ulid,name];
 }

@@ -6,9 +6,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:ulid4d/ulid4d.dart';
-import 'get_all_document_types_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<GetAllDocumentTypesRepository>()])
+import '../../repositories/biosp_services/document_types/get_all_document_types_repository_test.mocks.dart';
+
 void main() {
   late final MockGetAllDocumentTypesRepository
       mockGetAllDocumentTypesRepository;

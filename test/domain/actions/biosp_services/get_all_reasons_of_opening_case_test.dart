@@ -7,9 +7,8 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:ulid4d/ulid4d.dart';
 
-import 'get_all_reasons_of_opening_case_test.mocks.dart';
+import '../../repositories/biosp_services/reason_of_opening_cases/get_all_reasons_of_opening_case_repository_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<GetAllReasonOfOpeningCasesRepository>()])
 void main() {
   late final MockGetAllReasonOfOpeningCasesRepository
       mockGetAllReasonOfOpeningCasesRepository;

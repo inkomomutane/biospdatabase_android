@@ -6,12 +6,13 @@ part 'purpose_of_visit_entity.freezed.dart';
 
 @freezed
 class PurposeOfVisitEntity extends Equatable with _$PurposeOfVisitEntity {
-  const factory PurposeOfVisitEntity({
-    required ULID ulid,
-    required String name
-  }) = _PurposeOfVisitEntity;
+  const factory PurposeOfVisitEntity(
+      {
+        int? id,
+      required ULID ulid,
+      required String name}) = _PurposeOfVisitEntity;
 
   const PurposeOfVisitEntity._();
   @override
-  List<Object?> get props => [ulid,name];
+  List<Object?> get props => [id,ulid, name];
 }

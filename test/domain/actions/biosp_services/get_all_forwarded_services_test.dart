@@ -7,9 +7,9 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:ulid4d/ulid4d.dart';
 
-import 'get_all_forwarded_services_test.mocks.dart';
+import '../../repositories/biosp_services/forwarded_services/get_all_forwarded_services_repository_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<GetAllForwardedServicesRepository>()])
+
 void main() {
   late final MockGetAllForwardedServicesRepository
       mockGetAllForwardedServicesRepository;
