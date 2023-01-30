@@ -7,11 +7,12 @@ abstract class BiospDto {
   static BiospEntity fromIsar(Biosp? biosp) => BiospEntity(
       ulid: ULID.fromString(biosp!.ulid),
       name: biosp.name,
-      projectName: biosp.projectName);
+      projectName: biosp.projectName,
+      id: biosp.id);
 
   static Biosp fromEntity(BiospEntity? biospEntity) => Biosp()
     ..name = biospEntity!.name
     ..ulid = biospEntity.ulid.toString()
     ..projectName = biospEntity.projectName
-      ..id = biospEntity.id;
+    ..id = biospEntity.id;
 }

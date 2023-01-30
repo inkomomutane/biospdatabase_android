@@ -15,7 +15,7 @@ import '../domain/repository/get_beneficiaries_repository.dart';
 class Inject {
   static void init() {
     GetIt getIt = GetIt.I;
-    getIt.registerLazySingleton<Isar>(()  => Isar.openSync([
+    getIt.registerLazySingleton<Isar>(() => Isar.openSync([
           BeneficiarySchema,
           BiospSchema,
           DocumentTypeSchema,
@@ -25,9 +25,11 @@ class Inject {
           PurposeOfVisitSchema,
           ReasonOfOpeningCaseSchema,
         ]));
-    getIt.registerLazySingleton<GetBeneficiariesRepository>(() => GetBeneficiariesResource(GetIt.instance()));
+    getIt.registerLazySingleton<GetBeneficiariesRepository>(
+        () => GetBeneficiariesResource(GetIt.instance()));
   }
-  static int fastHash(String ulid){
+
+  static int fastHash(String ulid) {
     var hash = 0xcbf29ce484222325;
     var i = 0;
     while (i < ulid.length) {

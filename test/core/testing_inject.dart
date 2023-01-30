@@ -23,41 +23,55 @@ import '../domain/repositories/beneficiaries/delete/delete_beneficiary_repositor
 import '../domain/repositories/beneficiaries/get/get_beneficiaries_repository_test.mocks.dart';
 import '../domain/repositories/beneficiaries/get/get_beneficiary_by_id_repository_test.mocks.dart';
 
-
 class TestingInject {
   static GetIt init() {
     GetIt getIt = GetIt.I;
-    getIt.registerLazySingleton<Isar>(()  => Isar.openSync([
-      BeneficiarySchema,
-      BiospSchema,
-      DocumentTypeSchema,
-      ForwardedServiceSchema,
-      GenreSchema,
-      ProvenanceSchema,
-      PurposeOfVisitSchema,
-      ReasonOfOpeningCaseSchema,
-    ]));
+    getIt.registerLazySingleton<Isar>(() => Isar.openSync([
+          BeneficiarySchema,
+          BiospSchema,
+          DocumentTypeSchema,
+          ForwardedServiceSchema,
+          GenreSchema,
+          ProvenanceSchema,
+          PurposeOfVisitSchema,
+          ReasonOfOpeningCaseSchema,
+        ]));
     //Repositories Implementations
-    getIt.registerLazySingleton<MockCreateBeneficiaryRepository>(() => MockCreateBeneficiaryRepository());
-    getIt.registerLazySingleton<MockDeleteBeneficiaryRepository>(() => MockDeleteBeneficiaryRepository());
-    getIt.registerLazySingleton<MockGetBeneficiariesRepository>(() => MockGetBeneficiariesRepository());
-    getIt.registerLazySingleton<MockGetBeneficiaryByIdRepository>(() => MockGetBeneficiaryByIdRepository());
+    getIt.registerLazySingleton<MockCreateBeneficiaryRepository>(
+        () => MockCreateBeneficiaryRepository());
+    getIt.registerLazySingleton<MockDeleteBeneficiaryRepository>(
+        () => MockDeleteBeneficiaryRepository());
+    getIt.registerLazySingleton<MockGetBeneficiariesRepository>(
+        () => MockGetBeneficiariesRepository());
+    getIt.registerLazySingleton<MockGetBeneficiaryByIdRepository>(
+        () => MockGetBeneficiaryByIdRepository());
 
     //Repositories injections
-    getIt.registerLazySingleton<CreateBeneficiaryRepository>(() => MockCreateBeneficiaryRepository());
-    getIt.registerLazySingleton<DeleteBeneficiaryRepository>(() => MockDeleteBeneficiaryRepository());
-    getIt.registerLazySingleton<GetBeneficiariesRepository>(() => MockGetBeneficiariesRepository());
-    getIt.registerLazySingleton<GetBeneficiaryByIdRepository>(() => MockGetBeneficiaryByIdRepository());
+    getIt.registerLazySingleton<CreateBeneficiaryRepository>(
+        () => MockCreateBeneficiaryRepository());
+    getIt.registerLazySingleton<DeleteBeneficiaryRepository>(
+        () => MockDeleteBeneficiaryRepository());
+    getIt.registerLazySingleton<GetBeneficiariesRepository>(
+        () => MockGetBeneficiariesRepository());
+    getIt.registerLazySingleton<GetBeneficiaryByIdRepository>(
+        () => MockGetBeneficiaryByIdRepository());
 
     //Actions injections
-    getIt.registerLazySingleton<CreateBeneficiary>(() => CreateBeneficiary(createBeneficiaryRepository: (GetIt.I<MockCreateBeneficiaryRepository>())));
-    getIt.registerLazySingleton<DeleteBeneficiary>(() => DeleteBeneficiary(deleteBeneficiaryRepository: (GetIt.I<MockDeleteBeneficiaryRepository>())));
-    getIt.registerLazySingleton<GetBeneficiaries>(() => GetBeneficiaries(getBeneficiariesRepository: (GetIt.I<MockGetBeneficiariesRepository>())));
-    getIt.registerLazySingleton<GetBeneficiaryById>(() => GetBeneficiaryById(getBeneficiaryByIdRepository: (GetIt.I<MockGetBeneficiaryByIdRepository>())));
-
-
+    getIt.registerLazySingleton<CreateBeneficiary>(() => CreateBeneficiary(
+        createBeneficiaryRepository:
+            (GetIt.I<MockCreateBeneficiaryRepository>())));
+    getIt.registerLazySingleton<DeleteBeneficiary>(() => DeleteBeneficiary(
+        deleteBeneficiaryRepository:
+            (GetIt.I<MockDeleteBeneficiaryRepository>())));
+    getIt.registerLazySingleton<GetBeneficiaries>(() => GetBeneficiaries(
+        getBeneficiariesRepository:
+            (GetIt.I<MockGetBeneficiariesRepository>())));
+    getIt.registerLazySingleton<GetBeneficiaryById>(() => GetBeneficiaryById(
+        getBeneficiaryByIdRepository:
+            (GetIt.I<MockGetBeneficiaryByIdRepository>())));
 
     return getIt;
   }
+
   static ULID get ulid => ULID.nextULID();
 }

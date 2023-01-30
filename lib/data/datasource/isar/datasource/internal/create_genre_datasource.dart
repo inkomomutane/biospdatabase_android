@@ -11,7 +11,7 @@ class CreateGenreDatasource {
   Future<ErrorHandler<int>> call(GenreEntity genreEntity) {
     try {
       return Future(() => right(_isar.writeTxnSync(
-              () => _isar.genres.putSync(GenreDto.fromEntity(genreEntity)))));
+          () => _isar.genres.putSync(GenreDto.fromEntity(genreEntity)))));
     } on Exception catch (_, e) {
       return Future(() => left(e.toString()));
     }

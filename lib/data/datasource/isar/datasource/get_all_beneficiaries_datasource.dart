@@ -19,7 +19,7 @@ class GetBeneficiariesResource implements GetBeneficiariesRepository {
           .txnSync(() => _isar.beneficiaries.where().findAllSync())
           .map((beneficiary) => BeneficiaryDto.fromIsar(beneficiary))
           .toList()));
-    } on Exception catch (_,e) {
+    } on Exception catch (_, e) {
       return Future(() => left(e.toString()));
     }
   }
