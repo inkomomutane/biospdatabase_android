@@ -1,9 +1,10 @@
-import '../../../../../core/error_handler.dart';
-import '../../model/genres/genre.dart';
-import '../../../../dto/genres/genre_dto.dart';
-import '../../../../../domain/entity/genres/genre_entity.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:isar/isar.dart';
+
+import '../../../../../core/error_handler.dart';
+import '../../../../../domain/entity/genres/genre_entity.dart';
+import '../../../../dto/genres/genre_dto.dart';
+import '../../model/genres/genre.dart';
 
 class CreateGenreDatasource {
   final Isar _isar;

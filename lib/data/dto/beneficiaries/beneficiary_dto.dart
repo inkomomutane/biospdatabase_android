@@ -11,10 +11,10 @@ import '../purpose_of_visits/purpose_of_visit_dto.dart';
 import '../reasons_of_opening_cases/reasons_of_opening_case_dto.dart';
 
 abstract class BeneficiaryDto {
-  static BeneficiaryEntity fromIsar(Beneficiary beneficiary) =>
+  static BeneficiaryEntity fromIsar(Beneficiary? beneficiary) =>
       BeneficiaryEntity(
+        ulid: ULID.fromString(beneficiary!.ulid),
         biospEntity: BiospDto.fromIsar(beneficiary.biosp.value),
-        ulid: ULID.fromString(beneficiary.ulid),
         genreEntity: GenreDto.fromIsar(beneficiary.genre.value),
         birthDate: beneficiary.birthDate,
         serviceDate: beneficiary.serviceDate,
@@ -38,6 +38,7 @@ abstract class BeneficiaryDto {
         specifyPurposeOfVisit: beneficiary.specifyPurposeOfVisit,
         visitProposes: beneficiary.visitProposes,
         status: beneficiary.status,
+        id: beneficiary.id,
       );
 
   static Beneficiary fromEntity(BeneficiaryEntity beneficiaryEntity) =>
@@ -67,5 +68,6 @@ abstract class BeneficiaryDto {
         ..phone = beneficiaryEntity.phone
         ..specifyPurposeOfVisit = beneficiaryEntity.specifyPurposeOfVisit
         ..visitProposes = beneficiaryEntity.visitProposes
-        ..status = beneficiaryEntity.status;
+        ..status = beneficiaryEntity.status
+        ..id = beneficiaryEntity.id;
 }

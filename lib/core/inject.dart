@@ -1,7 +1,7 @@
+import '../data/datasource/isar/datasource/get_all_beneficiaries_datasource.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
-import '../data/datasource/isar/datasource/get_all_beneficiaries_datasource.dart';
 import '../data/datasource/isar/model/beneficiaries/beneficiary.dart';
 import '../data/datasource/isar/model/biosps/biosp.dart';
 import '../data/datasource/isar/model/document_types/document_type.dart';
@@ -26,7 +26,7 @@ class Inject {
           ReasonOfOpeningCaseSchema,
         ]));
     getIt.registerLazySingleton<GetBeneficiariesRepository>(
-        () => GetBeneficiariesResource(GetIt.instance()));
+        () => GetAllBeneficiariesDatasource(GetIt.instance()));
   }
 
   static int fastHash(String ulid) {

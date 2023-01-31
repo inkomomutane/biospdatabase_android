@@ -12,35 +12,66 @@ final BiospEntity biospEntity = BiospEntity(
   ulid: ULID.nextULID(),
   name: 'Maputo',
   projectName: 'Akulo-Akulo',
+  id: 1,
 );
- final ULID ulid = ULID.nextULID();
- const String fullName = "Jane Doe";
- const int numberOfVisits = 2;
- final DateTime birthDate = DateTime.now();
- const String phone = "+258847607095";
- final DateTime serviceDate = DateTime.now();
- const bool homeCare = false;
- final DateTime dateReceived = DateTime.now();
- final GenreEntity genreEntity = GenreEntity(ulid: ULID.nextULID(), name: 'Male');
- final ProvenanceEntity provenanceEntity =
- ProvenanceEntity(ulid: ULID.nextULID(), name: 'Community');
- final ReasonOfOpeningCaseEntity reasonOfOpeningCaseEntity =
- ReasonOfOpeningCaseEntity(ulid: ULID.nextULID(), name: 'Bring ID');
- const String otherReasonOfOpeningCase = "";
- final DocumentTypeEntity documentTypeEntity = DocumentTypeEntity(ulid: ULID.nextULID(), name: 'ID');
- const String otherDocumentType = "";
- final ForwardedServiceEntity forwardedServiceEntity =
- ForwardedServiceEntity(ulid: ULID.nextULID(), name: 'DIC');
- const String otherForwardedService = "";
- final PurposeOfVisitEntity purposeOfVisitEntity =
- PurposeOfVisitEntity(ulid: ULID.nextULID(), name: 'ID');
- const String specifyPurposeOfVisit = "";
- const String visitProposes = "";
- const bool status = false;
 
-BeneficiaryEntity beneficiaryEntityTestTrait(){
+final ULID ulid = ULID.nextULID();
+const String fullName = "Jane Doe";
+const int numberOfVisits = 2;
+final DateTime birthDate = DateTime.now();
+const String phone = "+258847607095";
+final DateTime serviceDate = DateTime.now();
+const bool homeCare = false;
+final DateTime dateReceived = DateTime.now();
+
+final GenreEntity genreEntity = GenreEntity(
+  ulid: ULID.nextULID(),
+  name: 'Male',
+  id: 1,
+);
+
+final ProvenanceEntity provenanceEntity = ProvenanceEntity(
+  ulid: ULID.nextULID(),
+  name: 'Community',
+  id: 1,
+);
+
+final ReasonOfOpeningCaseEntity reasonOfOpeningCaseEntity =
+    ReasonOfOpeningCaseEntity(
+  ulid: ULID.nextULID(),
+  name: 'Bring ID',
+  id: 1,
+);
+
+const String otherReasonOfOpeningCase = "";
+
+final DocumentTypeEntity documentTypeEntity = DocumentTypeEntity(
+  ulid: ULID.nextULID(),
+  name: 'ID',
+  id: 1,
+);
+
+const String otherDocumentType = "";
+
+final ForwardedServiceEntity forwardedServiceEntity = ForwardedServiceEntity(
+  ulid: ULID.nextULID(),
+  name: 'DIC',
+  id: 1,
+);
+const String otherForwardedService = "";
+
+final PurposeOfVisitEntity purposeOfVisitEntity = PurposeOfVisitEntity(
+  ulid: ULID.nextULID(),
+  name: 'ID',
+  id: 1,
+);
+const String specifyPurposeOfVisit = "";
+const String visitProposes = "";
+const bool status = false;
+
+BeneficiaryEntity beneficiaryEntityTestTrait() {
   return BeneficiaryEntity(
-    biospEntity : biospEntity,
+    biospEntity: biospEntity,
     ulid: ulid,
     fullName: fullName,
     genreEntity: genreEntity,
@@ -61,12 +92,10 @@ BeneficiaryEntity beneficiaryEntityTestTrait(){
     specifyPurposeOfVisit: specifyPurposeOfVisit,
     visitProposes: visitProposes,
     status: status,
+    id: 1,
   );
 }
 
-List<BeneficiaryEntity> listOfBeneficiaryEntityTestTrait(){
+List<BeneficiaryEntity> listOfBeneficiaryEntityTestTrait() {
   return [beneficiaryEntityTestTrait()];
 }
-
-
-

@@ -22,7 +22,7 @@ void main() {
     isar.writeTxn(() async => await isar.genres.clear());
   });
 
-  test('it should create genre entity and read all genres from isar database', () async {
+  test('it should create genre from isar database', () async {
     var result = await CreateGenreDatasource(isar)(genreEntity);
     result.fold((l)  => expect(l,''), (r) async {
       GenreEntity genreIsar = genreEntity.copyWith(id: r);
