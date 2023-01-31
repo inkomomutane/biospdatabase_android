@@ -1,8 +1,6 @@
-import 'package:biosp/core/error_handler.dart';
 import 'package:biosp/data/datasource/isar/datasource/get_all_document_types_datasource.dart';
 import 'package:biosp/data/datasource/isar/datasource/internal/create_document_type_datasource.dart';
 import 'package:biosp/data/datasource/isar/model/document_types/document_type.dart';
-import 'package:biosp/data/dto/document_types/document_type_dto.dart';
 import 'package:biosp/domain/entity/document_types/document_type_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
