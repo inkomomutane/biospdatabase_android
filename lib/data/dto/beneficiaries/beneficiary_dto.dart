@@ -13,33 +13,35 @@ import '../reasons_of_opening_cases/reasons_of_opening_case_dto.dart';
 abstract class BeneficiaryDto {
   static BeneficiaryEntity fromIsar(Beneficiary? beneficiary) =>
       BeneficiaryEntity(
-        ulid: ULID.fromString(beneficiary!.ulid),
-        biospEntity: BiospDto.fromIsar(beneficiary.biosp.value),
-        genreEntity: GenreDto.fromIsar(beneficiary.genre.value),
-        birthDate: beneficiary.birthDate,
-        serviceDate: beneficiary.serviceDate,
-        dateReceived: beneficiary.dateReceived,
-        provenanceEntity: ProvenanceDto.fromIsar(beneficiary.provenance.value),
-        reasonOfOpeningCaseEntity: ReasonOfOpeningCaseDto.fromIsar(
-            beneficiary.reasonOfOpeningCase.value),
-        documentTypeEntity:
-            DocumentTypeDto.fromIsar(beneficiary.documentType.value),
-        otherDocumentType: beneficiary.otherDocumentType,
-        forwardedServiceEntity:
-            ForwardedServiceDto.fromIsar(beneficiary.forwardedService.value),
-        otherForwardedService: beneficiary.otherForwardedService,
-        purposeOfVisitEntity:
-            PurposeOfVisitDto.fromIsar(beneficiary.purposeOfVisit.value),
-        otherReasonOfOpeningCase: beneficiary.otherReasonOfOpeningCase,
-        fullName: beneficiary.fullName,
-        homeCare: beneficiary.homeCare,
-        numberOfVisits: beneficiary.numberOfVisits,
-        phone: beneficiary.phone,
-        specifyPurposeOfVisit: beneficiary.specifyPurposeOfVisit,
-        visitProposes: beneficiary.visitProposes,
-        status: beneficiary.status,
-        id: beneficiary.id,
-      );
+          ulid: ULID.fromString(beneficiary!.ulid),
+          biospEntity: BiospDto.fromIsar(beneficiary.biosp.value),
+          genreEntity: GenreDto.fromIsar(beneficiary.genre.value),
+          birthDate: beneficiary.birthDate,
+          serviceDate: beneficiary.serviceDate,
+          dateReceived: beneficiary.dateReceived,
+          provenanceEntity:
+              ProvenanceDto.fromIsar(beneficiary.provenance.value),
+          reasonOfOpeningCaseEntity: ReasonOfOpeningCaseDto.fromIsar(
+              beneficiary.reasonOfOpeningCase.value),
+          documentTypeEntity:
+              DocumentTypeDto.fromIsar(beneficiary.documentType.value),
+          otherDocumentType: beneficiary.otherDocumentType,
+          forwardedServiceEntity:
+              ForwardedServiceDto.fromIsar(beneficiary.forwardedService.value),
+          otherForwardedService: beneficiary.otherForwardedService,
+          purposeOfVisitEntity:
+              PurposeOfVisitDto.fromIsar(beneficiary.purposeOfVisit.value),
+          otherReasonOfOpeningCase: beneficiary.otherReasonOfOpeningCase,
+          fullName: beneficiary.fullName,
+          homeCare: beneficiary.homeCare,
+          numberOfVisits: beneficiary.numberOfVisits,
+          phone: beneficiary.phone,
+          specifyPurposeOfVisit: beneficiary.specifyPurposeOfVisit,
+          visitProposes: beneficiary.visitProposes,
+          status: beneficiary.status,
+          id: beneficiary.id,
+          createdAt: beneficiary.createdAt,
+          updatedAt: beneficiary.updatedAt);
 
   static Beneficiary fromEntity(BeneficiaryEntity beneficiaryEntity) =>
       Beneficiary()
@@ -69,5 +71,7 @@ abstract class BeneficiaryDto {
         ..specifyPurposeOfVisit = beneficiaryEntity.specifyPurposeOfVisit
         ..visitProposes = beneficiaryEntity.visitProposes
         ..status = beneficiaryEntity.status
-        ..id = beneficiaryEntity.id;
+        ..id = beneficiaryEntity.id
+        ..createdAt = beneficiaryEntity.createdAt
+        ..updatedAt = beneficiaryEntity.updatedAt;
 }

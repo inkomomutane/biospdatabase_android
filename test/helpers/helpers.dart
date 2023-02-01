@@ -68,6 +68,10 @@ final PurposeOfVisitEntity purposeOfVisitEntity = PurposeOfVisitEntity(
 const String specifyPurposeOfVisit = "";
 const String visitProposes = "";
 const bool status = false;
+DateTime createdAt = DateTime.now();
+
+DateTime updatedAt = DateTime.now();
+
 
 BeneficiaryEntity beneficiaryEntityTestTrait() {
   return BeneficiaryEntity(
@@ -92,6 +96,8 @@ BeneficiaryEntity beneficiaryEntityTestTrait() {
     specifyPurposeOfVisit: specifyPurposeOfVisit,
     visitProposes: visitProposes,
     status: status,
+    createdAt: createdAt,
+    updatedAt: updatedAt,
     id: 1,
   );
 }

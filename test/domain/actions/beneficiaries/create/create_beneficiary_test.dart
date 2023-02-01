@@ -10,7 +10,7 @@ import '../../../repositories/beneficiaries/create/create_beneficiary_repository
 void main() {
   setUp(() => TestingInject.init());
 
-  test('it action should return created beneficiary', () async {
+  test('it action should created beneficiary', () async {
 
     when(GetIt.I<MockCreateBeneficiaryRepository>()(
         beneficiaryEntityTestTrait()))

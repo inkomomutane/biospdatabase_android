@@ -9,7 +9,7 @@ import '../../../repositories/beneficiaries/get/get_beneficiaries_repository_tes
 
 void main() {
   setUp(() => TestingInject.init());
-  test('it should return all beneficiaries.', () async {
+  test('it should get all beneficiaries.', () async {
     when( GetIt.I<MockGetBeneficiariesRepository>()()).thenAnswer((answer) =>
         Future(() => ErrorHandler.right(listOfBeneficiaryEntityTestTrait())));
     final beneficiaryEntities = await GetIt.I<GetBeneficiaries>()();

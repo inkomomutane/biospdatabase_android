@@ -17,7 +17,7 @@ void main() {
     ulid = ULID.nextULID();
   });
 
-  test('it repository should return delete beneficiary by ulid.', () async {
+  test('it repository should delete beneficiary by ulid.', () async {
     when( GetIt.I<MockDeleteBeneficiaryRepository>()(ulid)).thenAnswer((answer) =>
         Future(() => ErrorHandler.right(beneficiaryEntityTestTrait())));
     final beneficiaryEntity = await  GetIt.I.get<DeleteBeneficiary>()(ulid);

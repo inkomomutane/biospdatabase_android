@@ -28,6 +28,8 @@ class Beneficiary {
   late String specifyPurposeOfVisit;
   late String visitProposes;
   late bool status;
+  late DateTime createdAt;
+  late DateTime updatedAt;
   final biosp = IsarLink<Biosp>();
   final genre = IsarLink<Genre>();
   final provenance = IsarLink<Provenance>();

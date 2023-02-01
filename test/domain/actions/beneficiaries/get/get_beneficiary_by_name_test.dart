@@ -17,7 +17,7 @@ void main() {
         getBeneficiaryByNameRepository: mockGetBeneficiaryByNameRepository);
   });
 
-  test('it repository should get beneficiary by name.', () async {
+  test('it should get beneficiary by name.', () async {
     when(mockGetBeneficiaryByNameRepository(name)).thenAnswer((answer) =>
         Future(() => ErrorHandler.right(beneficiaryEntityTestTrait())));
     final beneficiaryEntity = await getBeneficiaryByName(name);

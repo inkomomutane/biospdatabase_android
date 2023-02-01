@@ -37,11 +37,13 @@ class BeneficiaryEntity extends Equatable with _$BeneficiaryEntity {
     @Default("") String specifyPurposeOfVisit,
     @Default("") String visitProposes,
     @Default(true) bool status,
+    required DateTime createdAt,
+    required DateTime updatedAt,
   }) = _BeneficiaryEntity;
 
   @override
   List<Object?> get props => [
-    id,
+        id,
         biospEntity,
         ulid,
         fullName,
@@ -63,5 +65,7 @@ class BeneficiaryEntity extends Equatable with _$BeneficiaryEntity {
         specifyPurposeOfVisit,
         visitProposes,
         status,
+        createdAt,
+        updatedAt,
       ];
 }

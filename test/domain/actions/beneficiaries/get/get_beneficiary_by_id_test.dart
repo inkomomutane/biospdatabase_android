@@ -16,7 +16,7 @@ void main() {
     ulid = TestingInject.ulid;
   });
 
-  test('it repository should return get beneficiary by ulid.', () async {
+  test('it should get beneficiary by ulid.', () async {
 
     when(GetIt.I<MockGetBeneficiaryByIdRepository>()(ulid))
         .thenAnswer((answer) =>
