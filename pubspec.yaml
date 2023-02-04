@@ -63,6 +63,7 @@ dependencies:
   flutter_local_notifications: ^13.0.0
   flutter_native_splash: ^2.2.17
   image: ^4.0.13
+  flex_color_scheme: ^6.1.2
   
 flutter_icons:
   android: "ic_launcher"

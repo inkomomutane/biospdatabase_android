@@ -13,7 +13,9 @@ part 'beneficiary.g.dart';
 @Collection(accessor: 'beneficiaries')
 class Beneficiary {
   Id? id;
+  
   @Index(unique: true)
+  
   late String ulid;
   late String fullName;
   late int numberOfVisits;
@@ -28,8 +30,12 @@ class Beneficiary {
   late String specifyPurposeOfVisit;
   late String visitProposes;
   late bool status;
+
+  @Index()
   late DateTime createdAt;
+  @Index()
   late DateTime updatedAt;
+
   final biosp = IsarLink<Biosp>();
   final genre = IsarLink<Genre>();
   final provenance = IsarLink<Provenance>();
@@ -37,4 +43,7 @@ class Beneficiary {
   final documentType = IsarLink<DocumentType>();
   final forwardedService = IsarLink<ForwardedService>();
   final purposeOfVisit = IsarLink<PurposeOfVisit>();
+
+  @Index(type: IndexType.value, caseSensitive: false)
+  List<String> get fullNameWords => Isar.splitWords(fullName);
 }
