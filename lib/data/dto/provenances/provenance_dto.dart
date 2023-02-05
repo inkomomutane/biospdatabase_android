@@ -1,3 +1,4 @@
+import 'package:biosp/core/inject.dart';
 import 'package:ulid4d/ulid4d.dart';
 
 import '../../../domain/entity/provenances/provenance_entity.dart';
@@ -14,4 +15,7 @@ abstract class ProvenanceDto {
         ..name = provenanceEntity!.name
         ..ulid = provenanceEntity.ulid.toString()
         ..id = provenanceEntity.id;
+
+  static Provenance fromGraphql(Map<String,dynamic> graphql) => Provenance()
+    ..name = graphql['name']..ulid =  Inject.toUppercase(graphql['ulid'] as String);
 }

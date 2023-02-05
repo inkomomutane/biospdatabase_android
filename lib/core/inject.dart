@@ -1,7 +1,10 @@
+import 'package:graphql/client.dart';
+
 import '../data/datasource/isar/datasource/get_all_beneficiaries_datasource.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
+import '../data/datasource/isar/model/auth/auth.dart';
 import '../data/datasource/isar/model/beneficiaries/beneficiary.dart';
 import '../data/datasource/isar/model/biosps/biosp.dart';
 import '../data/datasource/isar/model/document_types/document_type.dart';
@@ -24,21 +27,16 @@ class Inject {
           ProvenanceSchema,
           PurposeOfVisitSchema,
           ReasonOfOpeningCaseSchema,
+          AuthSchema,
         ]));
-    getIt.registerLazySingleton<GetBeneficiariesRepository>(
-        () => GetAllBeneficiariesDatasource(GetIt.instance()));
-  }
+    getIt.registerLazySingleton<GetBeneficiariesRepository>(() => GetAllBeneficiariesDatasource(GetIt.instance()));
+    getIt.registerLazySingleton<AuthLink>(() => AuthLink(getToken: () => 'Bearer ${GetIt.I<Isar>().auths.getSync(1)?.token}'));
+    getIt.registerLazySingleton<Link>(() => GetIt.I<AuthLink>().concat(HttpLink('http://127.0.0.1:8000/graphql')));
 
-  static int fastHash(String ulid) {
-    var hash = 0xcbf29ce484222325;
-    var i = 0;
-    while (i < ulid.length) {
-      final codeUnit = ulid.codeUnitAt(i++);
-      hash ^= codeUnit >> 8;
-      hash *= 0x100000001b3;
-      hash ^= codeUnit & 0xFF;
-      hash *= 0x100000001b3;
-    }
-    return hash;
+    getIt.registerLazySingleton<GraphQLClient>(() => GraphQLClient(cache: GraphQLCache(),
+    link: GetIt.instance<Link>(),
+    ));
   }
+  static String toUppercase(String? string) => string!.toUpperCase();
+  static String toLowerCase(String? string) => string!.toLowerCase();
 }

@@ -14,4 +14,7 @@ abstract class AuthDto {
         email: authEntity.email,
         token: authEntity.token,
       );
+
+  static Auth fromGraphql(Map<String,dynamic> graphql) => Auth(name: graphql['name'], email: graphql['email'], token: graphql['token']);
+
 }

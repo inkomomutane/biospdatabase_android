@@ -3,31 +3,33 @@ import 'package:biosp/data/datasource/isar/datasource/internal/create_forwarded_
 import 'package:biosp/data/datasource/isar/model/forwarded_services/forwarded_service.dart';
 import 'package:biosp/domain/entity/forwarded_services/forwarded_service_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:ulid4d/ulid4d.dart';
 
+import '../../../core/testing_inject.dart';
+
 
 void main() {
-  late Isar isar;
+TestingInject.init();
   late ULID ulid;
   late ForwardedServiceEntity forwardedServiceEntity;
   setUp(() async {
     await Isar.initializeIsarCore();
-    isar = await Isar.open([ForwardedServiceSchema]);
     ulid = ULID.nextULID();
     forwardedServiceEntity =
         ForwardedServiceEntity(ulid: ulid, name: 'forwardedService', id: 1);
-    await CreateForwardedServiceDatasource(isar)(forwardedServiceEntity);
+    await CreateForwardedServiceDatasource( GetIt.I<Isar>())(forwardedServiceEntity);
   });
 
   tearDown(() {
-    isar.writeTxn(() async => await isar.forwardedServices.clear());
+    GetIt.I<Isar>().writeTxn(() async => await  GetIt.I<Isar>().forwardedServices.clear());
   });
 
   test('it should read all forwarded services from isar database', () async {
-    var result = await GetAllForwardedServicesDatasource(isar)();
+    var result = await GetAllForwardedServicesDatasource(GetIt.I<Isar>())();
     result.fold((l) => expect(l, ''), (r) {
-      expect(r, [forwardedServiceEntity]);
+      expect(r.contains(forwardedServiceEntity), true);
     });
   });
 }

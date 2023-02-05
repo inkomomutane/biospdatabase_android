@@ -1,3 +1,4 @@
+import 'package:biosp/data/datasource/isar/model/auth/auth.dart';
 import 'package:biosp/data/datasource/isar/model/beneficiaries/beneficiary.dart';
 import 'package:biosp/data/datasource/isar/model/biosps/biosp.dart';
 import 'package:biosp/data/datasource/isar/model/document_types/document_type.dart';
@@ -35,6 +36,7 @@ class TestingInject {
           ProvenanceSchema,
           PurposeOfVisitSchema,
           ReasonOfOpeningCaseSchema,
+          AuthSchema
         ]));
     //Repositories Implementations
     getIt.registerLazySingleton<MockCreateBeneficiaryRepository>(

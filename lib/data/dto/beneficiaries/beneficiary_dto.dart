@@ -1,3 +1,15 @@
+import 'dart:ffi';
+
+import 'package:biosp/core/inject.dart';
+import 'package:biosp/data/datasource/isar/model/biosps/biosp.dart';
+import 'package:biosp/data/datasource/isar/model/document_types/document_type.dart';
+import 'package:biosp/data/datasource/isar/model/forwarded_services/forwarded_service.dart';
+import 'package:biosp/data/datasource/isar/model/genres/genre.dart';
+import 'package:biosp/data/datasource/isar/model/provenances/provenance.dart';
+import 'package:biosp/data/datasource/isar/model/purposes_of_visit/purpose_of_visit.dart';
+import 'package:biosp/data/datasource/isar/model/reasons_of_opening_case/reason_of_opening_case.dart';
+import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
 import 'package:ulid4d/ulid4d.dart';
 
 import '../../../domain/entity/beneficiaries/beneficiary_entity.dart';
@@ -74,4 +86,35 @@ abstract class BeneficiaryDto {
         ..id = beneficiaryEntity.id
         ..createdAt = beneficiaryEntity.createdAt
         ..updatedAt = beneficiaryEntity.updatedAt;
+
+  static Beneficiary fromGraphql(Map<String,dynamic> graphql) => Beneficiary()
+    ..fullName = graphql['fullName'] ?? ""
+    ..biosp.value = GetIt.I<Isar>().biosps.where().findFirstSync()
+    ..ulid = Inject.toUppercase(graphql['ulid'])
+    ..genre.value = GetIt.I<Isar>().genres.filter().ulidEqualTo(GenreDto.fromGraphql(graphql['genre']).ulid
+    ).findFirstSync()
+    ..birthDate = DateTime.parse(graphql['birth_date'])
+    ..serviceDate = DateTime.parse(graphql['service_date'])
+    ..dateReceived = DateTime.parse(graphql['date_received'])
+    ..provenance.value =GetIt.I<Isar>().provenances.filter().ulidEqualTo(ProvenanceDto.fromGraphql(graphql['provenance']).ulid
+    ).findFirstSync()
+    ..reasonOfOpeningCase.value = GetIt.I<Isar>().reasonOfOpeningCases.filter().ulidEqualTo(ReasonOfOpeningCaseDto.fromGraphql(graphql['reason_opening_case']).ulid
+    ).findFirstSync()
+    ..documentType.value = GetIt.I<Isar>().documentTypes.filter().ulidEqualTo(DocumentTypeDto.fromGraphql(graphql['document_type']).ulid
+    ).findFirstSync()
+    ..otherDocumentType = graphql['other_document_type'] ?? ""
+    ..forwardedService.value = GetIt.I<Isar>().forwardedServices.filter().ulidEqualTo(ForwardedServiceDto.fromGraphql(graphql['forwarded_service']).ulid
+    ).findFirstSync()
+    ..otherForwardedService = graphql['other_forwarded_service'] ?? ""
+    ..purposeOfVisit.value = GetIt.I<Isar>().purposeOfVisits.filter().ulidEqualTo(PurposeOfVisitDto.fromGraphql(graphql['purpose_of_visit']).ulid
+    ).findFirstSync()
+    ..otherReasonOfOpeningCase = graphql['other_reason_of_opening_case'] ?? ""
+    ..homeCare = bool.fromEnvironment(graphql['home_care'])
+    ..numberOfVisits = int.parse(graphql['number_of_visits'])
+    ..phone = graphql['phone'] ?? ""
+    ..specifyPurposeOfVisit = graphql['specify_purpose_of_visit'] ?? ""
+    ..visitProposes = graphql['visit_proposes'] ?? ""
+    ..status = bool.fromEnvironment(graphql['status'])
+    ..createdAt = DateTime.parse(graphql['created_at'])
+    ..updatedAt = DateTime.parse(graphql['updated_at']);
 }

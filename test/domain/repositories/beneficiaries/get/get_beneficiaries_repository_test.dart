@@ -15,7 +15,8 @@ void main() {
   });
   test('it repository should return all beneficiaries.', () async {
     when(mockGetBeneficiariesRepository()).thenAnswer( (answer) =>
-      Future(() => ErrorHandler.right(listOfBeneficiaryEntityTestTrait())));
+      Future(() => ErrorHandler.right(listOfBeneficiaryEntityTestTrait()))
+    );
     final beneficiaryEntities = await mockGetBeneficiariesRepository();
     beneficiaryEntities.fold((l) => null, (r) => expect((r).first == listOfBeneficiaryEntityTestTrait().first ,true)
     );

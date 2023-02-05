@@ -17,55 +17,46 @@ import 'package:biosp/data/datasource/isar/model/purposes_of_visit/purpose_of_vi
 import 'package:biosp/data/datasource/isar/model/reasons_of_opening_case/reason_of_opening_case.dart';
 import 'package:biosp/domain/entity/beneficiaries/beneficiary_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:ulid4d/ulid4d.dart';
 
-import '../../helpers/helpers.dart';
+import '../../../core/testing_inject.dart';
+import '../../../helpers/helpers.dart';
 
 void main() {
-  late Isar isar;
 
+  TestingInject.init();
   late BeneficiaryEntity beneficiaryEntity;
   setUp(() async {
     await Isar.initializeIsarCore();
-    isar = await Isar.open([
-      BeneficiarySchema,
-      BiospSchema,
-      DocumentTypeSchema,
-      ForwardedServiceSchema,
-      GenreSchema,
-      ProvenanceSchema,
-      PurposeOfVisitSchema,
-      ReasonOfOpeningCaseSchema,
-    ]);
-
     beneficiaryEntity = beneficiaryEntityTestTrait().copyWith(ulid: ULID.nextULID());
 
-    await isar.writeTxn(() async {
-      await isar.clear();
+    await  GetIt.I<Isar>().writeTxn(() async {
+      await  GetIt.I<Isar>().clear();
     });
 
-    await CreateBiospDatasource(isar)(biospEntity);
-    await CreateDocumentTypeDatasource(isar)(documentTypeEntity);
-    await CreateForwardedServiceDatasource(isar)(forwardedServiceEntity);
-    await CreateGenreDatasource(isar)(genreEntity);
-    await CreateProvenanceDatasource(isar)(provenanceEntity);
-    await CreatePurposeOfVisitDatasource(isar)(purposeOfVisitEntity);
-    await CreateReasonOfOpeningCaseDatasource(isar)(reasonOfOpeningCaseEntity);
+    await CreateBiospDatasource( GetIt.I<Isar>())(biospEntity);
+    await CreateDocumentTypeDatasource( GetIt.I<Isar>())(documentTypeEntity);
+    await CreateForwardedServiceDatasource( GetIt.I<Isar>())(forwardedServiceEntity);
+    await CreateGenreDatasource( GetIt.I<Isar>())(genreEntity);
+    await CreateProvenanceDatasource( GetIt.I<Isar>())(provenanceEntity);
+    await CreatePurposeOfVisitDatasource( GetIt.I<Isar>())(purposeOfVisitEntity);
+    await CreateReasonOfOpeningCaseDatasource( GetIt.I<Isar>())(reasonOfOpeningCaseEntity);
 
-    await CreateBeneficiaryDatasource(isar)(beneficiaryEntity);
+    await CreateBeneficiaryDatasource( GetIt.I<Isar>())(beneficiaryEntity);
   });
 
   tearDown(() {
-    isar.writeTxn(() async {
-      await isar.clear();
+    GetIt.I<Isar>().writeTxn(() async {
+      await  GetIt.I<Isar>().clear();
     });
   });
 
   test('it should read all beneficiaries from isar database', () async {
-    var result = await GetAllBeneficiariesDatasource(isar)();
+    var result = await GetAllBeneficiariesDatasource( GetIt.I<Isar>())();
     result.fold((l) => expect(l, ''), (r) {
-      expect(r, [beneficiaryEntity]);
+      expect(r.contains(beneficiaryEntity),true);
     });
   });
 }

@@ -4,26 +4,28 @@ import 'package:biosp/data/datasource/isar/datasource/internal/store_auth_dataso
 import 'package:biosp/data/datasource/isar/model/auth/auth.dart';
 import 'package:biosp/domain/entity/auth/auth_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
+
+import '../../../../core/testing_inject.dart';
 
 
 
 void main() {
-  late Isar isar;
+TestingInject.init();
   late AuthEntity authEntity;
   setUp(() async {
     await Isar.initializeIsarCore();
-    isar = await Isar.open([AuthSchema]);
     authEntity = const AuthEntity(
         email: 'email@test.com',
         name: 'Task',
         token: 'jkhskjsvgskdgvskdv',
         id: 1);
-    await StoreAuthDatasource(isar)(authEntity);
+    await StoreAuthDatasource( GetIt.I<Isar>())(authEntity);
   });
 
   test('it should read auth user from isar database', () async {
-    var result = await GetAuthUserDatasource(isar)();
+    var result = await GetAuthUserDatasource( GetIt.I<Isar>())();
     result.fold((l) => expect(l, ''), (r) {
       expect(r, authEntity);
     });

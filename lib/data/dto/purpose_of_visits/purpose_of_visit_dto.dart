@@ -1,3 +1,4 @@
+import 'package:biosp/core/inject.dart';
 import 'package:ulid4d/ulid4d.dart';
 
 import '../../../domain/entity/purposes_of_visit/purpose_of_visit_entity.dart';
@@ -16,4 +17,7 @@ abstract class PurposeOfVisitDto {
         ..name = purposeOfVisitEntity!.name
         ..ulid = purposeOfVisitEntity.ulid.toString()
         ..id = purposeOfVisitEntity.id;
+
+  static PurposeOfVisit fromGraphql(Map<String,dynamic> graphql) => PurposeOfVisit()
+    ..name = graphql['name']..ulid =  Inject.toUppercase(graphql['ulid'] as String);
 }

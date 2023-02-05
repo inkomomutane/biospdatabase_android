@@ -1,3 +1,4 @@
+import 'package:biosp/core/inject.dart';
 import 'package:ulid4d/ulid4d.dart';
 
 import '../../../domain/entity/genres/genre_entity.dart';
@@ -11,4 +12,7 @@ abstract class GenreDto {
     ..name = genreEntity!.name
     ..ulid = genreEntity.ulid.toString()
     ..id = genreEntity.id;
+
+  static Genre fromGraphql(Map<String,dynamic> graphql) => Genre()
+    ..name = graphql['name']..ulid =  Inject.toUppercase(graphql['ulid'] as String);
 }

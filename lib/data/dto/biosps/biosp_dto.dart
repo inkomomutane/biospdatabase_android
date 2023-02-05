@@ -1,5 +1,6 @@
 import 'package:ulid4d/ulid4d.dart';
 
+import '../../../core/inject.dart';
 import '../../../domain/entity/biosps/biosp_entity.dart';
 import '../../datasource/isar/model/biosps/biosp.dart';
 
@@ -15,4 +16,8 @@ abstract class BiospDto {
     ..ulid = biospEntity.ulid.toString()
     ..projectName = biospEntity.projectName
     ..id = biospEntity.id;
+
+  static Biosp fromGraphql(Map<String,dynamic> graphql) => Biosp()
+    ..name = graphql['name']..ulid =  Inject.toUppercase(graphql['ulid'] as String)
+    ..projectName = graphql['project_name'];
 }

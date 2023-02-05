@@ -1,6 +1,7 @@
 import 'package:biosp/counter_cubit.dart';
 import 'package:biosp/translations/codegen_loader.g.dart';
 import 'package:biosp/translations/locale_keys.g.dart';
+import 'package:biosp/views/components/text_component.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class CounterHome extends StatelessWidget {
   final ThemeMode mode = ThemeMode.light;
   @override
   Widget build(BuildContext context) {
-    const FlexScheme usedScheme = FlexScheme.flutterDash;
+    const FlexScheme usedScheme = FlexScheme.bigStone;
     return MaterialApp(
       title: 'Counter App',
       theme: FlexThemeData.light(
@@ -86,7 +87,7 @@ class CounterHome extends StatelessWidget {
                 ),
                 body: ListView(
                   children: [
-                    Text("Rebuilded: ${LocaleKeys.Hi.tr()}"),
+                    Text("Rebuild: ${LocaleKeys.Hi.tr()}"),
                     DatePickerDialog(
                         initialDate: DateTime.now(),
                         firstDate: DateTime(1900),
@@ -113,7 +114,10 @@ class CounterHome extends StatelessWidget {
                       ),
                       onChanged: print,
                       selectedItem: "Brazil",
-                    )
+                    ),
+                    TextComponent(hintText: LocaleKeys.Hi.tr())
+
+
                   ],
                 ));
           },

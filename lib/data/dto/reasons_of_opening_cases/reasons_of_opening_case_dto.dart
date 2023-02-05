@@ -1,3 +1,4 @@
+import 'package:biosp/core/inject.dart';
 import 'package:ulid4d/ulid4d.dart';
 
 import '../../../domain/entity/reasons_of_opening_case/reason_of_opening_case_entity.dart';
@@ -17,4 +18,11 @@ abstract class ReasonOfOpeningCaseDto {
         ..name = reasonOfOpeningCaseEntity!.name
         ..ulid = reasonOfOpeningCaseEntity.ulid.toString()
         ..id = reasonOfOpeningCaseEntity.id;
+
+  static ReasonOfOpeningCase fromGraphql(Map<String,dynamic> graphql) => ReasonOfOpeningCase()
+    ..name = graphql['name']..ulid =  Inject.toUppercase(graphql['ulid'] as String);
 }
+
+
+
+

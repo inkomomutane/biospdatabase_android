@@ -3,31 +3,33 @@ import 'package:biosp/data/datasource/isar/model/genres/genre.dart';
 import 'package:biosp/data/dto/genres/genre_dto.dart';
 import 'package:biosp/domain/entity/genres/genre_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:ulid4d/ulid4d.dart';
 
+import '../../../../core/testing_inject.dart';
+
 
 void main() {
-  late Isar isar;
+TestingInject.init();
   late ULID ulid;
   late GenreEntity genreEntity;
   setUp(() async {
     await Isar.initializeIsarCore();
-    isar = await Isar.open([GenreSchema]);
     ulid = ULID.nextULID();
     genreEntity = GenreEntity(ulid: ulid, name: 'genre');
   });
 
   tearDown(() {
-    isar.writeTxn(() async => await isar.genres.clear());
+    GetIt.I<Isar>().writeTxn(() async => await  GetIt.I<Isar>().genres.clear());
   });
 
   test('it should create genre from isar database', () async {
-    var result = await CreateGenreDatasource(isar)(genreEntity);
+    var result = await CreateGenreDatasource( GetIt.I<Isar>())(genreEntity);
     result.fold((l)  => expect(l,''), (r) async {
       GenreEntity genreIsar = genreEntity.copyWith(id: r);
-      var genre = await isar
-          .txn(() async => GenreDto.fromIsar((await isar.genres.get(1))));
+      var genre = await  GetIt.I<Isar>()
+          .txn(() async => GenreDto.fromIsar((await  GetIt.I<Isar>().genres.get(1))));
       expect(genre, genreIsar);
     });
   });

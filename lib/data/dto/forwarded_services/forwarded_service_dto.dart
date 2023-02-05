@@ -1,3 +1,4 @@
+import 'package:biosp/core/inject.dart';
 import 'package:ulid4d/ulid4d.dart';
 
 import '../../../domain/entity/forwarded_services/forwarded_service_entity.dart';
@@ -16,4 +17,6 @@ abstract class ForwardedServiceDto {
         ..id = forwardedServiceEntity!.id
         ..name = forwardedServiceEntity.name
         ..ulid = forwardedServiceEntity.ulid.toString();
+  static ForwardedService fromGraphql(Map<String,dynamic> graphql) => ForwardedService()
+    ..name = graphql['name']..ulid =  Inject.toUppercase(graphql['ulid'] as String);
 }
