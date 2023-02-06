@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  bottom_navy_bar:
+    dependency: "direct main"
+    description:
+      name: bottom_navy_bar
+      sha256: b30d9a566909b9a56f366b9e8abe0c24ef8939e4b464d1cad5ded6a1e2dcfca1
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.0"
   build:
     dependency: transitive
     description:
@@ -181,10 +189,18 @@ packages:
     dependency: "direct main"
     description:
       name: connectivity_plus
-      sha256: f353f9572ff1551b1e9a49ede295b942afb4bb2f9e40a45a191fa11163ffbeeb
+      sha256: "745ebcccb1ef73768386154428a55250bc8d44059c19fd27aecda2a6dc013a22"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.1"
+    version: "3.0.2"
+  connectivity_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: connectivity_plus_platform_interface
+      sha256: b8795b9238bf83b64375f63492034cb3d8e222af4d9ce59dda085edf038fa06f
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.3"
   convert:
     dependency: transitive
     description:
@@ -241,6 +257,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  datetime_picker_formfield:
+    dependency: "direct main"
+    description:
+      name: datetime_picker_formfield
+      sha256: "6d0412c98cc5da18a5dca1f81f82a834fbacdb5d249fd6d9bed42d912339720e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   datetime_picker_formfield_new:
     dependency: "direct main"
     description:
@@ -758,6 +782,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  nm:
+    dependency: transitive
+    description:
+      name: nm
+      sha256: "2c9aae4127bdc8993206464fcc063611e0e36e72018696cd9631023a31b24254"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.0"
   node_preamble:
     dependency: transitive
     description:
@@ -838,6 +870,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.3"
+  persistent_bottom_nav_bar:
+    dependency: "direct main"
+    description:
+      name: persistent_bottom_nav_bar
+      sha256: e2e031e3366fde01511e372a9a19d720a9b252bb456e5c8d77a30d7a4a2ddfb0
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.2"
   petitparser:
     dependency: transitive
     description:
@@ -918,6 +958,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+  select_form_field:
+    dependency: "direct main"
+    description:
+      name: select_form_field
+      sha256: "11b2ab3842b9da2a49a7933239c3d428e0cd2d0aa6a70b7e70f370dbf263a751"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   shared_preferences:
     dependency: transitive
     description:
@@ -1252,5 +1300,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.18.0 <3.0.0"
+  dart: ">=2.18.0 <4.0.0"
   flutter: ">=3.7.0"

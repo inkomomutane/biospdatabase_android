@@ -1,6 +1,13 @@
 import 'package:biosp/counter_cubit.dart';
 import 'package:biosp/translations/codegen_loader.g.dart';
 import 'package:biosp/translations/locale_keys.g.dart';
+import 'package:biosp/views/components/label_component.dart';
+import 'package:biosp/views/components/number_component.dart';
+import 'package:biosp/views/components/password_component.dart';
+import 'package:biosp/views/components/phone_number_component.dart';
+import 'package:biosp/views/components/select_component.dart';
+import 'package:biosp/views/components/date_component.dart';
+import 'package:biosp/views/components/datetime_component.dart';
 import 'package:biosp/views/components/text_component.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
@@ -37,17 +44,53 @@ class CounterHome extends StatelessWidget {
   final ThemeMode mode = ThemeMode.light;
   @override
   Widget build(BuildContext context) {
-    const FlexScheme usedScheme = FlexScheme.bigStone;
+    const FlexScheme usedScheme = FlexScheme.amber;
     return MaterialApp(
       title: 'Counter App',
+      // theme: FlexThemeData.light(
+      //     useMaterial3: true,
+      //     textTheme: GoogleFonts.jostTextTheme(),
+      //     scheme: usedScheme),
+      // darkTheme: FlexThemeData.dark(
+      //     useMaterial3: true,
+      //     textTheme: GoogleFonts.jostTextTheme(),
+      //     scheme: usedScheme),
+
+
+      // Made for FlexColorScheme version 7.0.0-dev.2 (beta). Make sure
+// you use same or higher version, but still same major version. If
+// you use a lower version, some properties may not be supported. In
+// that case you can also remove them after copying the theme to your app.
       theme: FlexThemeData.light(
-          useMaterial3: true,
-          textTheme: GoogleFonts.jostTextTheme(),
-          scheme: usedScheme),
+        scheme: usedScheme,
+        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+        blendLevel: 9,
+        // tabBarStyle: null,
+        visualDensity: FlexColorScheme.comfortablePlatformDensity,
+        useMaterial3: true,
+        swapLegacyOnMaterial3: true,
+
+        // To use the playground font, add GoogleFonts package and uncomment
+        fontFamily: GoogleFonts.jost().fontFamily,
+      ),
       darkTheme: FlexThemeData.dark(
-          useMaterial3: true,
-          textTheme: GoogleFonts.jostTextTheme(),
-          scheme: usedScheme),
+        scheme: usedScheme,
+        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+        blendLevel: 15,
+        // tabBarStyle: null,
+        visualDensity: FlexColorScheme.comfortablePlatformDensity,
+        useMaterial3: true,
+        swapLegacyOnMaterial3: true,
+        // To use the Playground font, add GoogleFonts package and uncomment
+        fontFamily: GoogleFonts.jost().fontFamily,
+      ),
+// If you do not have a themeMode switch, uncomment this line
+// to let the device system mode control the theme mode:
+// themeMode: ThemeMode.system,
+
+
+
+
       themeMode: mode,
       home: BlocListener<CounterCubit, CounterState>(
         listener: (context, state) {
@@ -88,13 +131,10 @@ class CounterHome extends StatelessWidget {
                 body: ListView(
                   children: [
                     Text("Rebuild: ${LocaleKeys.Hi.tr()}"),
-                    DatePickerDialog(
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime(2100)),
-                    TextFormField(),
-                    DropdownButtonFormField(items: [], onChanged: (option) {}),
-                    DropdownSearch<String>(
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 35, right: 35, top: 10),
+                      child: DropdownSearch<String>(
                       popupProps: PopupProps.menu(
                         showSelectedItems: true,
                         showSearchBox: true,
@@ -115,7 +155,30 @@ class CounterHome extends StatelessWidget {
                       onChanged: print,
                       selectedItem: "Brazil",
                     ),
-                    TextComponent(hintText: LocaleKeys.Hi.tr())
+                    ),
+                    TextComponent(hintText: LocaleKeys.Hi.tr()),
+                    DateTimeComponent(),
+                    DateComponent(),
+                    PasswordComponent(hintText: 'Password',),
+                    const LabelComponent(labelText: 'Name'),
+                    SelectComponent(hintText: 'T', items: const <String>[
+                      "Brazil",
+                      "Italia (Disabled)",
+                      "Tunisia",
+                      'Canada',
+                      'Massamba',
+                      'manguinha',
+                      'Serão',
+                      'Fuja',
+                      'Sopo',
+                      'Menga'
+                    ]),
+                    const LabelComponent(labelText: 'Name'),
+                    NumberComponent(),
+                    const LabelComponent(labelText: ''),
+                    PhoneNumberComponent(),
+                    const LabelComponent(labelText: ''),
+
 
 
                   ],
