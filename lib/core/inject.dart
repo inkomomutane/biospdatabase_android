@@ -1,3 +1,4 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:graphql/client.dart';
 
 import '../data/datasource/isar/datasource/get_all_beneficiaries_datasource.dart';
@@ -39,4 +40,9 @@ class Inject {
   }
   static String toUppercase(String? string) => string!.toUpperCase();
   static String toLowerCase(String? string) => string!.toLowerCase();
+}
+
+@pragma('vm:entry-point')
+ void notificationTapBackground(NotificationResponse notificationResponse) {
+  // handle action
 }
