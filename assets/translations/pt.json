@@ -67,5 +67,7 @@
     "previous": "Previous",
     "beneficiary": "Beneficiário",
     "beneficiaries": "Beneficiários",
-    "Sync": "Sync"
+    "Sync": "Sync",
+    "email_error" : "O campo não contém um endereço de e-mail válido.",
+    "string_length" : "O campo {attribute} tem de ter mais de {value} caracteres."
 }

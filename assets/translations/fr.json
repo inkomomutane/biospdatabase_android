@@ -67,5 +67,7 @@
     "previous": "Précédent",
     "beneficiary": "Beneficiárie",
     "beneficiaries": "Beneficiáries",
-    "Sync": "Sync"
+    "Sync": "Sync",
+    "email_error" : "Le champ doit être une adresse e-mail valide.",
+    "string_length" : "Le texte {attribute} doit contenir plus de {value} caractères."
 }

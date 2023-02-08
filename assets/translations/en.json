@@ -67,5 +67,7 @@
     "previous": "Previous",
     "beneficiary": "Beneficiary",
     "beneficiaries": "Beneficiaries",
-    "Sync": "Sync"
+    "Sync": "Sync",
+    "email_error" : "The field must be a valid email address.",
+    "string_length" : "The {attribute} must be greater than {value} characters."
 }
