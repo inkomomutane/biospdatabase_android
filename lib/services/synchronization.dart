@@ -1,5 +1,5 @@
 
-import 'package:biosp/core/error_handler.dart';
+import '../core/error_handler.dart';
 
 abstract class Synchronization {
 

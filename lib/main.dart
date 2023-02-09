@@ -1,8 +1,10 @@
-import 'package:biosp/bloc/components/cubit/login_cubit.dart';
-import 'package:biosp/core/inject.dart';
-import 'package:biosp/translations/codegen_loader.g.dart';
-import 'package:biosp/translations/locale_keys.g.dart';
-import 'package:biosp/views/screens/auth/auth_screen.dart';
+import 'package:biosp/bloc/components/cubit/hidden_passowrd_cubit.dart';
+
+import 'bloc/components/cubit/login_cubit.dart';
+import 'core/inject.dart';
+import 'translations/codegen_loader.g.dart';
+import 'translations/locale_keys.g.dart';
+import 'views/screens/auth/auth_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +28,15 @@ Future<void> main() async {
       assetLoader: const CodegenLoader(),
       startLocale: const Locale('pt'),
       saveLocale: true,
-      child: BlocProvider(
-        create: (context) => LoginCubit(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (loginContext) => LoginCubit(),
+          ),
+          BlocProvider(
+            create: (hiddenPasswordContext) => HiddenPassowrdCubit(),
+          ),
+        ],
         child: const CounterHome(),
       ),
     ),
@@ -36,7 +45,7 @@ Future<void> main() async {
 
 class CounterHome extends StatelessWidget {
   const CounterHome({super.key});
-  final ThemeMode mode = ThemeMode.dark;
+  final ThemeMode mode = ThemeMode.light;
   @override
   Widget build(BuildContext context) {
     const FlexScheme usedScheme = FlexScheme.deepBlue;

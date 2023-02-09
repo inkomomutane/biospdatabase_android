@@ -1,8 +1,8 @@
 
-import 'package:biosp/core/error_handler.dart';
-import 'package:biosp/core/inject.dart';
-import 'package:biosp/domain/entity/beneficiaries/beneficiary_entity.dart';
-import 'package:biosp/services/graphql.dart';
+import '../../../core/error_handler.dart';
+import '../../../core/inject.dart';
+import '../../../domain/entity/beneficiaries/beneficiary_entity.dart';
+import '../../../services/graphql.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class CreateBeneficiaryGraphqlDatasource{

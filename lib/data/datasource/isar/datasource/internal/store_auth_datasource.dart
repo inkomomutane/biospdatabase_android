@@ -1,7 +1,8 @@
-import 'package:biosp/core/error_handler.dart';
-import 'package:biosp/data/datasource/isar/model/auth/auth.dart';
-import 'package:biosp/data/dto/auth/auth_dto.dart';
-import 'package:biosp/domain/entity/auth/auth_entity.dart';
+import '../../../../../core/error_handler.dart';
+import '../../model/auth/auth.dart';
+import '../../../../dto/auth/auth_dto.dart';
+import '../../../../../domain/entity/auth/auth_entity.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:isar/isar.dart';
 

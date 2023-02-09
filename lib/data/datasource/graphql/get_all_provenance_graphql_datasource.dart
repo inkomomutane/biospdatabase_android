@@ -1,6 +1,6 @@
-import 'package:biosp/data/datasource/isar/model/provenances/provenance.dart';
-import 'package:biosp/data/dto/provenances/provenance_dto.dart';
-import 'package:biosp/services/graphql.dart';
+import '../isar/model/provenances/provenance.dart';
+import '../../dto/provenances/provenance_dto.dart';
+import '../../../services/graphql.dart';
 import 'package:fpdart/fpdart.dart';
 import '../../../../core/error_handler.dart';
 

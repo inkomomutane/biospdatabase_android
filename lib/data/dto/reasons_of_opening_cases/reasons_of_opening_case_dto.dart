@@ -1,4 +1,4 @@
-import 'package:biosp/core/inject.dart';
+import '../../../core/inject.dart';
 import 'package:ulid4d/ulid4d.dart';
 
 import '../../../domain/entity/reasons_of_opening_case/reason_of_opening_case_entity.dart';

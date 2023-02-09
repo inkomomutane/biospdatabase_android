@@ -1,6 +1,6 @@
-import 'package:biosp/data/datasource/isar/model/biosps/biosp.dart';
-import 'package:biosp/data/dto/biosps/biosp_dto.dart';
-import 'package:biosp/services/graphql.dart';
+import '../isar/model/biosps/biosp.dart';
+import '../../dto/biosps/biosp_dto.dart';
+import '../../../services/graphql.dart';
 import 'package:fpdart/fpdart.dart';
 import '../../../../core/error_handler.dart';
 class GetBiospGraphqlDatasource{

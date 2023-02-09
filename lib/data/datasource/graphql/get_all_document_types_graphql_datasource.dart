@@ -1,6 +1,6 @@
-import 'package:biosp/data/datasource/isar/model/document_types/document_type.dart';
-import 'package:biosp/data/dto/document_types/document_type_dto.dart';
-import 'package:biosp/services/graphql.dart';
+import '../isar/model/document_types/document_type.dart';
+import '../../dto/document_types/document_type_dto.dart';
+import '../../../services/graphql.dart';
 import 'package:fpdart/fpdart.dart';
 import '../../../../core/error_handler.dart';
 

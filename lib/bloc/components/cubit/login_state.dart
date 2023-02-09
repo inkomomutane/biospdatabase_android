@@ -10,8 +10,9 @@ class LoginState extends Equatable with _$LoginState {
     @Default('') String password,
     @Default(false) bool validated,
     @Default(false) bool authenticated,
+    @Default('') String ulid,
   }) = _LoginState;
 
   @override
-  List<Object?> get props => [email, password, validated, authenticated];
+  List<Object?> get props => [email, password, validated, authenticated, ulid];
 }

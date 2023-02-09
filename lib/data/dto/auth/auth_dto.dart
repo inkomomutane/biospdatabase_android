@@ -1,5 +1,5 @@
-import 'package:biosp/data/datasource/isar/model/auth/auth.dart';
-import 'package:biosp/domain/entity/auth/auth_entity.dart';
+import '../../datasource/isar/model/auth/auth.dart';
+import '../../../domain/entity/auth/auth_entity.dart';
 
 abstract class AuthDto {
   static AuthEntity fromIsar(Auth? auth) => AuthEntity(

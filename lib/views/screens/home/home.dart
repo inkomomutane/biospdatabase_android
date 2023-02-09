@@ -1,5 +1,5 @@
-import 'package:biosp/translations/locale_keys.g.dart';
-import 'package:biosp/views/screens/home/home_drawer_screen.dart';
+import '../../../translations/locale_keys.g.dart';
+import 'home_drawer_screen.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';

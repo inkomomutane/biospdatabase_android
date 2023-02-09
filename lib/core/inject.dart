@@ -30,19 +30,26 @@ class Inject {
           ReasonOfOpeningCaseSchema,
           AuthSchema,
         ]));
-    getIt.registerLazySingleton<GetBeneficiariesRepository>(() => GetAllBeneficiariesDatasource(GetIt.instance()));
-    getIt.registerLazySingleton<AuthLink>(() => AuthLink(getToken: () => 'Bearer ${GetIt.I<Isar>().auths.getSync(1)?.token}'));
-    getIt.registerLazySingleton<Link>(() => GetIt.I<AuthLink>().concat(HttpLink('http://127.0.0.1:8000/graphql')));
+    getIt.registerLazySingleton<GetBeneficiariesRepository>(
+        () => GetAllBeneficiariesDatasource(GetIt.instance()));
+    getIt.registerLazySingleton<AuthLink>(() => AuthLink(
+        getToken: () => 'Bearer ${GetIt.I<Isar>().auths.getSync(1)?.token}'));
+    getIt.registerLazySingleton<Link>(() =>
+        GetIt.I<AuthLink>().concat(HttpLink('http://127.0.0.1:8000/graphql')));
 
-    getIt.registerLazySingleton<GraphQLClient>(() => GraphQLClient(cache: GraphQLCache(),
-    link: GetIt.instance<Link>(),
-    ));
+    getIt.registerLazySingleton<GraphQLClient>(() => GraphQLClient(
+      alwaysRebroadcast: true,
+          cache: GraphQLCache(
+          ),
+          link: GetIt.instance<Link>(),
+        ));
   }
+
   static String toUppercase(String? string) => string!.toUpperCase();
   static String toLowerCase(String? string) => string!.toLowerCase();
 }
 
 @pragma('vm:entry-point')
- void notificationTapBackground(NotificationResponse notificationResponse) {
+void notificationTapBackground(NotificationResponse notificationResponse) {
   // handle action
 }

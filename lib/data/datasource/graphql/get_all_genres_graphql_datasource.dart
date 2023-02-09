@@ -1,6 +1,6 @@
-import 'package:biosp/data/datasource/isar/model/genres/genre.dart';
-import 'package:biosp/data/dto/genres/genre_dto.dart';
-import 'package:biosp/services/graphql.dart';
+import '../isar/model/genres/genre.dart';
+import '../../dto/genres/genre_dto.dart';
+import '../../../services/graphql.dart';
 import 'package:fpdart/fpdart.dart';
 import '../../../../core/error_handler.dart';
 

@@ -1,5 +1,5 @@
-import 'package:biosp/data/datasource/isar/model/auth/auth.dart';
-import 'package:biosp/domain/repository/get_stored_auth_user_repository.dart';
+import '../../model/auth/auth.dart';
+import '../../../../../domain/repository/get_stored_auth_user_repository.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:isar/isar.dart';
 

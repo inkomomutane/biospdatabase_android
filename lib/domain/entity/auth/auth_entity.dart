@@ -14,5 +14,5 @@ class AuthEntity extends Equatable with _$AuthEntity {
 
   const AuthEntity._();
   @override
-  List<Object?> get props => [name, email, token];
+  List<Object?> get props => [id,name, email, token];
 }

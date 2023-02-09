@@ -1,7 +1,7 @@
-import 'package:biosp/core/error_handler.dart';
-import 'package:biosp/data/datasource/isar/model/forwarded_services/forwarded_service.dart';
-import 'package:biosp/data/dto/forwarded_services/forwarded_service_dto.dart';
-import 'package:biosp/services/graphql.dart';
+import '../../../core/error_handler.dart';
+import '../isar/model/forwarded_services/forwarded_service.dart';
+import '../../dto/forwarded_services/forwarded_service_dto.dart';
+import '../../../services/graphql.dart';
 import 'package:fpdart/fpdart.dart';
 
 class GetAllForwardedServicesGraphqlDatasource  {

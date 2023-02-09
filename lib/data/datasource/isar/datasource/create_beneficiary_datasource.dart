@@ -1,10 +1,10 @@
-import '../model/beneficiaries/beneficiary.dart';
-import '../../../dto/beneficiaries/beneficiary_dto.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:isar/isar.dart';
 
 import '../../../../../core/error_handler.dart';
 import '../../../../../domain/entity/beneficiaries/beneficiary_entity.dart';
-import 'package:fpdart/fpdart.dart';
-import 'package:isar/isar.dart';
+import '../../../dto/beneficiaries/beneficiary_dto.dart';
+import '../model/beneficiaries/beneficiary.dart';
 
 class CreateBeneficiaryDatasource {
   final Isar _isar;

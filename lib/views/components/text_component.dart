@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 class TextComponent extends StatelessWidget {
   TextComponent(
       {Key? key,
-        required this.hintText,
-        this.onChanged,
-        this.onSaved,
-        this.controller,
-        this.onSubmitted,
-        this.initialValue,
-        this.validator})
+      required this.hintText,
+      this.onChanged,
+      this.onSaved,
+      this.controller,
+      this.onSubmitted,
+      this.initialValue,
+      this.validator})
       : super(key: key);
   final String hintText;
- late void Function(String string)? onChanged;
+  late void Function(String string)? onChanged;
   late void Function(String? string)? onSaved;
   late void Function(String)? onSubmitted;
   late TextEditingController? controller;
@@ -24,7 +24,7 @@ class TextComponent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 35, right: 35, top: 10),
       child: TextFormField(
-        decoration:  InputDecoration(
+        decoration: InputDecoration(
           border: const OutlineInputBorder(),
           hintText: hintText,
           hintStyle: const TextStyle(
@@ -33,10 +33,12 @@ class TextComponent extends StatelessWidget {
           filled: true,
           focusColor: Theme.of(context).hintColor,
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1.0, color: Theme.of(context).primaryColor),
+            borderSide:
+                BorderSide(width: 1.0, color: Theme.of(context).primaryColor),
           ),
-          focusedBorder:   OutlineInputBorder(
-            borderSide: BorderSide(width: 2, color: Theme.of(context).primaryColor),
+          focusedBorder: OutlineInputBorder(
+            borderSide:
+                BorderSide(width: 2, color: Theme.of(context).primaryColor),
           ),
           errorBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red, width: 2.0),

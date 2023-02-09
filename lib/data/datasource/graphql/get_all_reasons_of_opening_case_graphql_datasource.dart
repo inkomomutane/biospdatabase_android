@@ -1,6 +1,6 @@
-import 'package:biosp/data/datasource/isar/model/reasons_of_opening_case/reason_of_opening_case.dart';
-import 'package:biosp/data/dto/reasons_of_opening_cases/reasons_of_opening_case_dto.dart';
-import 'package:biosp/services/graphql.dart';
+import '../isar/model/reasons_of_opening_case/reason_of_opening_case.dart';
+import '../../dto/reasons_of_opening_cases/reasons_of_opening_case_dto.dart';
+import '../../../services/graphql.dart';
 import 'package:fpdart/fpdart.dart';
 import '../../../../core/error_handler.dart';
 

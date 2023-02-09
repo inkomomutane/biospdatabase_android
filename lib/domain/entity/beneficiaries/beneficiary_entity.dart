@@ -1,3 +1,7 @@
+import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:ulid4d/ulid4d.dart';
+
 import '../biosps/biosp_entity.dart';
 import '../document_types/document_type_entity.dart';
 import '../forwarded_services/forwarded_service_entity.dart';
@@ -5,9 +9,6 @@ import '../genres/genre_entity.dart';
 import '../provenances/provenance_entity.dart';
 import '../purposes_of_visit/purpose_of_visit_entity.dart';
 import '../reasons_of_opening_case/reason_of_opening_case_entity.dart';
-import 'package:equatable/equatable.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:ulid4d/ulid4d.dart';
 
 part 'beneficiary_entity.freezed.dart';
 

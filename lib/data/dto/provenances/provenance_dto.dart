@@ -1,6 +1,6 @@
-import 'package:biosp/core/inject.dart';
 import 'package:ulid4d/ulid4d.dart';
 
+import '../../../core/inject.dart';
 import '../../../domain/entity/provenances/provenance_entity.dart';
 import '../../datasource/isar/model/provenances/provenance.dart';
 
