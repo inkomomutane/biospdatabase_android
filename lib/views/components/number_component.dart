@@ -22,12 +22,12 @@ class NumberComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(left: 35, right: 35, top: 10),
+        padding: const EdgeInsets.only(left: 35, right: 35, top: 10),
         child: TextFormField(
           keyboardType: TextInputType.number,
-          initialValue: initialValue != null ? initialValue : "",
+          initialValue: initialValue ?? "",
           decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
               hintText: hintText,
               // focusColor: Colors.black,
               // fillColor: Colors.white,
@@ -35,8 +35,8 @@ class NumberComponent extends StatelessWidget {
               enabledBorder: OutlineInputBorder(
                 borderSide:  BorderSide(color: Theme.of(context).primaryColor, width: 1.0),
               ),
-              errorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.red, width: 2.0),
+              errorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red, width: 2.0),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide:

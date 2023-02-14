@@ -7,7 +7,7 @@ import 'package:ulid4d/ulid4d.dart';
 
 import '../../../../core/testing_inject.dart';
 import '../../../../helpers/helpers.dart';
-import '../../../repositories/beneficiaries/get/get_beneficiary_by_id_repository_test.mocks.dart';
+import '../../../repositories/beneficiaries/get/get_beneficiary_by_ulid_repository_test.mocks.dart';
 
 void main() {
   late final ULID ulid;
@@ -17,7 +17,7 @@ void main() {
   });
 
   test('it should get beneficiary by ulid.', () async {
-    when(GetIt.I<MockGetBeneficiaryByIdRepository>()(ulid)).thenAnswer(
+    when(GetIt.I<MockGetBeneficiaryByUlidRepository>()(ulid)).thenAnswer(
       (answer) async => ErrorHandler.right(
         beneficiaryEntityTestTrait(),
       ),

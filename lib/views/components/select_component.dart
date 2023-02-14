@@ -24,7 +24,7 @@ class SelectComponent<T> extends StatelessWidget {
   void Function(T?)? onChanged;
   TextEditingController? controller;
   String Function(T)? itemAsString;
-  var selectedItem;
+  final  dynamic selectedItem;
 
   @override
   Widget build(BuildContext context) {

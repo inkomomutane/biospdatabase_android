@@ -1,7 +1,5 @@
-import 'package:biosp/core/error_handler.dart';
 import 'package:biosp/data/datasource/isar/datasource/internal/get_auth_user_datasource.dart';
 import 'package:biosp/data/datasource/isar/datasource/internal/store_auth_datasource.dart';
-import 'package:biosp/data/datasource/isar/model/auth/auth.dart';
 import 'package:biosp/domain/entity/auth/auth_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';

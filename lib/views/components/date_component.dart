@@ -1,6 +1,6 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 // ignore: must_be_immutable
 class DateComponent extends StatelessWidget {
@@ -22,14 +22,14 @@ class DateComponent extends StatelessWidget {
     final format = DateFormat("dd-MM-yyyy");
 
     return Padding(
-        padding: EdgeInsets.only(left: 35, right: 35, top: 10),
+        padding: const EdgeInsets.only(left: 35, right: 35, top: 10),
         child: DateTimeField(
           format: format,
           controller: controller,
           onFieldSubmitted: onSubmited,
           onChanged: onChanged,
           onSaved: onSaved,
-          initialValue: initialValue!=null ? initialValue :DateTime.now(),
+          initialValue: initialValue ?? DateTime.now(),
           onShowPicker: (context, currentValue) async {
             final date = await showDatePicker(
                 context: context,
@@ -43,7 +43,7 @@ class DateComponent extends StatelessWidget {
             }
           },
           decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
               // focusColor: Colors.black45,
               // fillColor: Colors.white,
               suffixIcon: const Icon(Icons.date_range),

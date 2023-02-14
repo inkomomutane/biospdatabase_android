@@ -22,7 +22,6 @@ import 'package:ulid4d/ulid4d.dart';
 import '../domain/repositories/beneficiaries/create/create_beneficiary_repository_test.mocks.dart';
 import '../domain/repositories/beneficiaries/delete/delete_beneficiary_repository_test.mocks.dart';
 import '../domain/repositories/beneficiaries/get/get_beneficiaries_repository_test.mocks.dart';
-import '../domain/repositories/beneficiaries/get/get_beneficiary_by_id_repository_test.mocks.dart';
 import '../domain/repositories/beneficiaries/get/get_beneficiary_by_ulid_repository_test.mocks.dart';
 
 class TestingInject {
@@ -46,8 +45,8 @@ class TestingInject {
         () => MockDeleteBeneficiaryRepository());
     getIt.registerLazySingleton<MockGetBeneficiariesRepository>(
         () => MockGetBeneficiariesRepository());
-    getIt.registerLazySingleton<MockGetBeneficiaryByIdRepository>(
-        () => MockGetBeneficiaryByIdRepository());
+    getIt.registerLazySingleton<MockGetBeneficiaryByUlidRepository>(
+        () => MockGetBeneficiaryByUlidRepository());
 
     //Repositories injections
     getIt.registerLazySingleton<CreateBeneficiaryRepository>(

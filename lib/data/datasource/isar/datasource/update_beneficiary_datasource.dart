@@ -1,4 +1,3 @@
-import 'package:biosp/domain/repository/create_beneficiary_repository.dart';
 import 'package:biosp/domain/repository/update_beneficiary_repository.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:isar/isar.dart';

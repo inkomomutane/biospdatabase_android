@@ -23,25 +23,25 @@ class PhoneNumberComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(left: 35, right: 35, top: 10),
+        padding: const EdgeInsets.only(left: 35, right: 35, top: 10),
         child: TextFormField(
           keyboardType: TextInputType.phone,
-          initialValue: initialValue != null ? initialValue : "",
+          initialValue: initialValue ?? "",
           decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
               hintText: hintText,
               focusColor: Colors.black,
               fillColor: Colors.white,
               filled: true,
-              enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.black45, width: 1.0),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black45, width: 1.0),
               ),
-              errorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.red, width: 2.0),
+              errorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red, width: 2.0),
               ),
-              focusedBorder: OutlineInputBorder(
+              focusedBorder: const OutlineInputBorder(
                 borderSide:
-                    const BorderSide(color: Color(0xFF311b92), width: 2.0),
+                    BorderSide(color: Color(0xFF311b92), width: 2.0),
               )),
           onChanged: onChanged,
           controller: controller,
