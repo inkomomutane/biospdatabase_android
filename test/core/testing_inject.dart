@@ -14,7 +14,7 @@ import 'package:biosp/domain/actions/beneficiary/get_beneficiary_by_id.dart';
 import 'package:biosp/domain/repository/create_beneficiary_repository.dart';
 import 'package:biosp/domain/repository/delete_beneficiary_repository.dart';
 import 'package:biosp/domain/repository/get_beneficiaries_repository.dart';
-import 'package:biosp/domain/repository/get_beneficiary_by_id_repository.dart';
+import 'package:biosp/domain/repository/get_beneficiary_by_ulid_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:ulid4d/ulid4d.dart';
@@ -23,6 +23,7 @@ import '../domain/repositories/beneficiaries/create/create_beneficiary_repositor
 import '../domain/repositories/beneficiaries/delete/delete_beneficiary_repository_test.mocks.dart';
 import '../domain/repositories/beneficiaries/get/get_beneficiaries_repository_test.mocks.dart';
 import '../domain/repositories/beneficiaries/get/get_beneficiary_by_id_repository_test.mocks.dart';
+import '../domain/repositories/beneficiaries/get/get_beneficiary_by_ulid_repository_test.mocks.dart';
 
 class TestingInject {
   static GetIt init() {
@@ -55,8 +56,8 @@ class TestingInject {
         () => MockDeleteBeneficiaryRepository());
     getIt.registerLazySingleton<GetBeneficiariesRepository>(
         () => MockGetBeneficiariesRepository());
-    getIt.registerLazySingleton<GetBeneficiaryByIdRepository>(
-        () => MockGetBeneficiaryByIdRepository());
+    getIt.registerLazySingleton<GetBeneficiaryByUlidRepository>(
+        () => MockGetBeneficiaryByUlidRepository());
 
     //Actions injections
     getIt.registerLazySingleton<CreateBeneficiary>(() => CreateBeneficiary(
@@ -68,9 +69,10 @@ class TestingInject {
     getIt.registerLazySingleton<GetBeneficiaries>(() => GetBeneficiaries(
         getBeneficiariesRepository:
             (GetIt.I<MockGetBeneficiariesRepository>())));
-    getIt.registerLazySingleton<GetBeneficiaryById>(() => GetBeneficiaryById(
-        getBeneficiaryByIdRepository:
-            (GetIt.I<MockGetBeneficiaryByIdRepository>())));
+    getIt.registerLazySingleton<GetBeneficiaryByUlid>(() =>
+        GetBeneficiaryByUlid(
+            getBeneficiaryByUlidRepository:
+                (GetIt.I<MockGetBeneficiaryByUlidRepository>())));
 
     return getIt;
   }

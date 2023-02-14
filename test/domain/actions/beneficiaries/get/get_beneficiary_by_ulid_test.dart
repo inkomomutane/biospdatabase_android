@@ -22,7 +22,7 @@ void main() {
         beneficiaryEntityTestTrait(),
       ),
     );
-    final beneficiaryEntity = await GetIt.I<GetBeneficiaryById>()(ulid);
+    final beneficiaryEntity = await GetIt.I<GetBeneficiaryByUlid>()(ulid);
     beneficiaryEntity.fold(
         (l) => null, (r) => expect((r) == beneficiaryEntityTestTrait(), true));
   });
