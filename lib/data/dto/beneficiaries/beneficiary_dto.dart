@@ -1,6 +1,10 @@
-import 'dart:ffi';
+import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
+import 'package:ulid4d/ulid4d.dart';
 
 import '../../../core/inject.dart';
+import '../../../domain/entity/beneficiaries/beneficiary_entity.dart';
+import '../../datasource/isar/model/beneficiaries/beneficiary.dart';
 import '../../datasource/isar/model/biosps/biosp.dart';
 import '../../datasource/isar/model/document_types/document_type.dart';
 import '../../datasource/isar/model/forwarded_services/forwarded_service.dart';
@@ -8,12 +12,6 @@ import '../../datasource/isar/model/genres/genre.dart';
 import '../../datasource/isar/model/provenances/provenance.dart';
 import '../../datasource/isar/model/purposes_of_visit/purpose_of_visit.dart';
 import '../../datasource/isar/model/reasons_of_opening_case/reason_of_opening_case.dart';
-import 'package:get_it/get_it.dart';
-import 'package:isar/isar.dart';
-import 'package:ulid4d/ulid4d.dart';
-
-import '../../../domain/entity/beneficiaries/beneficiary_entity.dart';
-import '../../datasource/isar/model/beneficiaries/beneficiary.dart';
 import '../biosps/biosp_dto.dart';
 import '../document_types/document_type_dto.dart';
 import '../forwarded_services/forwarded_service_dto.dart';

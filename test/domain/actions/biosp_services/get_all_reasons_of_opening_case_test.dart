@@ -22,9 +22,11 @@ void main() {
     ulid = ULID.nextULID();
   });
   test('it should get all reasonOfOpeningCases', () async {
-    when(mockGetAllReasonOfOpeningCasesRepository()).thenAnswer((answer) =>
-        Future(() => ErrorHandler.right(
-            [ReasonOfOpeningCaseEntity(ulid: ulid, name: name)])));
+    when(mockGetAllReasonOfOpeningCasesRepository()).thenAnswer(
+      (answer) async => ErrorHandler.right(
+        [ReasonOfOpeningCaseEntity(ulid: ulid, name: name)],
+      ),
+    );
     final reasonOfOpeningCaseEntities = await getAllReasonOfOpeningCases();
     reasonOfOpeningCaseEntities.fold((l) => null, (r) async {
       expect((r).first, ReasonOfOpeningCaseEntity(ulid: ulid, name: name));

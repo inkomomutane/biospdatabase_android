@@ -5,7 +5,7 @@ import '../../repository/create_beneficiary_repository.dart';
 class CreateBeneficiary {
   CreateBeneficiaryRepository createBeneficiaryRepository;
   CreateBeneficiary({required this.createBeneficiaryRepository});
-  Future<ErrorHandler<BeneficiaryEntity>> call(
+  Future<ErrorHandler<int>> call(
           BeneficiaryEntity beneficiaryEntity) =>
       createBeneficiaryRepository(beneficiaryEntity);
 }

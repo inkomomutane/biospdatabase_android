@@ -1,11 +1,11 @@
-import '../../../bloc/components/cubit/login_state.dart';
-import '../isar/model/auth/auth.dart';
-import '../../dto/auth/auth_dto.dart';
-import 'package:flutter/material.dart';
+
 import 'package:fpdart/fpdart.dart';
 
+import '../../../bloc/components/views/auth/login_state.dart';
 import '../../../core/error_handler.dart';
 import '../../../services/graphql.dart';
+import '../../dto/auth/auth_dto.dart';
+import '../isar/model/auth/auth.dart';
 
 class GetAuthUserGraphqlDatasource {
   Future<ErrorHandler<Auth>> call(LoginState login) async {

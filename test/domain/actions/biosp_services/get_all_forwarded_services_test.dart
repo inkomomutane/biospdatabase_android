@@ -7,7 +7,6 @@ import 'package:ulid4d/ulid4d.dart';
 
 import '../../repositories/biosp_services/forwarded_services/get_all_forwarded_services_repository_test.mocks.dart';
 
-
 void main() {
   late final MockGetAllForwardedServicesRepository
       mockGetAllForwardedServicesRepository;
@@ -23,9 +22,11 @@ void main() {
     ulid = ULID.nextULID();
   });
   test('it should get all forwarded services', () async {
-    when(mockGetAllForwardedServicesRepository()).thenAnswer((answer) => Future(
-        () => ErrorHandler.right(
-            [ForwardedServiceEntity(ulid: ulid, name: name)])));
+    when(mockGetAllForwardedServicesRepository()).thenAnswer(
+      (answer) async => ErrorHandler.right(
+        [ForwardedServiceEntity(ulid: ulid, name: name)],
+      ),
+    );
     final forwardedServiceEntities = await getAllForwardedServices();
     forwardedServiceEntities.fold((l) => null, (r) async {
       expect((r).first, ForwardedServiceEntity(ulid: ulid, name: name));

@@ -15,12 +15,15 @@ void main() {
         updateBeneficiaryRepository: mockUpdateBeneficiaryRepository);
   });
   test('it should return update beneficiary', () async {
-    when(mockUpdateBeneficiaryRepository(beneficiaryEntityTestTrait()))
-        .thenAnswer((answer) =>
-            Future(() => ErrorHandler.right(beneficiaryEntityTestTrait())));
+    when(
+      mockUpdateBeneficiaryRepository(
+        beneficiaryEntityTestTrait(),
+      ),
+    ).thenAnswer(
+      (answer) async => ErrorHandler.right(1),
+    );
     final beneficiaryEntity =
         await updateBeneficiary(beneficiaryEntityTestTrait());
-    beneficiaryEntity.fold(
-        (l) => null, (r) => expect((r) == beneficiaryEntityTestTrait(), true));
+    beneficiaryEntity.fold((l) => null, (r) => expect((r) == 1, true));
   });
 }

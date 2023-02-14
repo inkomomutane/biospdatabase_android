@@ -1,6 +1,6 @@
-import '../../../core/inject.dart';
 import 'package:ulid4d/ulid4d.dart';
 
+import '../../../core/inject.dart';
 import '../../../domain/entity/genres/genre_entity.dart';
 import '../../datasource/isar/model/genres/genre.dart';
 

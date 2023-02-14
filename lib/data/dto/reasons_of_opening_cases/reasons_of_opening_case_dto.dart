@@ -1,6 +1,6 @@
-import '../../../core/inject.dart';
 import 'package:ulid4d/ulid4d.dart';
 
+import '../../../core/inject.dart';
 import '../../../domain/entity/reasons_of_opening_case/reason_of_opening_case_entity.dart';
 import '../../datasource/isar/model/reasons_of_opening_case/reason_of_opening_case.dart';
 

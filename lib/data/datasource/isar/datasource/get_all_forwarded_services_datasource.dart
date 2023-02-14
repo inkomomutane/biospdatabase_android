@@ -7,18 +7,19 @@ import '../../../../domain/repository/get_all_forwarded_services_repository.dart
 import '../../../dto/forwarded_services/forwarded_service_dto.dart';
 import '../model/forwarded_services/forwarded_service.dart';
 
-class GetAllForwardedServicesDatasource extends GetAllForwardedServicesRepository {
+class GetAllForwardedServicesDatasource
+    extends GetAllForwardedServicesRepository {
   final Isar _isar;
   GetAllForwardedServicesDatasource(this._isar);
   @override
-  Future<ErrorHandler<List<ForwardedServiceEntity>>> call() {
+  Future<ErrorHandler<List<ForwardedServiceEntity>>> call() async {
     try {
-      return Future(() => right(_isar
+      return right(_isar
           .txnSync(() => _isar.forwardedServices.where().findAllSync())
           .map((biosp) => ForwardedServiceDto.fromIsar(biosp))
-          .toList()));
+          .toList());
     } on Exception catch (_, e) {
-      return Future(() => left(e.toString()));
+      return left(e.toString());
     }
   }
 }

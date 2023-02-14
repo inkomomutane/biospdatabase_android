@@ -9,12 +9,18 @@ import '../../model/reasons_of_opening_case/reason_of_opening_case.dart';
 class CreateReasonOfOpeningCaseDatasource {
   final Isar _isar;
   CreateReasonOfOpeningCaseDatasource(this._isar);
-  Future<ErrorHandler<int>> call(ReasonOfOpeningCaseEntity reasonOfOpeningCaseEntity) {
+  Future<ErrorHandler<int>> call(
+      ReasonOfOpeningCaseEntity reasonOfOpeningCaseEntity) async {
     try {
-      return Future(() => right(_isar.writeTxnSync(() => _isar.reasonOfOpeningCases
-          .putSync(ReasonOfOpeningCaseDto.fromEntity(reasonOfOpeningCaseEntity)))));
+      return right(
+        _isar.writeTxnSync(
+          () => _isar.reasonOfOpeningCases.putSync(
+            ReasonOfOpeningCaseDto.fromEntity(reasonOfOpeningCaseEntity),
+          ),
+        ),
+      );
     } on Exception catch (_, e) {
-      return Future(() => left(e.toString()));
+      return left(e.toString());
     }
   }
 }

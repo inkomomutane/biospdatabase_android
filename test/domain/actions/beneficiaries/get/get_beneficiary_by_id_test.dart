@@ -11,18 +11,18 @@ import '../../../repositories/beneficiaries/get/get_beneficiary_by_id_repository
 
 void main() {
   late final ULID ulid;
-  setUp((){
+  setUp(() {
     TestingInject.init();
     ulid = TestingInject.ulid;
   });
 
   test('it should get beneficiary by ulid.', () async {
-
-    when(GetIt.I<MockGetBeneficiaryByIdRepository>()(ulid))
-        .thenAnswer((answer) =>
-            Future(() => ErrorHandler.right(beneficiaryEntityTestTrait())));
-    final beneficiaryEntity =
-        await GetIt.I<GetBeneficiaryById>()(ulid);
+    when(GetIt.I<MockGetBeneficiaryByIdRepository>()(ulid)).thenAnswer(
+      (answer) async => ErrorHandler.right(
+        beneficiaryEntityTestTrait(),
+      ),
+    );
+    final beneficiaryEntity = await GetIt.I<GetBeneficiaryById>()(ulid);
     beneficiaryEntity.fold(
         (l) => null, (r) => expect((r) == beneficiaryEntityTestTrait(), true));
   });

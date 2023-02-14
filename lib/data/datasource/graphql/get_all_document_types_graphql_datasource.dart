@@ -1,8 +1,9 @@
-import '../isar/model/document_types/document_type.dart';
-import '../../dto/document_types/document_type_dto.dart';
-import '../../../services/graphql.dart';
 import 'package:fpdart/fpdart.dart';
+
 import '../../../../core/error_handler.dart';
+import '../../../services/graphql.dart';
+import '../../dto/document_types/document_type_dto.dart';
+import '../isar/model/document_types/document_type.dart';
 
 class GetAllDocumentTypesGraphqlDatasource  {
   Future<ErrorHandler<List<DocumentType>>> call() async {

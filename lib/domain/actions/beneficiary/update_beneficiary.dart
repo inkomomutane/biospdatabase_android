@@ -5,7 +5,7 @@ import '../../repository/update_beneficiary_repository.dart';
 class UpdateBeneficiary {
   final UpdateBeneficiaryRepository updateBeneficiaryRepository;
   UpdateBeneficiary({required this.updateBeneficiaryRepository});
-  Future<ErrorHandler<BeneficiaryEntity>> call(
+  Future<ErrorHandler<int>> call(
           BeneficiaryEntity beneficiaryEntity) =>
       updateBeneficiaryRepository(beneficiaryEntity);
 }

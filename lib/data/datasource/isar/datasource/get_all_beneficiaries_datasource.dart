@@ -15,20 +15,20 @@ class GetAllBeneficiariesDatasource implements GetBeneficiariesRepository {
   @override
   Future<ErrorHandler<List<BeneficiaryEntity>>> call() async {
     try {
-      return Future(() => right(_isar
-              .txnSync(() => _isar.beneficiaries.where().findAllSync())
-              .map((beneficiary) {
-            beneficiary.biosp.loadSync();
-            beneficiary.documentType.loadSync();
-            beneficiary.forwardedService.loadSync();
-            beneficiary.genre.loadSync();
-            beneficiary.provenance.loadSync();
-            beneficiary.reasonOfOpeningCase.loadSync();
-            beneficiary.purposeOfVisit.loadSync();
-            return BeneficiaryDto.fromIsar(beneficiary);
-          }).toList()));
+      return right(_isar
+          .txnSync(() => _isar.beneficiaries.where().findAllSync())
+          .map((beneficiary) {
+        beneficiary.biosp.loadSync();
+        beneficiary.documentType.loadSync();
+        beneficiary.forwardedService.loadSync();
+        beneficiary.genre.loadSync();
+        beneficiary.provenance.loadSync();
+        beneficiary.reasonOfOpeningCase.loadSync();
+        beneficiary.purposeOfVisit.loadSync();
+        return BeneficiaryDto.fromIsar(beneficiary);
+      }).toList());
     } on Exception catch (_, e) {
-      return Future(() => left(e.toString()));
+      return left(e.toString());
     }
   }
 }

@@ -7,6 +7,6 @@ import '../../repository/delete_beneficiary_repository.dart';
 class DeleteBeneficiary {
   final DeleteBeneficiaryRepository deleteBeneficiaryRepository;
   DeleteBeneficiary({required this.deleteBeneficiaryRepository});
-  Future<ErrorHandler<BeneficiaryEntity>> call(ULID ulid) =>
+  Future<ErrorHandler<int>> call(ULID ulid) =>
       deleteBeneficiaryRepository(ulid);
 }

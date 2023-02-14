@@ -1,8 +1,7 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
 class TextComponent extends StatelessWidget {
-  TextComponent(
+  const TextComponent(
       {Key? key,
       required this.hintText,
       this.onChanged,
@@ -13,12 +12,12 @@ class TextComponent extends StatelessWidget {
       this.validator})
       : super(key: key);
   final String hintText;
-  late void Function(String string)? onChanged;
-  late void Function(String? string)? onSaved;
-  late void Function(String)? onSubmitted;
-  late TextEditingController? controller;
-  late String? initialValue;
-  late String? Function(String?)? validator;
+  final void Function(String string)? onChanged;
+  final void Function(String? string)? onSaved;
+  final void Function(String)? onSubmitted;
+  final TextEditingController? controller;
+  final String? initialValue;
+  final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return Padding(

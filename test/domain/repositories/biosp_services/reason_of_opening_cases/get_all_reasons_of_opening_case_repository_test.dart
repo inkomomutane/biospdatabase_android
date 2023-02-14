@@ -21,9 +21,11 @@ void main() {
     ulid = ULID.nextULID();
   });
   test('it repository should get all reasonOfOpeningCases', () async {
-    when(mockGetAllReasonOfOpeningCasesRepository()).thenAnswer((answer) =>
-        Future(() => ErrorHandler.right(
-            [ReasonOfOpeningCaseEntity(ulid: ulid, name: name)])));
+    when(mockGetAllReasonOfOpeningCasesRepository()).thenAnswer(
+      (answer) async => ErrorHandler.right(
+        [ReasonOfOpeningCaseEntity(ulid: ulid, name: name)],
+      ),
+    );
     final reasonOfOpeningCaseEntities =
         await mockGetAllReasonOfOpeningCasesRepository();
     reasonOfOpeningCaseEntities.fold((l) => null, (r) async {

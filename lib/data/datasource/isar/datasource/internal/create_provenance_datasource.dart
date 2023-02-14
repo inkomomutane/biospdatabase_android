@@ -9,12 +9,17 @@ import '../../model/provenances/provenance.dart';
 class CreateProvenanceDatasource {
   final Isar _isar;
   CreateProvenanceDatasource(this._isar);
-  Future<ErrorHandler<int>> call(ProvenanceEntity provenanceEntity) {
+  Future<ErrorHandler<int>> call(ProvenanceEntity provenanceEntity) async {
     try {
-      return Future(() => right(_isar.writeTxnSync(
-          () => _isar.provenances.putSync(ProvenanceDto.fromEntity(provenanceEntity)))));
+      return right(
+        _isar.writeTxnSync(
+          () => _isar.provenances.putSync(
+            ProvenanceDto.fromEntity(provenanceEntity),
+          ),
+        ),
+      );
     } on Exception catch (_, e) {
-      return Future(() => left(e.toString()));
+      return left(e.toString());
     }
   }
 }

@@ -1,8 +1,9 @@
-import '../isar/model/genres/genre.dart';
-import '../../dto/genres/genre_dto.dart';
-import '../../../services/graphql.dart';
 import 'package:fpdart/fpdart.dart';
+
 import '../../../../core/error_handler.dart';
+import '../../../services/graphql.dart';
+import '../../dto/genres/genre_dto.dart';
+import '../isar/model/genres/genre.dart';
 
 class GetAllGenresGraphqlDatasource  {
   Future<ErrorHandler<List<Genre>>> call() async {

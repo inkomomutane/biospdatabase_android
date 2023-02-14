@@ -19,8 +19,11 @@ void main() {
     ulid = ULID.nextULID();
   });
   test('it repository should get all provenances', () async {
-    when(mockGetAllProvenancesRepository()).thenAnswer((answer) => Future(
-        () => ErrorHandler.right([ProvenanceEntity(ulid: ulid, name: name)])));
+    when(mockGetAllProvenancesRepository()).thenAnswer(
+      (answer) async => ErrorHandler.right(
+        [ProvenanceEntity(ulid: ulid, name: name)],
+      ),
+    );
     final provenanceEntity = await mockGetAllProvenancesRepository();
     provenanceEntity.fold((l) => null, (r) async {
       expect((r).first, ProvenanceEntity(ulid: ulid, name: name));

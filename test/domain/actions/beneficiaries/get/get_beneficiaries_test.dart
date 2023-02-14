@@ -10,10 +10,15 @@ import '../../../repositories/beneficiaries/get/get_beneficiaries_repository_tes
 void main() {
   setUp(() => TestingInject.init());
   test('it should get all beneficiaries.', () async {
-    when( GetIt.I<MockGetBeneficiariesRepository>()()).thenAnswer((answer) =>
-        Future(() => ErrorHandler.right(listOfBeneficiaryEntityTestTrait())));
+    when(GetIt.I<MockGetBeneficiariesRepository>()()).thenAnswer(
+      (answer) async => ErrorHandler.right(
+        listOfBeneficiaryEntityTestTrait(),
+      ),
+    );
     final beneficiaryEntities = await GetIt.I<GetBeneficiaries>()();
-    beneficiaryEntities.fold((l) => null, (r) => expect(
+    beneficiaryEntities.fold(
+        (l) => null,
+        (r) => expect(
             (r).first == listOfBeneficiaryEntityTestTrait().first, true));
   });
 }

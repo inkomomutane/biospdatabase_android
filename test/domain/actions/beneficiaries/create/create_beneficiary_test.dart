@@ -11,17 +11,18 @@ void main() {
   setUp(() => TestingInject.init());
 
   test('it action should created beneficiary', () async {
-
-    when(GetIt.I<MockCreateBeneficiaryRepository>()(
-        beneficiaryEntityTestTrait()))
-        .thenAnswer((realInvocation) =>
-        Future(() => ErrorHandler.right(beneficiaryEntityTestTrait())));
+    when(
+      GetIt.I<MockCreateBeneficiaryRepository>()(
+        beneficiaryEntityTestTrait(),
+      ),
+    ).thenAnswer(
+      (realInvocation) async => ErrorHandler.right(1),
+    );
 
     var task = await GetIt.I<CreateBeneficiary>()(beneficiaryEntityTestTrait());
 
     task.fold((l) => null, (r) {
-      expect(r == beneficiaryEntityTestTrait(), true);
+      expect(r == 1, true);
     });
-
   });
 }

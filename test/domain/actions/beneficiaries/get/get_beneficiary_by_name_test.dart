@@ -18,8 +18,9 @@ void main() {
   });
 
   test('it should get beneficiary by name.', () async {
-    when(mockGetBeneficiaryByNameRepository(name)).thenAnswer((answer) =>
-        Future(() => ErrorHandler.right(beneficiaryEntityTestTrait())));
+    when(mockGetBeneficiaryByNameRepository(name)).thenAnswer(
+      (answer) async => ErrorHandler.right(beneficiaryEntityTestTrait()),
+    );
     final beneficiaryEntity = await getBeneficiaryByName(name);
 
     beneficiaryEntity.fold(

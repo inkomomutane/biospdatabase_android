@@ -7,18 +7,19 @@ import '../../../../domain/repository/get_all_reasons_of_opening_case_repository
 import '../../../dto/reasons_of_opening_cases/reasons_of_opening_case_dto.dart';
 import '../model/reasons_of_opening_case/reason_of_opening_case.dart';
 
-class GetAllReasonOfOpeningCasesDatasource extends GetAllReasonOfOpeningCasesRepository {
+class GetAllReasonOfOpeningCasesDatasource
+    extends GetAllReasonOfOpeningCasesRepository {
   final Isar _isar;
   GetAllReasonOfOpeningCasesDatasource(this._isar);
   @override
-  Future<ErrorHandler<List<ReasonOfOpeningCaseEntity>>> call() {
+  Future<ErrorHandler<List<ReasonOfOpeningCaseEntity>>> call() async {
     try {
-      return Future(() => right(_isar
+      return right(_isar
           .txnSync(() => _isar.reasonOfOpeningCases.where().findAllSync())
           .map((biosp) => ReasonOfOpeningCaseDto.fromIsar(biosp))
-          .toList()));
+          .toList());
     } on Exception catch (_, e) {
-      return Future(() => left(e.toString()));
+      return left(e.toString());
     }
   }
 }

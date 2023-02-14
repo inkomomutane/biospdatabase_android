@@ -1,8 +1,9 @@
-import '../../../core/error_handler.dart';
-import '../isar/model/forwarded_services/forwarded_service.dart';
-import '../../dto/forwarded_services/forwarded_service_dto.dart';
-import '../../../services/graphql.dart';
 import 'package:fpdart/fpdart.dart';
+
+import '../../../core/error_handler.dart';
+import '../../../services/graphql.dart';
+import '../../dto/forwarded_services/forwarded_service_dto.dart';
+import '../isar/model/forwarded_services/forwarded_service.dart';
 
 class GetAllForwardedServicesGraphqlDatasource  {
   Future<ErrorHandler<List<ForwardedService>>> call() async {

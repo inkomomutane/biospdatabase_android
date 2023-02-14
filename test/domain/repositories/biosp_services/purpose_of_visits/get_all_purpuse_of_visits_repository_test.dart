@@ -20,9 +20,11 @@ void main() {
     ulid = ULID.nextULID();
   });
   test('it repository should get all purposes of visit', () async {
-    when(mockGetAllPurposeOfVisitsRepository()).thenAnswer((answer) => Future(
-        () => ErrorHandler.right(
-            [PurposeOfVisitEntity(ulid: ulid, name: name)])));
+    when(mockGetAllPurposeOfVisitsRepository()).thenAnswer(
+      (answer) async => ErrorHandler.right(
+        [PurposeOfVisitEntity(ulid: ulid, name: name)],
+      ),
+    );
     final purposeOfVisitEntity = await mockGetAllPurposeOfVisitsRepository();
     purposeOfVisitEntity.fold((l) => null, (r) async {
       expect((r).first, PurposeOfVisitEntity(ulid: ulid, name: name));

@@ -1,6 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:get_it/get_it.dart';
 import 'package:graphql/client.dart';
+
 import '../core/error_handler.dart' as app_error_handler;
 
 abstract class GraphqlQueryResource {

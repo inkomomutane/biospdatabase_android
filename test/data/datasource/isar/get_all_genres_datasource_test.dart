@@ -1,6 +1,5 @@
 import 'package:biosp/data/datasource/isar/datasource/get_all_genres_datasource.dart';
 import 'package:biosp/data/datasource/isar/datasource/internal/create_genre_datasource.dart';
-import 'package:biosp/data/datasource/isar/model/genres/genre.dart';
 import 'package:biosp/domain/entity/genres/genre_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';

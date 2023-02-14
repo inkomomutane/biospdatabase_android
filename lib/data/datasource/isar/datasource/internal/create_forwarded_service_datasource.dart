@@ -9,12 +9,18 @@ import '../../model/forwarded_services/forwarded_service.dart';
 class CreateForwardedServiceDatasource {
   final Isar _isar;
   CreateForwardedServiceDatasource(this._isar);
-  Future<ErrorHandler<int>> call(ForwardedServiceEntity forwardedServiceEntity) {
+  Future<ErrorHandler<int>> call(
+      ForwardedServiceEntity forwardedServiceEntity) async {
     try {
-      return Future(() => right(_isar.writeTxnSync(() => _isar.forwardedServices
-          .putSync(ForwardedServiceDto.fromEntity(forwardedServiceEntity)))));
+      return right(
+        _isar.writeTxnSync(
+          () => _isar.forwardedServices.putSync(
+            ForwardedServiceDto.fromEntity(forwardedServiceEntity),
+          ),
+        ),
+      );
     } on Exception catch (_, e) {
-      return Future(() => left(e.toString()));
+      return left(e.toString());
     }
   }
 }

@@ -17,11 +17,13 @@ void main() {
     mockGetAllDocumentTypesRepository = MockGetAllDocumentTypesRepository();
     name = 'Male';
     ulid = ULID.nextULID();
-  });  
+  });
   test('it repository should get all document types', () async {
-    when(mockGetAllDocumentTypesRepository()).thenAnswer((answer) => Future(
-        () =>
-            ErrorHandler.right([DocumentTypeEntity(ulid: ulid, name: name)])));
+    when(mockGetAllDocumentTypesRepository()).thenAnswer(
+      (answer) async => ErrorHandler.right(
+        [DocumentTypeEntity(ulid: ulid, name: name)],
+      ),
+    );
     final documentTypeEntities = await mockGetAllDocumentTypesRepository();
     documentTypeEntities.fold((l) => null, (r) async {
       expect((r).first, DocumentTypeEntity(ulid: ulid, name: name));

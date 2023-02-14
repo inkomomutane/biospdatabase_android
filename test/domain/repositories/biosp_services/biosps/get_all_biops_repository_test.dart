@@ -21,9 +21,11 @@ void main() {
     projectName = 'Akulo-Akulo';
   });
   test('it repository should get all biosps', () async {
-    when(mockGetAllBiospsRepository()).thenAnswer((answer) => Future(() =>
-        ErrorHandler.right(
-            [BiospEntity(ulid: ulid, name: name, projectName: projectName)])));
+    when(mockGetAllBiospsRepository()).thenAnswer(
+      (answer) async => ErrorHandler.right(
+        [BiospEntity(ulid: ulid, name: name, projectName: projectName)],
+      ),
+    );
     final biospEntities = await mockGetAllBiospsRepository();
     biospEntities.fold((l) => null, (r) async {
       expect((r).first,

@@ -15,16 +15,18 @@ void main() {
   late final ULID ulid;
   setUp(() {
     mockGetAllDocumentTypesRepository = MockGetAllDocumentTypesRepository();
-    getAllDocumentTypes = GetAllDocumentTypes(
-        mockGetAllDocumentTypesRepository);
+    getAllDocumentTypes =
+        GetAllDocumentTypes(mockGetAllDocumentTypesRepository);
 
     name = 'Male';
     ulid = ULID.nextULID();
   });
   test('it should get all document types', () async {
-    when(mockGetAllDocumentTypesRepository()).thenAnswer((answer) => Future(
-        () =>
-            ErrorHandler.right([DocumentTypeEntity(ulid: ulid, name: name)])));
+    when(mockGetAllDocumentTypesRepository()).thenAnswer(
+      (answer) async => ErrorHandler.right(
+        [DocumentTypeEntity(ulid: ulid, name: name)],
+      ),
+    );
     final documentTypeEntities = await getAllDocumentTypes();
     documentTypeEntities.fold((l) => null, (r) async {
       expect((r).first, DocumentTypeEntity(ulid: ulid, name: name));

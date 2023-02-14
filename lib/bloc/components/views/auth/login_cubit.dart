@@ -1,10 +1,10 @@
-import 'login_state.dart';
-import '../../../sync/auth_sync.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:ulid4d/ulid4d.dart';
+
+import '../../../../sync/auth_sync.dart';
+import 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(const LoginState(email: '', password: ''));

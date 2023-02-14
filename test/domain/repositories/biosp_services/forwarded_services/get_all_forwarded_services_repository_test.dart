@@ -21,9 +21,11 @@ void main() {
     ulid = ULID.nextULID();
   });
   test('it repository should get all forwarded services', () async {
-    when(mockGetAllForwardedServicesRepository()).thenAnswer((answer) => Future(
-        () => ErrorHandler.right(
-            [ForwardedServiceEntity(ulid: ulid, name: name)])));
+    when(mockGetAllForwardedServicesRepository()).thenAnswer(
+      (answer) async => ErrorHandler.right(
+        [ForwardedServiceEntity(ulid: ulid, name: name)],
+      ),
+    );
     final forwardedServiceEntities =
         await mockGetAllForwardedServicesRepository();
     forwardedServiceEntities.fold((l) => null, (r) async {

@@ -11,14 +11,14 @@ class GetAllDocumentTypesDatasource extends GetAllDocumentTypesRepository {
   final Isar _isar;
   GetAllDocumentTypesDatasource(this._isar);
   @override
-  Future<ErrorHandler<List<DocumentTypeEntity>>> call() {
+  Future<ErrorHandler<List<DocumentTypeEntity>>> call() async {
     try {
-      return Future(() => right(_isar
+      return right(_isar
           .txnSync(() => _isar.documentTypes.where().findAllSync())
           .map((biosp) => DocumentTypeDto.fromIsar(biosp))
-          .toList()));
+          .toList());
     } on Exception catch (_, e) {
-      return Future(() => left(e.toString()));
+      return left(e.toString());
     }
   }
 }

@@ -9,12 +9,17 @@ import '../../model/document_types/document_type.dart';
 class CreateDocumentTypeDatasource {
   final Isar _isar;
   CreateDocumentTypeDatasource(this._isar);
-  Future<ErrorHandler<int>> call(DocumentTypeEntity documentTypeEntity) {
+  Future<ErrorHandler<int>> call(DocumentTypeEntity documentTypeEntity) async {
     try {
-      return Future(() => right(_isar.writeTxnSync(() => _isar.documentTypes
-          .putSync(DocumentTypeDto.fromEntity(documentTypeEntity)))));
+      return right(
+        _isar.writeTxnSync(
+          () => _isar.documentTypes.putSync(
+            DocumentTypeDto.fromEntity(documentTypeEntity),
+          ),
+        ),
+      );
     } on Exception catch (_, e) {
-      return Future(() => left(e.toString()));
+      return left(e.toString());
     }
   }
 }

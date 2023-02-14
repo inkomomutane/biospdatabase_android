@@ -7,7 +7,6 @@ import 'package:ulid4d/ulid4d.dart';
 
 import '../../repositories/biosp_services/provenances/get_all_provenance_repository_test.mocks.dart';
 
-
 void main() {
   late final MockGetAllProvenancesRepository mockGetAllProvenancesRepository;
   late final GetAllProvenances getAllProvenances;
@@ -20,8 +19,11 @@ void main() {
     ulid = ULID.nextULID();
   });
   test('it should get all provenances', () async {
-    when(mockGetAllProvenancesRepository()).thenAnswer((answer) => Future(
-        () => ErrorHandler.right([ProvenanceEntity(ulid: ulid, name: name)])));
+    when(mockGetAllProvenancesRepository()).thenAnswer(
+      (answer) async => ErrorHandler.right(
+        [ProvenanceEntity(ulid: ulid, name: name)],
+      ),
+    );
     final provenanceEntity = await getAllProvenances();
     provenanceEntity.fold((l) => null, (r) async {
       expect((r).first, ProvenanceEntity(ulid: ulid, name: name));

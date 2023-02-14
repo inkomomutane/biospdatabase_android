@@ -1,15 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../bloc/components/cubit/login_cubit.dart';
-import '../../../bloc/components/cubit/login_state.dart';
+import '../../../bloc/components/views/auth/login_cubit.dart';
+import '../../../bloc/components/views/auth/login_state.dart';
 import '../../../core/validations.dart';
 import '../../../translations/locale_keys.g.dart';
 import '../../components/label_component.dart';
 import '../../components/password_component.dart';
 import '../../components/text_component.dart';
+import '../home/home.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -22,15 +22,12 @@ class LoginForm extends StatelessWidget {
       child: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state.authenticated && state.validated) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                showCloseIcon: true,
-                dismissDirection: DismissDirection.startToEnd,
-                behavior: SnackBarBehavior.floating,
-                content: Text(
-                  "Authenticated",
-                ),
-                backgroundColor: FlexColor.greenDarkPrimaryContainer,
+            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => const Home(),
+                fullscreenDialog: true,
               ),
             );
           } else if (state.validated) {

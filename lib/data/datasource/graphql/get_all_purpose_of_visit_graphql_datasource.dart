@@ -1,8 +1,9 @@
-import '../isar/model/purposes_of_visit/purpose_of_visit.dart';
-import '../../dto/purpose_of_visits/purpose_of_visit_dto.dart';
-import '../../../services/graphql.dart';
 import 'package:fpdart/fpdart.dart';
+
 import '../../../../core/error_handler.dart';
+import '../../../services/graphql.dart';
+import '../../dto/purpose_of_visits/purpose_of_visit_dto.dart';
+import '../isar/model/purposes_of_visit/purpose_of_visit.dart';
 
 class GetAllPurposeOfVisitsGraphqlDatasource  {
   Future<ErrorHandler<List<PurposeOfVisit>>> call() async {

@@ -19,8 +19,11 @@ void main() {
     getAllGenres = GetAllGenres(mockGetAllGenresRepository);
   });
   test('it should get all genres', () async {
-    when(mockGetAllGenresRepository()).thenAnswer((answer) => Future(
-        () => ErrorHandler.right([GenreEntity(ulid: ulid, name: name)])));
+    when(mockGetAllGenresRepository()).thenAnswer(
+      (answer) async => ErrorHandler.right(
+        [GenreEntity(ulid: ulid, name: name)],
+      ),
+    );
     final genreEntities = await getAllGenres();
     genreEntities.fold((l) => null, (r) async {
       expect((r).first, GenreEntity(ulid: ulid, name: name));

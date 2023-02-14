@@ -1,5 +1,5 @@
-import '../../datasource/isar/model/auth/auth.dart';
 import '../../../domain/entity/auth/auth_entity.dart';
+import '../../datasource/isar/model/auth/auth.dart';
 
 abstract class AuthDto {
   static AuthEntity fromIsar(Auth? auth) => AuthEntity(

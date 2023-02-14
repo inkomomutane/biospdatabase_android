@@ -12,14 +12,14 @@ class GetAllBiospsDatasource implements GetAllBiospsRepository {
   GetAllBiospsDatasource(this._isar);
 
   @override
-  Future<ErrorHandler<List<BiospEntity>>> call() {
-     try {
-      return Future(() => right(_isar
+  Future<ErrorHandler<List<BiospEntity>>> call() async {
+    try {
+      return right(_isar
           .txnSync(() => _isar.biosps.where().findAllSync())
           .map((biosp) => BiospDto.fromIsar(biosp))
-          .toList()));
+          .toList());
     } on Exception catch (_, e) {
-      return Future(() => left(e.toString()));
+      return left(e.toString());
     }
   }
 }

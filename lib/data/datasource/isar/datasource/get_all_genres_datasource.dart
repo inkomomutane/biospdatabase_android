@@ -11,15 +11,15 @@ class GetAllGenresDatasource implements GetAllGenresRepository {
   final Isar _isar;
   GetAllGenresDatasource(this._isar);
   @override
-  Future<ErrorHandler<List<GenreEntity>>> call() {
+  Future<ErrorHandler<List<GenreEntity>>> call() async {
     try {
-      return Future(() => right(_isar.txnSync(() => _isar.genres
+      return right(_isar.txnSync(() => _isar.genres
           .where()
           .findAllSync()
           .map((genre) => GenreDto.fromIsar(genre))
-          .toList())));
+          .toList()));
     } on Exception catch (_, s) {
-      return Future(() => left(s.toString()));
+      return left(s.toString());
     }
   }
 }

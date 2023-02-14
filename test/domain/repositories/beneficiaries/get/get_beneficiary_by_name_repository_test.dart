@@ -6,7 +6,6 @@ import 'package:mockito/mockito.dart';
 import '../../../../helpers/helpers.dart';
 import 'get_beneficiary_by_name_repository_test.mocks.dart';
 
-
 @GenerateNiceMocks([MockSpec<GetBeneficiaryByNameRepository>()])
 void main() {
   late final MockGetBeneficiaryByNameRepository
@@ -16,8 +15,11 @@ void main() {
     mockGetBeneficiaryByNameRepository = MockGetBeneficiaryByNameRepository();
   });
   test('it repository should get beneficiary by name.', () async {
-    when(mockGetBeneficiaryByNameRepository(name)).thenAnswer((answer) =>
-        Future(() => ErrorHandler.right(beneficiaryEntityTestTrait())));
+    when(mockGetBeneficiaryByNameRepository(name)).thenAnswer(
+      (answer) async => ErrorHandler.right(
+        beneficiaryEntityTestTrait(),
+      ),
+    );
     final beneficiaryEntity = await mockGetBeneficiaryByNameRepository(name);
 
     beneficiaryEntity.fold(

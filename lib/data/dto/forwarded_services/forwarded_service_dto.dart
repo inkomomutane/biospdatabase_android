@@ -1,6 +1,6 @@
-import '../../../core/inject.dart';
 import 'package:ulid4d/ulid4d.dart';
 
+import '../../../core/inject.dart';
 import '../../../domain/entity/forwarded_services/forwarded_service_entity.dart';
 import '../../datasource/isar/model/forwarded_services/forwarded_service.dart';
 

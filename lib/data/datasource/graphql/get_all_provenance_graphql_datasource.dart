@@ -1,8 +1,9 @@
-import '../isar/model/provenances/provenance.dart';
-import '../../dto/provenances/provenance_dto.dart';
-import '../../../services/graphql.dart';
 import 'package:fpdart/fpdart.dart';
+
 import '../../../../core/error_handler.dart';
+import '../../../services/graphql.dart';
+import '../../dto/provenances/provenance_dto.dart';
+import '../isar/model/provenances/provenance.dart';
 
 class GetAllProvenancesGraphqlDatasource  {
   Future<ErrorHandler<List<Provenance>>> call() async {
