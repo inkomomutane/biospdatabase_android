@@ -1,23 +1,23 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:isar/isar.dart';
-import 'package:ulid4d/ulid4d.dart';
 
 import '../../../../core/error_handler.dart';
 import '../../../../domain/entity/beneficiaries/beneficiary_entity.dart';
-import '../../../../domain/repository/get_beneficiary_by_ulid_repository.dart';
+import '../../../../domain/repository/get_beneficiary_by_name_repository.dart';
 import '../../../dto/beneficiaries/beneficiary_dto.dart';
 import '../model/beneficiaries/beneficiary.dart';
 
-class GetBeneficiaryByUlidDatasource implements GetBeneficiaryByUlidRepository {
+class GetBeneficiaryByNameDatasource implements GetBeneficiaryByNameRepository {
   final Isar _isar;
-  GetBeneficiaryByUlidDatasource(this._isar);
+  GetBeneficiaryByNameDatasource(this._isar);
+
   @override
-  Future<ErrorHandler<BeneficiaryEntity>> call(ULID ulid) async {
+  Future<ErrorHandler<BeneficiaryEntity>> call(String name) async {
     try {
       return right(_isar.txnSync(() {
         final beneficiary = _isar.beneficiaries
             .filter()
-            .ulidEqualTo(ulid.toString())
+            .fullNameEqualTo(name, caseSensitive: false)
             .findFirstSync();
         beneficiary!.biosp.loadSync();
         beneficiary.documentType.loadSync();

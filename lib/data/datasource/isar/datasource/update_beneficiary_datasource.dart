@@ -1,9 +1,9 @@
-import 'package:biosp/domain/repository/update_beneficiary_repository.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:isar/isar.dart';
 
 import '../../../../../core/error_handler.dart';
 import '../../../../../domain/entity/beneficiaries/beneficiary_entity.dart';
+import '../../../../domain/repository/update_beneficiary_repository.dart';
 import '../../../dto/beneficiaries/beneficiary_dto.dart';
 import '../model/beneficiaries/beneficiary.dart';
 

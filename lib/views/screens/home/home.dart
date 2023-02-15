@@ -1,7 +1,9 @@
+import 'package:biosp/domain/actions/beneficiary/get_beneficiaries.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../translations/locale_keys.g.dart';
 import '../crud/create_screen.dart';
@@ -14,72 +16,66 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       drawer: const HomeDrawerScreen(),
-      body: ListView(
-        children: [
-          ListTile(
-            tileColor: Theme.of(context).canvasColor,
-            shape: Border(
-              bottom: BorderSide(color: Theme.of(context).dividerColor),
-            ),
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(5.0), //or 15.0
-              child: Container(
-                height: 40.0,
-                width: 40.0,
-                color: Theme.of(context).hoverColor,
-                child: const Icon(Icons.volume_up),
-              ),
-            ),
-            onTap: () {},
-            title: const Text("Nelson Alexandre Mutane",
-                style: TextStyle(fontWeight: FontWeight.w800)),
-            subtitle: Row(
-              children: const [
-                Icon(
-                  Icons.phone_android_rounded,
-                  size: 14,
-                ),
-                SizedBox(
-                  width: 4,
-                ),
-                Text("+258 847607095",
-                    style: TextStyle(fontWeight: FontWeight.normal))
-              ],
-            ),
-          ),
-          ListTile(
-            tileColor: Theme.of(context).canvasColor,
-            shape: Border(
-              bottom: BorderSide(color: Theme.of(context).dividerColor),
-            ),
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(5.0), //or 15.0
-              child: Container(
-                height: 40.0,
-                width: 40.0,
-                color: Theme.of(context).hoverColor,
-                child: const Icon(Icons.volume_up),
-              ),
-            ),
-            onTap: () {},
-            title: const Text("Nelson Alexandre Mutane",
-                style: TextStyle(fontWeight: FontWeight.w800)),
-            subtitle: Row(
-              children: const [
-                Icon(
-                  Icons.phone_android_rounded,
-                  size: 14,
-                ),
-                SizedBox(
-                  width: 4,
-                ),
-                Text("+258 847607095",
-                    style: TextStyle(fontWeight: FontWeight.normal))
-              ],
-            ),
-          ),
-        ],
-      ),
+      body: FutureBuilder(
+          future: GetIt.I<GetBeneficiaries>()(),
+          builder: (_, snap) {
+            if (snap.hasData) {
+              return snap.data!.fold(
+                  (l) => const Placeholder(),
+                  (r) => ListView(
+                        children: r
+                            .map(
+                              (beneficiary) => ListTile(
+                                tileColor: Theme.of(context).canvasColor,
+                                shape: Border(
+                                  bottom: BorderSide(
+                                    color: Theme.of(context).dividerColor,
+                                  ),
+                                ),
+                                leading: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(5.0), //or 15.0
+                                  child: Container(
+                                    height: 40.0,
+                                    width: 40.0,
+                                    color: Theme.of(context).hoverColor,
+                                    child: const Icon(
+                                      Icons.volume_up,
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {},
+                                title: Text(
+                                  beneficiary.fullName,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                subtitle: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.phone_android_rounded,
+                                      size: 14,
+                                    ),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    Text(
+                                      beneficiary.phone,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ));
+            } else {
+              return const Placeholder();
+            }
+          }),
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: 0,
         showElevation: true,

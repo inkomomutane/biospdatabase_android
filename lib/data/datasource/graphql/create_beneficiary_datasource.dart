@@ -1,9 +1,10 @@
 
+import 'package:easy_localization/easy_localization.dart';
+
 import '../../../core/error_handler.dart';
 import '../../../core/inject.dart';
 import '../../../domain/entity/beneficiaries/beneficiary_entity.dart';
 import '../../../services/graphql.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class CreateBeneficiaryGraphqlDatasource{
 

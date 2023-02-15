@@ -2,6 +2,8 @@ import 'package:get_it/get_it.dart';
 import 'package:graphql/client.dart';
 import 'package:isar/isar.dart';
 
+import '../data/datasource/isar/datasource/create_beneficiary_datasource.dart';
+import '../data/datasource/isar/datasource/delete_beneficiary_datasource.dart';
 import '../data/datasource/isar/datasource/get_all_beneficiaries_datasource.dart';
 import '../data/datasource/isar/datasource/get_all_biosps_datasource.dart';
 import '../data/datasource/isar/datasource/get_all_document_types_datasource.dart';
@@ -10,7 +12,10 @@ import '../data/datasource/isar/datasource/get_all_genres_datasource.dart';
 import '../data/datasource/isar/datasource/get_all_provenance_datasource.dart';
 import '../data/datasource/isar/datasource/get_all_purpose_of_visit_datasource.dart';
 import '../data/datasource/isar/datasource/get_all_reasons_of_opening_case_datasource.dart';
+import '../data/datasource/isar/datasource/get_beneficiary_by_name_datasource.dart';
+import '../data/datasource/isar/datasource/get_beneficiary_by_ulid_datasource.dart';
 import '../data/datasource/isar/datasource/internal/get_auth_user_datasource.dart';
+import '../data/datasource/isar/datasource/update_beneficiary_datasource.dart';
 import '../data/datasource/isar/model/auth/auth.dart';
 import '../data/datasource/isar/model/beneficiaries/beneficiary.dart';
 import '../data/datasource/isar/model/biosps/biosp.dart';
@@ -20,7 +25,12 @@ import '../data/datasource/isar/model/genres/genre.dart';
 import '../data/datasource/isar/model/provenances/provenance.dart';
 import '../data/datasource/isar/model/purposes_of_visit/purpose_of_visit.dart';
 import '../data/datasource/isar/model/reasons_of_opening_case/reason_of_opening_case.dart';
+import '../domain/actions/beneficiary/create_beneficiary.dart';
+import '../domain/actions/beneficiary/delete_beneficiary.dart';
 import '../domain/actions/beneficiary/get_beneficiaries.dart';
+import '../domain/actions/beneficiary/get_beneficiary_by_id.dart';
+import '../domain/actions/beneficiary/get_beneficiary_by_name.dart';
+import '../domain/actions/beneficiary/update_beneficiary.dart';
 import '../domain/actions/biosp_services/get_all_biosps.dart';
 import '../domain/actions/biosp_services/get_all_document_types.dart';
 import '../domain/actions/biosp_services/get_all_forwarded_services.dart';
@@ -29,6 +39,8 @@ import '../domain/actions/biosp_services/get_all_provenance.dart';
 import '../domain/actions/biosp_services/get_all_purpuse_of_visits.dart';
 import '../domain/actions/biosp_services/get_all_reasons_of_opening_case.dart';
 import '../domain/actions/get_auth_user.dart';
+import '../domain/repository/create_beneficiary_repository.dart';
+import '../domain/repository/delete_beneficiary_repository.dart';
 import '../domain/repository/get_all_biosps_repository.dart';
 import '../domain/repository/get_all_document_types_repository.dart';
 import '../domain/repository/get_all_forwarded_services_repository.dart';
@@ -37,7 +49,10 @@ import '../domain/repository/get_all_provenance_repository.dart';
 import '../domain/repository/get_all_purpuse_of_visits_repository.dart';
 import '../domain/repository/get_all_reasons_of_opening_case_repository.dart';
 import '../domain/repository/get_beneficiaries_repository.dart';
+import '../domain/repository/get_beneficiary_by_name_repository.dart';
+import '../domain/repository/get_beneficiary_by_ulid_repository.dart';
 import '../domain/repository/get_stored_auth_user_repository.dart';
+import '../domain/repository/update_beneficiary_repository.dart';
 
 class Inject {
   static void init() {
@@ -112,6 +127,31 @@ class Inject {
         GetIt.I<Isar>(),
       ),
     );
+    getIt.registerLazySingleton<GetBeneficiaryByUlidDatasource>(
+      () => GetBeneficiaryByUlidDatasource(
+        GetIt.I<Isar>(),
+      ),
+    );
+    getIt.registerLazySingleton<GetBeneficiaryByNameDatasource>(
+      () => GetBeneficiaryByNameDatasource(
+        GetIt.I<Isar>(),
+      ),
+    );
+    getIt.registerLazySingleton<CreateBeneficiaryDatasource>(
+      () => CreateBeneficiaryDatasource(
+        GetIt.I<Isar>(),
+      ),
+    );
+    getIt.registerLazySingleton<UpdateBeneficiaryDatasource>(
+      () => UpdateBeneficiaryDatasource(
+        GetIt.I<Isar>(),
+      ),
+    );
+    getIt.registerLazySingleton<DeleteBeneficiaryDatasource>(
+      () => DeleteBeneficiaryDatasource(
+        GetIt.I<Isar>(),
+      ),
+    );
 
     /// Repositories Injecting
     getIt.registerLazySingleton<GetAuthUserRepository>(
@@ -141,6 +181,21 @@ class Inject {
     //// Beneficiary operations Repositories Injecting.
     getIt.registerLazySingleton<GetBeneficiariesRepository>(
       () => GetIt.I<GetAllBeneficiariesDatasource>(),
+    );
+    getIt.registerLazySingleton<GetBeneficiaryByUlidRepository>(
+      () => GetIt.I<GetBeneficiaryByUlidDatasource>(),
+    );
+    getIt.registerLazySingleton<GetBeneficiaryByNameRepository>(
+      () => GetIt.I<GetBeneficiaryByNameDatasource>(),
+    );
+    getIt.registerLazySingleton<CreateBeneficiaryRepository>(
+      () => GetIt.I<CreateBeneficiaryDatasource>(),
+    );
+    getIt.registerLazySingleton<UpdateBeneficiaryRepository>(
+      () => GetIt.I<UpdateBeneficiaryDatasource>(),
+    );
+    getIt.registerLazySingleton<DeleteBeneficiaryRepository>(
+      () => GetIt.I<DeleteBeneficiaryDatasource>(),
     );
 
     /// Actions Injecting
@@ -188,6 +243,33 @@ class Inject {
     getIt.registerLazySingleton<GetBeneficiaries>(
       () => GetBeneficiaries(
         getBeneficiariesRepository: GetIt.I<GetBeneficiariesRepository>(),
+      ),
+    );
+    getIt.registerLazySingleton<GetBeneficiaryByUlid>(
+      () => GetBeneficiaryByUlid(
+        getBeneficiaryByUlidRepository:
+            GetIt.I<GetBeneficiaryByUlidDatasource>(),
+      ),
+    );
+    getIt.registerLazySingleton<GetBeneficiaryByName>(
+      () => GetBeneficiaryByName(
+        getBeneficiaryByNameRepository:
+            GetIt.I<GetBeneficiaryByNameDatasource>(),
+      ),
+    );
+    getIt.registerLazySingleton<CreateBeneficiary>(
+      () => CreateBeneficiary(
+        createBeneficiaryRepository: GetIt.I<CreateBeneficiaryRepository>(),
+      ),
+    );
+    getIt.registerLazySingleton<UpdateBeneficiary>(
+      () => UpdateBeneficiary(
+        updateBeneficiaryRepository: GetIt.I<UpdateBeneficiaryRepository>(),
+      ),
+    );
+    getIt.registerLazySingleton<DeleteBeneficiary>(
+      () => DeleteBeneficiary(
+        deleteBeneficiaryRepository: GetIt.I<DeleteBeneficiaryRepository>(),
       ),
     );
   }
