@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:graphql/client.dart';
 import 'package:isar/isar.dart';
@@ -276,4 +277,9 @@ class Inject {
 
   static String toUppercase(String? string) => string!.toUpperCase();
   static String toLowerCase(String? string) => string!.toLowerCase();
+  static Widget placeholder() => const Center(
+        child: Image(
+          image: AssetImage("assets/splash/splash.png"),
+        ),
+      );
 }

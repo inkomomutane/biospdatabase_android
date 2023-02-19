@@ -5,23 +5,24 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../core/inject.dart';
 import '../../../translations/locale_keys.g.dart';
-import '../crud/create_screen.dart';
+import '../crud/create_update_screen.dart';
 import 'home_drawer_screen.dart';
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       drawer: const HomeDrawerScreen(),
       body: FutureBuilder(
-          future: GetIt.I<GetBeneficiaries>()(),
+          future: Future.delayed(const Duration(seconds: 5), () => GetIt.I<GetBeneficiaries>()()),
           builder: (_, snap) {
             if (snap.hasData) {
               return snap.data!.fold(
-                  (l) => const Placeholder(),
+                  (l) => Inject.placeholder(),
                   (r) => ListView(
                         children: r
                             .map(
@@ -73,7 +74,7 @@ class Home extends StatelessWidget {
                             .toList(),
                       ));
             } else {
-              return const Placeholder();
+              return Inject.placeholder();
             }
           }),
       bottomNavigationBar: BottomNavyBar(
@@ -106,7 +107,7 @@ class Home extends StatelessWidget {
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute<void>(
-            builder: (BuildContext context) => const CreateScreen(),
+            builder: (BuildContext context) => const CreateUpdateScreen(),
             fullscreenDialog: true,
           ),
         ),

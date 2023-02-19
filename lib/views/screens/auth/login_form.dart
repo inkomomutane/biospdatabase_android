@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,7 +10,6 @@ import '../../../translations/locale_keys.g.dart';
 import '../../components/label_component.dart';
 import '../../components/password_component.dart';
 import '../../components/text_component.dart';
-import '../home/home.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -22,14 +22,18 @@ class LoginForm extends StatelessWidget {
       child: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state.authenticated && state.validated) {
-            Navigator.of(context).pop();
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => const Home(),
-                fullscreenDialog: true,
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                showCloseIcon: true,
+                dismissDirection: DismissDirection.startToEnd,
+                behavior: SnackBarBehavior.floating,
+                content: Text(
+                  'Authenticated',
+                ),
+                backgroundColor: FlexColor.greenDarkPrimaryContainer,
               ),
             );
+            Navigator.of(context).popAndPushNamed('home');
           } else if (state.validated) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -37,7 +41,7 @@ class LoginForm extends StatelessWidget {
                 dismissDirection: DismissDirection.startToEnd,
                 behavior: SnackBarBehavior.floating,
                 content: Text(
-                  LocaleKeys.auth_failed.tr(),
+                  LocaleKeys.authFailed.tr(),
                 ),
                 // backgroundColor: FlexColor.redDarkPrimary,
               ),
@@ -49,11 +53,11 @@ class LoginForm extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              LabelComponent(labelText: LocaleKeys.email_address.tr()),
+              LabelComponent(labelText: LocaleKeys.emailAddress.tr()),
               BlocBuilder<LoginCubit, LoginState>(
                 builder: (context, state) {
                   return TextComponent(
-                    hintText: LocaleKeys.email_address.tr(),
+                    hintText: LocaleKeys.emailAddress.tr(),
                     initialValue: state.email,
                     validator: (value) =>
                         Validation.mailValidation(value ?? ""),
