@@ -21,7 +21,7 @@ void main() {
     build: () => loginCubit,
     act: (state) =>
         state.emit(const LoginState(email: "email@ts.com", password: '')),
-        expect: () => const LoginState(email: "email@t.com", password: ''),
+        expect: () => [const LoginState(email: "email@ts.com", password: '')],
   );
 
   tearDown(() {

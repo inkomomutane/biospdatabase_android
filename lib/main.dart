@@ -1,3 +1,5 @@
+import 'package:biosp/bloc/components/cubit/language_cubit.dart';
+import 'package:biosp/domain/entity/language_entity.dart';
 import 'package:biosp/views/routes/route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
@@ -27,6 +29,7 @@ Future<void> main() async {
         Locale('en'),
         Locale('pt'),
         Locale('fr'),
+        Locale('es'),
       ],
       path: 'assets/translations',
       assetLoader: const CodegenLoader(),
@@ -34,6 +37,7 @@ Future<void> main() async {
       saveLocale: true,
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (languageContext) => LanguageCubit()),
           BlocProvider(
             create: (loginContext) => LoginCubit(),
           ),
@@ -41,7 +45,12 @@ Future<void> main() async {
             create: (hiddenPasswordContext) => HiddenPassowrdCubit(),
           ),
         ],
-        child: MainEntry(),
+        child: BlocListener<LanguageCubit, LanguageEntity>(
+          listener: (languageContext, state) {
+            languageContext.setLocale(Locale(state.lang));
+          },
+          child: MainEntry(),
+        ),
       ),
     ),
   );
@@ -49,7 +58,7 @@ Future<void> main() async {
 
 class MainEntry extends StatelessWidget {
   MainEntry({super.key});
-  final ThemeMode mode = ThemeMode.light;
+  final ThemeMode mode = ThemeMode.dark;
   final BiospgeneratedRouting biospgeneratedRouting = BiospgeneratedRouting();
   @override
   Widget build(BuildContext context) {

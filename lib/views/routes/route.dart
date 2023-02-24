@@ -1,4 +1,5 @@
 import 'package:biosp/views/screens/crud/create_update_screen.dart';
+import 'package:biosp/views/screens/home/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -31,6 +32,8 @@ class BiospgeneratedRouting {
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case 'create_update':
         return MaterialPageRoute(builder: (_) => const CreateUpdateScreen());
+      case 'settings':
+        return MaterialPageRoute(builder: (_) => SettingsScreen());
       default:
         return MaterialPageRoute(builder: (_) => const AuthScreen());
     }
