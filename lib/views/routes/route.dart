@@ -1,11 +1,11 @@
-import 'package:biosp/views/screens/crud/create_update_screen.dart';
-import 'package:biosp/views/screens/home/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../domain/actions/get_auth_user.dart';
 import '../screens/auth/auth_screen.dart';
+import '../screens/crud/create_update_screen.dart';
 import '../screens/home/home.dart';
+import '../screens/home/settings_screen.dart';
 
 class BiospgeneratedRouting {
   Route generatedRoutes(RouteSettings routeSettings) {

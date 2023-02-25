@@ -1,13 +1,13 @@
-import 'package:biosp/bloc/components/cubit/language_cubit.dart';
-import 'package:biosp/domain/entity/language_entity.dart';
-import 'package:biosp/translations/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../bloc/components/cubit/language_cubit.dart';
 import '../../../domain/actions/get_auth_user.dart';
+import '../../../domain/entity/language_entity.dart';
+import '../../../translations/locale_keys.g.dart';
 
 class HomeDrawerScreen extends StatelessWidget {
   const HomeDrawerScreen({Key? key}) : super(key: key);

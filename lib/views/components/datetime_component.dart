@@ -29,23 +29,21 @@ class DateTimeComponent extends StatelessWidget {
           initialValue: initialValue ?? DateTime.now(),
           controller: controller,
           onFieldSubmitted: onSubmitted,
-          onShowPicker: (context, currentValue) async {
-            final date = await showDatePicker(
-                context: context,
-                firstDate: DateTime(1900),
-                initialDate: currentValue ?? DateTime.now(),
-                lastDate: DateTime(2100));
-            if (date != null) {
-              final time = await showTimePicker(
-                context: context,
-                initialTime:
-                    TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-              );
-              return DateTimeField.combine(date, time);
-            } else {
-              return currentValue;
-            }
-          },
+          onShowPicker: (context, currentValue) => showDatePicker(
+                  context: context,
+                  firstDate: DateTime(1900),
+                  initialDate: currentValue ?? DateTime.now(),
+                  lastDate: DateTime(2100))
+              .then(
+            (date) => showTimePicker(
+              context: context,
+              initialTime: TimeOfDay.fromDateTime(
+                currentValue ?? DateTime.now(),
+              ),
+            ).then(
+              (time) => DateTimeField.combine(date ?? DateTime.now(), time),
+            ),
+          ),
           decoration: InputDecoration(
               border: const OutlineInputBorder(),
               filled: true,

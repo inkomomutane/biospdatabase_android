@@ -1,8 +1,8 @@
-import 'package:biosp/bloc/components/cubit/language_cubit.dart';
-import 'package:biosp/domain/entity/language_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../bloc/components/cubit/language_cubit.dart';
+import '../../../domain/entity/language_entity.dart';
 import 'desktop/desktop_screen.dart';
 import 'mobile/mobile_screen.dart';
 
