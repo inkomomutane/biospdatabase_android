@@ -72,10 +72,10 @@ DateTime createdAt = DateTime.now();
 
 DateTime updatedAt = DateTime.now();
 
-
 BeneficiaryEntity beneficiaryEntityTestTrait() {
   return BeneficiaryEntity(
     biospEntity: biospEntity,
+    specifyForwardedService: "",
     ulid: ulid,
     fullName: fullName,
     genreEntity: genreEntity,

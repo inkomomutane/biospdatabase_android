@@ -6,23 +6,27 @@ class SelectComponent<T> extends StatelessWidget {
       {Key? key,
       required this.hintText,
       required this.items,
-      this.showSearchBox = false,
+      this.showSearchBox = true,
       this.onSaved,
       this.onChanged,
       this.controller,
       this.label,
+      this.showSelectedItems = false,
       this.itemAsString,
+      this.validator,
       this.selectedItem})
       : super(key: key);
   final String hintText;
   final List<T> items;
   final bool showSearchBox;
+  final bool showSelectedItems;
   final void Function(T?)? onSaved;
   final void Function(T?)? onChanged;
   final TextEditingController? controller;
   final String Function(T?)? itemAsString;
   final dynamic selectedItem;
   final Widget? label;
+  final String? Function(T?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +35,13 @@ class SelectComponent<T> extends StatelessWidget {
       child: DropdownSearch<T>(
         mode: Mode.BOTTOM_SHEET,
         items: items,
-        showSearchBox: true,
+        showSearchBox: showSearchBox,
         selectedItem: selectedItem,
         onChanged: onChanged,
         onSaved: onSaved,
         itemAsString: itemAsString,
+        validator: validator,
+        showSelectedItems: showSelectedItems,
         showClearButton: true,
         dropdownSearchDecoration: InputDecoration(
           hintText: hintText,

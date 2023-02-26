@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 
 import '../translations/locale_keys.g.dart';
 
@@ -19,5 +20,41 @@ abstract class Validation {
     } else {
       return null;
     }
+  }
+
+  static String? textValidation(String field, String text) {
+    if (text.isEmpty) {
+      return LocaleKeys.required.tr(namedArgs: {
+        'attribute': field.toLowerCase(),
+      }).capitalize;
+    }
+    return null;
+  }
+
+  static String? selectValidation(String field, Object? select) {
+    if (select == null) {
+      return LocaleKeys.required.tr(namedArgs: {
+        'attribute': field.toLowerCase(),
+      }).capitalize;
+    }
+    return null;
+  }
+
+  static String? numberValidation(String field, String number) {
+    if (number.isEmpty || !RegExp(r'^[1234567890]+$').hasMatch(number)) {
+      return LocaleKeys.numeric.tr(namedArgs: {
+        'attribute': field.toLowerCase(),
+      }).capitalize;
+    }
+    return null;
+  }
+
+  static String? phoneValidation(String field, String number) {
+    if (number.isEmpty || !RegExp(r'^[1234567890 +()]+$').hasMatch(number)) {
+      return LocaleKeys.numeric.tr(namedArgs: {
+        'attribute': field.toLowerCase(),
+      }).capitalize;
+    }
+    return null;
   }
 }

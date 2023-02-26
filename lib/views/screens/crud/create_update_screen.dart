@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../bloc/components/cubit/beneficiary_crud_bottom_bar_index_cubit.dart';
+import '../../../bloc/components/cubit/create_update_beneficiary_cubit.dart';
 import '../../../bloc/components/cubit/language_cubit.dart';
+import '../../../core/validations.dart';
 import '../../../domain/actions/biosp_services/get_all_biosps.dart';
 import '../../../domain/actions/biosp_services/get_all_document_types.dart';
 import '../../../domain/actions/biosp_services/get_all_forwarded_services.dart';
@@ -13,8 +16,16 @@ import '../../../domain/actions/biosp_services/get_all_genres.dart';
 import '../../../domain/actions/biosp_services/get_all_provenance.dart';
 import '../../../domain/actions/biosp_services/get_all_purpuse_of_visits.dart';
 import '../../../domain/actions/biosp_services/get_all_reasons_of_opening_case.dart';
+import '../../../domain/entity/beneficiaries/beneficiary_entity.dart';
 import '../../../domain/entity/biosps/biosp_entity.dart';
+import '../../../domain/entity/document_types/document_type_entity.dart';
+import '../../../domain/entity/forwarded_services/forwarded_service_entity.dart';
+import '../../../domain/entity/genres/genre_entity.dart';
 import '../../../domain/entity/language_entity.dart';
+import '../../../domain/entity/provenances/provenance_entity.dart';
+import '../../../domain/entity/purposes_of_visit/purpose_of_visit_entity.dart';
+import '../../../domain/entity/reasons_of_opening_case/reason_of_opening_case_entity.dart';
+import '../../../domain/entity/true_false_entity.dart';
 import '../../../translations/locale_keys.g.dart';
 import '../../components/date_component.dart';
 import '../../components/datetime_component.dart';
@@ -29,6 +40,11 @@ class CreateUpdateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
+    const trueFalse = [
+      TrueFalseEntity(key: true, value: "Sim"),
+      TrueFalseEntity(key: true, value: "Não")
+    ];
+
     return BlocBuilder<LanguageCubit, LanguageEntity>(
       builder: (context, state) {
         return Scaffold(
@@ -38,313 +54,434 @@ class CreateUpdateScreen extends StatelessWidget {
             })),
           ),
           body: Form(
-              key: formKey,
-              child: SingleChildScrollView(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      LabelComponent(labelText: LocaleKeys.projectName.tr()),
-                      const TextComponent(hintText: "Nome completo"),
-                      LabelComponent(labelText: LocaleKeys.neighborhoods.tr()),
-                      FutureBuilder(
-                        future: GetIt.I<GetAllBiosps>()(),
-                        builder: (_, snap) {
-                          if (snap.hasData) {
-                            snap.data?.fold(
-                                (l) => SelectComponent(
-                                      hintText: LocaleKeys.neighborhoods.tr(),
-                                      items: const <BiospEntity>[],
-                                      selectedItem: null,
-                                    ), (r) {
-                              return SelectComponent(
-                                hintText: LocaleKeys.neighborhoods.tr(),
-                                items: r,
-                                selectedItem: r.isNotEmpty ? r.first : null,
-                              );
-                            });
-                          }
-                          return SelectComponent(
-                            hintText: LocaleKeys.neighborhoods.tr(),
-                            items: const <BiospEntity>[],
-                            selectedItem: null,
-                          );
-                        },
+            key: formKey,
+            child: SingleChildScrollView(
+              child:
+                  BlocBuilder<CreateUpdateBeneficiaryCubit, BeneficiaryEntity>(
+                builder: (context, state) {
+                  return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        LabelComponent(labelText: LocaleKeys.projectName.tr()),
+                        TextComponent(
+                          hintText: "Nome completo",
+                          validator: (fullName) => Validation.textValidation(
+                              'Nome completo', fullName ?? ''),
+                          onChanged: (fullName) => context
+                              .read<CreateUpdateBeneficiaryCubit>()
+                              .validate(
+                                state.copyWith(fullName: fullName),
+                              ),
+                        ),
+                        LabelComponent(
+                            labelText: LocaleKeys.neighborhoods.tr()),
+                        FutureBuilder(
+                          future: GetIt.I<GetAllBiosps>()(),
+                          builder: (_, snap) {
+                            List<BiospEntity>? items;
+                            if (snap.hasData) {
+                              items = snap.data?.fold((l) => null, (r) => r);
+                            }
+                            return SelectComponent<BiospEntity>(
+                              hintText: LocaleKeys.neighborhoods.tr(),
+                              items: items ?? <BiospEntity>[],
+                              selectedItem: (items == null || items.isEmpty)
+                                  ? null
+                                  : items.first,
+                              validator: (item) => Validation.selectValidation(
+                                  LocaleKeys.neighborhoods.tr(), item),
+                              onChanged: (biosp) => context
+                                  .read<CreateUpdateBeneficiaryCubit>()
+                                  .validate(
+                                    state.copyWith(biospEntity: biosp),
+                                  ),
+                            );
+                          },
+                        ),
+                        LabelComponent(
+                          labelText: LocaleKeys.genres.tr().capitalize,
+                        ),
+                        FutureBuilder(
+                          future: GetIt.I<GetAllGenres>()(),
+                          builder: (_, snap) {
+                            List<GenreEntity>? items;
+                            if (snap.hasData) {
+                              items = snap.data?.fold((l) => null, (r) => r);
+                            }
+                            return SelectComponent<GenreEntity>(
+                              hintText: LocaleKeys.genres.tr().capitalize,
+                              items: items ?? <GenreEntity>[],
+                              selectedItem: (items == null || items.isEmpty)
+                                  ? null
+                                  : items.first,
+                              validator: (item) => Validation.selectValidation(
+                                  LocaleKeys.genres.tr(), item),
+                              onChanged: (genre) => context
+                                  .read<CreateUpdateBeneficiaryCubit>()
+                                  .validate(
+                                    state.copyWith(genreEntity: genre),
+                                  ),
+                            );
+                          },
+                        ),
+                        const LabelComponent(
+                          labelText: "Frequência",
+                        ),
+                        NumberComponent(
+                          hintText: "Frequência",
+                          validator: (item) => Validation.numberValidation(
+                              "Frequência", item ?? ""),
+                          onChanged: (frequencia) => context
+                              .read<CreateUpdateBeneficiaryCubit>()
+                              .validate(
+                                state.copyWith(
+                                    numberOfVisits: int.parse(frequencia)),
+                              ),
+                        ),
+                        LabelComponent(
+                          labelText: LocaleKeys.provenance.tr().capitalize,
+                        ),
+                        FutureBuilder(
+                          future: GetIt.I<GetAllProvenances>()(),
+                          builder: (_, snap) {
+                            List<ProvenanceEntity>? items;
+                            if (snap.hasData) {
+                              items = snap.data?.fold((l) => null, (r) => r);
+                            }
+                            return SelectComponent<ProvenanceEntity>(
+                              hintText: LocaleKeys.provenances.tr().capitalize,
+                              items: items ?? <ProvenanceEntity>[],
+                              selectedItem: (items == null || items.isEmpty)
+                                  ? null
+                                  : items.first,
+                              validator: (item) => Validation.selectValidation(
+                                  LocaleKeys.provenances.tr(), item),
+                              onChanged: (provenance) => context
+                                  .read<CreateUpdateBeneficiaryCubit>()
+                                  .validate(
+                                    state.copyWith(
+                                        provenanceEntity: provenance),
+                                  ),
+                            );
+                          },
+                        ),
+                        const LabelComponent(
+                          labelText: "Data de nascimento",
+                        ),
+                        DateComponent(
+                          onChanged: (birthDate) => context
+                              .read<CreateUpdateBeneficiaryCubit>()
+                              .validate(
+                                state.copyWith(
+                                  birthDate: birthDate ?? DateTime.now(),
+                                ),
+                              ),
+                        ),
+                        const LabelComponent(
+                          labelText: "Contacto",
+                        ),
+                        PhoneNumberComponent(
+                          hintText: "Contacto",
+                          validator: (contacto) => Validation.phoneValidation(
+                              'Contacto', contacto ?? ''),
+                          onChanged: (contacto) => context
+                              .read<CreateUpdateBeneficiaryCubit>()
+                              .validate(
+                                state.copyWith(
+                                  phone: contacto,
+                                ),
+                              ),
+                        ),
+                        const LabelComponent(
+                          labelText: "Data de atendimento",
+                        ),
+                        DateTimeComponent(
+                          onChanged: (serviceDate) => context
+                              .read<CreateUpdateBeneficiaryCubit>()
+                              .validate(state.copyWith(
+                                  serviceDate: serviceDate ?? DateTime.now())),
+                        ),
+                        LabelComponent(
+                          labelText: LocaleKeys.purposeOfVisit.tr().capitalize,
+                        ),
+                        FutureBuilder(
+                          future: GetIt.I<GetAllPurposeOfVisits>()(),
+                          builder: (_, snap) {
+                            List<PurposeOfVisitEntity>? items;
+                            if (snap.hasData) {
+                              snap.data?.fold((l) => null, (r) => r);
+                            }
+                            return SelectComponent<PurposeOfVisitEntity>(
+                              hintText:
+                                  LocaleKeys.purposesOfVisit.tr().capitalize,
+                              items: items ?? <PurposeOfVisitEntity>[],
+                              selectedItem: (items == null || items.isEmpty)
+                                  ? null
+                                  : items.first,
+                              validator: (item) => Validation.selectValidation(
+                                  LocaleKeys.purposesOfVisit.tr(), item),
+                              onChanged: (purposesOfVisit) => context
+                                  .read<CreateUpdateBeneficiaryCubit>()
+                                  .validate(
+                                    state.copyWith(
+                                      purposeOfVisitEntity: purposesOfVisit,
+                                    ),
+                                  ),
+                            );
+                          },
+                        ),
+                        const LabelComponent(
+                          labelText:
+                              "Se tiver formação profissional Especificar",
+                        ),
+                        TextComponent(
+                          hintText:
+                              "Se tiver formação profissional Especificar",
+                          onChanged: (formacao) => context
+                              .read<CreateUpdateBeneficiaryCubit>()
+                              .validate(state.copyWith(
+                                  specifyPurposeOfVisit: formacao)),
+                        ),
+                        LabelComponent(
+                          labelText:
+                              LocaleKeys.reasonOfOpeningCase.tr().capitalize,
+                        ),
+                        FutureBuilder(
+                          future: GetIt.I<GetAllReasonOfOpeningCases>()(),
+                          builder: (_, snap) {
+                            List<ReasonOfOpeningCaseEntity>? items;
+                            if (snap.hasData) {
+                              snap.data?.fold((l) => null, (r) => r);
+                            }
+                            return SelectComponent<ReasonOfOpeningCaseEntity>(
+                              hintText: LocaleKeys.reasonOfOpeningCase
+                                  .tr()
+                                  .capitalize,
+                              items: items ?? <ReasonOfOpeningCaseEntity>[],
+                              selectedItem: (items == null || items.isEmpty)
+                                  ? null
+                                  : items.first,
+                              validator: (item) => Validation.selectValidation(
+                                  LocaleKeys.reasonsOfOpeningCase.tr(), item),
+                              onChanged: (reasonsOfOpeningCase) => context
+                                  .read<CreateUpdateBeneficiaryCubit>()
+                                  .validate(
+                                    state.copyWith(
+                                      reasonOfOpeningCaseEntity:
+                                          reasonsOfOpeningCase,
+                                    ),
+                                  ),
+                            );
+                          },
+                        ),
+                        const LabelComponent(labelText: "Outro motivo"),
+                        TextComponent(
+                          hintText: "Outro motivo",
+                          onChanged: (motivo) => context
+                              .read<CreateUpdateBeneficiaryCubit>()
+                              .validate(
+                                state.copyWith(
+                                    otherReasonOfOpeningCase: motivo),
+                              ),
+                        ),
+                        LabelComponent(
+                          labelText: LocaleKeys.documentNeeded.tr().capitalize,
+                        ),
+                        FutureBuilder(
+                          future: GetIt.I<GetAllDocumentTypes>()(),
+                          builder: (_, snap) {
+                            List<DocumentTypeEntity>? items;
+                            if (snap.hasData) {
+                              snap.data?.fold((l) => null, (r) => r);
+                            }
+                            return SelectComponent<DocumentTypeEntity>(
+                              hintText:
+                                  LocaleKeys.documentNeeded.tr().capitalize,
+                              items: items ?? <DocumentTypeEntity>[],
+                              selectedItem: (items == null || items.isEmpty)
+                                  ? null
+                                  : items.first,
+                              validator: (item) => Validation.selectValidation(
+                                  LocaleKeys.documentNeeded.tr(), item),
+                              onChanged: (documentNeeded) => context
+                                  .read<CreateUpdateBeneficiaryCubit>()
+                                  .validate(
+                                    state.copyWith(
+                                      documentTypeEntity: documentNeeded,
+                                    ),
+                                  ),
+                            );
+                          },
+                        ),
+                        const LabelComponent(labelText: "Outro documento"),
+                        TextComponent(
+                          hintText: "Outro documento",
+                          onChanged: (documento) => context
+                              .read<CreateUpdateBeneficiaryCubit>()
+                              .validate(
+                                state.copyWith(
+                                  otherDocumentType: documento,
+                                ),
+                              ),
+                        ),
+                        LabelComponent(
+                          labelText:
+                              LocaleKeys.forwardedService.tr().capitalize,
+                        ),
+                        FutureBuilder(
+                          future: GetIt.I<GetAllForwardedServices>()(),
+                          builder: (_, snap) {
+                            List<ForwardedServiceEntity>? items;
+                            if (snap.hasData) {
+                              snap.data?.fold((l) => null, (r) => r);
+                            }
+                            return SelectComponent<ForwardedServiceEntity>(
+                              hintText:
+                                  LocaleKeys.forwardedServices.tr().capitalize,
+                              items: items ?? <ForwardedServiceEntity>[],
+                              selectedItem: (items == null || items.isEmpty)
+                                  ? null
+                                  : items.first,
+                              validator: (item) => Validation.selectValidation(
+                                  LocaleKeys.forwardedServices.tr(), item),
+                              onChanged: (forwardedServices) => context
+                                  .read<CreateUpdateBeneficiaryCubit>()
+                                  .validate(
+                                    state.copyWith(
+                                      forwardedServiceEntity: forwardedServices,
+                                    ),
+                                  ),
+                            );
+                          },
+                        ),
+                        const LabelComponent(labelText: "Outro serviço"),
+                        TextComponent(
+                          hintText: "Outro serviço",
+                          onChanged: (servico) => context
+                              .read<CreateUpdateBeneficiaryCubit>()
+                              .validate(
+                                state.copyWith(
+                                  otherForwardedService: servico,
+                                ),
+                              ),
+                        ),
+                        const LabelComponent(labelText: "Especificar Serviço"),
+                        TextComponent(
+                          hintText: "Especificar Serviço",
+                          onChanged: (specifyService) => context
+                              .read<CreateUpdateBeneficiaryCubit>()
+                              .validate(
+                                state.copyWith(
+                                  specifyForwardedService: specifyService,
+                                ),
+                              ),
+                        ),
+                        const LabelComponent(
+                          labelText: "Necessita de acompanhamento domiciliar?",
+                        ),
+                        SelectComponent(
+                          hintText: "Necessita de acompanhamento domiciliar?",
+                          items: trueFalse,
+                          selectedItem: trueFalse.last,
+                          itemAsString: (item) => item!.value,
+                          validator: (item) => Validation.selectValidation(
+                              "Necessita de acompanhamento domiciliar?", item),
+                          onChanged: (homeCare) => context
+                              .read<CreateUpdateBeneficiaryCubit>()
+                              .validate(
+                                state.copyWith(
+                                  homeCare: homeCare!.key,
+                                ),
+                              ),
+                        ),
+                        LabelComponent(
+                          labelText: LocaleKeys.purposeOfVisit.tr().capitalize,
+                        ),
+                        TextComponent(
+                          hintText: LocaleKeys.purposeOfVisit.tr().capitalize,
+                          onChanged: (visitProposes) => context
+                              .read<CreateUpdateBeneficiaryCubit>()
+                              .validate(
+                                  state.copyWith(visitProposes: visitProposes)),
+                        ),
+                        const LabelComponent(
+                            labelText: "Data que foi recebida pelo serviço"),
+                        DateTimeComponent(
+                          onChanged: (datareceived) => context
+                              .read<CreateUpdateBeneficiaryCubit>()
+                              .validate(
+                                state.copyWith(
+                                  dateReceived: datareceived ?? DateTime.now(),
+                                ),
+                              ),
+                        ),
+                        const LabelComponent(
+                            labelText: "Resolveu o seu problema?"),
+                        SelectComponent(
+                          hintText: "Resolveu o seu problema?",
+                          items: trueFalse,
+                          itemAsString: (item) => item!.value,
+                          selectedItem: trueFalse.last,
+                          onChanged: (status) => context
+                              .read<CreateUpdateBeneficiaryCubit>()
+                              .validate(
+                                state.copyWith(
+                                  status: status!.key,
+                                ),
+                              ),
+                        ),
+                        const LabelComponent(labelText: ""),
+                      ]);
+                },
+              ),
+            ),
+          ),
+          bottomNavigationBar:
+              BlocBuilder<BeneficiaryCrudBottomBarIndexCubit, int>(
+            builder: (context, state) {
+              return BottomNavyBar(
+                selectedIndex:
+                    context.read<BeneficiaryCrudBottomBarIndexCubit>().state,
+                showElevation: true,
+                itemCornerRadius: 14,
+                curve: Curves.easeIn,
+                onItemSelected: (index) {
+                  context
+                      .read<BeneficiaryCrudBottomBarIndexCubit>()
+                      .changeIndex(index);
+                  if (index == 0) {
+                    context
+                        .read<BeneficiaryCrudBottomBarIndexCubit>()
+                        .changeIndex(-1);
+                    Navigator.of(context).pop();
+                  } else if (index == 1) {
+                    if (formKey.currentState != null &&
+                        formKey.currentState!.validate() == true) {
+                      context.read<CreateUpdateBeneficiaryCubit>().store(
+                          context.read<CreateUpdateBeneficiaryCubit>().state);
+                    }
+                  }
+                },
+                items: <BottomNavyBarItem>[
+                  BottomNavyBarItem(
+                    icon: const Icon(Icons.block),
+                    title: const Text('Cancelar'),
+                    activeColor: Colors.red,
+                    textAlign: TextAlign.center,
+                  ),
+                  BottomNavyBarItem(
+                    icon: const Icon(Icons.save),
+                    title: Text(
+                      LocaleKeys.storeResource.tr(
+                        namedArgs: {'resource': ''},
                       ),
-                      LabelComponent(
-                        labelText: LocaleKeys.genres.tr().capitalize,
-                      ),
-                      FutureBuilder(
-                        future: GetIt.I<GetAllBiosps>()(),
-                        builder: (_, snap) {
-                          if (snap.hasData) {
-                            snap.data?.fold(
-                                (l) => SelectComponent(
-                                      hintText: LocaleKeys.neighborhoods.tr(),
-                                      items: const <GetAllGenres>[],
-                                      selectedItem: null,
-                                    ), (r) {
-                              return SelectComponent(
-                                hintText: LocaleKeys.genres.tr().capitalize,
-                                items: r,
-                                selectedItem: r.isNotEmpty ? r.first : null,
-                              );
-                            });
-                          }
-                          return SelectComponent(
-                            hintText: LocaleKeys.genres.tr().capitalize,
-                            items: const <GetAllGenres>[],
-                            selectedItem: null,
-                          );
-                        },
-                      ),
-                      const LabelComponent(
-                        labelText: "Frequência",
-                      ),
-                      NumberComponent(
-                        hintText: "Frequência",
-                      ),
-                      LabelComponent(
-                        labelText: LocaleKeys.provenance.tr().capitalize,
-                      ),
-                      FutureBuilder(
-                        future: GetIt.I<GetAllProvenances>()(),
-                        builder: (_, snap) {
-                          if (snap.hasData) {
-                            snap.data?.fold(
-                                (l) => SelectComponent(
-                                      hintText: LocaleKeys.provenances.tr(),
-                                      items: const <GetAllProvenances>[],
-                                      selectedItem: null,
-                                    ), (r) {
-                              return SelectComponent(
-                                hintText:
-                                    LocaleKeys.provenances.tr().capitalize,
-                                items: r,
-                                selectedItem: r.isNotEmpty ? r.first : null,
-                              );
-                            });
-                          }
-                          return SelectComponent(
-                            hintText: LocaleKeys.provenances.tr().capitalize,
-                            items: const <GetAllProvenances>[],
-                            selectedItem: null,
-                          );
-                        },
-                      ),
-                      const LabelComponent(
-                        labelText: "Data de nascimento",
-                      ),
-                      DateComponent(),
-                      const LabelComponent(
-                        labelText: "Contacto",
-                      ),
-                      PhoneNumberComponent(
-                        hintText: "Contacto",
-                      ),
-                      const LabelComponent(
-                        labelText: "Data de atendimento",
-                      ),
-                      DateTimeComponent(),
-                      LabelComponent(
-                        labelText: LocaleKeys.purposeOfVisit.tr().capitalize,
-                      ),
-                      FutureBuilder(
-                        future: GetIt.I<GetAllPurposeOfVisits>()(),
-                        builder: (_, snap) {
-                          if (snap.hasData) {
-                            snap.data?.fold(
-                                (l) => SelectComponent(
-                                      hintText: LocaleKeys.purposesOfVisit.tr(),
-                                      items: const <GetAllPurposeOfVisits>[],
-                                      selectedItem: null,
-                                    ), (r) {
-                              return SelectComponent(
-                                hintText:
-                                    LocaleKeys.purposesOfVisit.tr().capitalize,
-                                items: r,
-                                selectedItem: r.isNotEmpty ? r.first : null,
-                              );
-                            });
-                          }
-                          return SelectComponent(
-                            hintText:
-                                LocaleKeys.purposesOfVisit.tr().capitalize,
-                            items: const <GetAllPurposeOfVisits>[],
-                            selectedItem: null,
-                          );
-                        },
-                      ),
-                      const TextComponent(
-                        hintText: "Se tiver formação profissional Especificar",
-                      ),
-                      const TextComponent(
-                        hintText: "Se tiver formação profissional Especificar",
-                      ),
-                      LabelComponent(
-                        labelText:
-                            LocaleKeys.reasonOfOpeningCase.tr().capitalize,
-                      ),
-                      FutureBuilder(
-                        future: GetIt.I<GetAllReasonOfOpeningCases>()(),
-                        builder: (_, snap) {
-                          if (snap.hasData) {
-                            snap.data?.fold(
-                                (l) => SelectComponent(
-                                      hintText:
-                                          LocaleKeys.reasonOfOpeningCase.tr(),
-                                      items: const <
-                                          GetAllReasonOfOpeningCases>[],
-                                      selectedItem: null,
-                                    ), (r) {
-                              return SelectComponent(
-                                hintText: LocaleKeys.reasonOfOpeningCase
-                                    .tr()
-                                    .capitalize,
-                                items: r,
-                                selectedItem: r.isNotEmpty ? r.first : null,
-                              );
-                            });
-                          }
-                          return SelectComponent(
-                            hintText:
-                                LocaleKeys.reasonOfOpeningCase.tr().capitalize,
-                            items: const <GetAllReasonOfOpeningCases>[],
-                            selectedItem: null,
-                          );
-                        },
-                      ),
-                      const LabelComponent(labelText: "Outro Motivo"),
-                      const TextComponent(hintText: "Outro Motivo"),
-                      LabelComponent(
-                        labelText: LocaleKeys.documentNeeded.tr().capitalize,
-                      ),
-                      FutureBuilder(
-                        future: GetIt.I<GetAllDocumentTypes>()(),
-                        builder: (_, snap) {
-                          if (snap.hasData) {
-                            snap.data?.fold(
-                                (l) => SelectComponent(
-                                      hintText: LocaleKeys.documentNeeded.tr(),
-                                      items: const <GetAllDocumentTypes>[],
-                                      selectedItem: null,
-                                    ), (r) {
-                              return SelectComponent(
-                                hintText:
-                                    LocaleKeys.documentNeeded.tr().capitalize,
-                                items: r,
-                                selectedItem: r.isNotEmpty ? r.first : null,
-                              );
-                            });
-                          }
-                          return SelectComponent(
-                            hintText: LocaleKeys.documentNeeded.tr().capitalize,
-                            items: const <GetAllDocumentTypes>[],
-                            selectedItem: null,
-                          );
-                        },
-                      ),
-                      const LabelComponent(labelText: "Outro documento"),
-                      const TextComponent(
-                        hintText: "Outro documento",
-                      ),
-                      LabelComponent(
-                        labelText: LocaleKeys.forwardedService.tr().capitalize,
-                      ),
-                      FutureBuilder(
-                        future: GetIt.I<GetAllForwardedServices>()(),
-                        builder: (_, snap) {
-                          if (snap.hasData) {
-                            snap.data?.fold(
-                                (l) => SelectComponent(
-                                      hintText:
-                                          LocaleKeys.forwardedServices.tr(),
-                                      items: const <GetAllForwardedServices>[],
-                                      selectedItem: null,
-                                    ), (r) {
-                              return SelectComponent(
-                                hintText: LocaleKeys.forwardedServices
-                                    .tr()
-                                    .capitalize,
-                                items: r,
-                                selectedItem: r.isNotEmpty ? r.first : null,
-                              );
-                            });
-                          }
-                          return SelectComponent(
-                            hintText:
-                                LocaleKeys.forwardedServices.tr().capitalize,
-                            items: const <GetAllForwardedServices>[],
-                            selectedItem: null,
-                          );
-                        },
-                      ),
-                      const LabelComponent(labelText: "Outro serviço"),
-                      const TextComponent(
-                        hintText: "Outro serviço",
-                      ),
-                      const LabelComponent(labelText: "Especificar Serviço"),
-                      const TextComponent(
-                        hintText: "Especificar Serviço",
-                      ),
-                      const LabelComponent(
-                        labelText: "Necessita de acompanhamento domiciliar?",
-                      ),
-                      const SelectComponent(
-                        hintText: "Necessita de acompanhamento domiciliar?",
-                        items: <Map<bool, String>>[
-                          {true: "Sim"},
-                          {false: "Não"}
-                        ],
-                        selectedItem: {true, "Sim"},
-                      ),
-                      LabelComponent(
-                        labelText: LocaleKeys.purposeOfVisit.tr().capitalize,
-                      ),
-                      TextComponent(
-                        hintText: LocaleKeys.purposeOfVisit.tr().capitalize,
-                      ),
-                      const LabelComponent(
-                          labelText: "Data que foi recebida pelo serviço"),
-                      DateTimeComponent(),
-                      const LabelComponent(
-                          labelText: "Resolveu o seu problema?"),
-                      const SelectComponent(
-                        hintText: "Resolveu o seu problema?",
-                        items: <Map<bool, String>>[
-                          {true: "Sim"},
-                          {false: "Não"}
-                        ],
-                        selectedItem: {true, "Sim"},
-                      ),
-                      const LabelComponent(labelText: ""),
-                    ]),
-              )),
-          bottomNavigationBar: BottomNavyBar(
-            selectedIndex: 1,
-            showElevation: true,
-            itemCornerRadius: 14,
-            curve: Curves.easeIn,
-            onItemSelected: (index) {
-              if (index == 0) {
-                Navigator.of(context).pop();
-              }
+                    ),
+                    activeColor: Colors.green,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              );
             },
-            items: <BottomNavyBarItem>[
-              BottomNavyBarItem(
-                icon: const Icon(Icons.block),
-                title: const Text('Cancelar'),
-                activeColor: Colors.red,
-                textAlign: TextAlign.center,
-              ),
-              BottomNavyBarItem(
-                icon: const Icon(Icons.save),
-                title: Text(
-                  LocaleKeys.storeResource.tr(namedArgs: {'resource': ''}),
-                ),
-                activeColor: Colors.green,
-                textAlign: TextAlign.center,
-              ),
-            ],
           ),
         );
       },

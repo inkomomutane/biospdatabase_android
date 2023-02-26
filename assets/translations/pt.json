@@ -26,7 +26,7 @@
     "previous": "Anterior",
     "beneficiary": "Beneficiário",
     "beneficiaries": "Beneficiários",
-    "Sync": "Sincronizar",
+    "sync": "Sincronizar",
     "allRightsReserved": "Todos os direitos reservados.",
     "emailAddress": "Endereço de e-mail",
     "changeLanguage": "Mudar idioma",
@@ -105,5 +105,7 @@
     "about": "Sobre",
     "privacyPolicy": "Política de privacidade",
     "termsOfService": "Termos de serviço",
-    "contactUs": "Fale conosco"
+    "contactUs": "Fale conosco",
+    "required" : "É obrigatória a indicação de um valor para o campo {attribute}.",
+    "numeric" : "O campo {attribute} deverá conter um valor numérico."
 }

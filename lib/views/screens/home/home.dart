@@ -1,3 +1,4 @@
+import '../../../bloc/components/cubit/home_bottom_bar_index_cubit.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
@@ -82,30 +83,35 @@ class HomeScreen extends StatelessWidget {
                   return Inject.placeholder();
                 }
               }),
-          bottomNavigationBar: BottomNavyBar(
-            selectedIndex: 0,
-            showElevation: true,
-            itemCornerRadius: 10,
-            curve: Curves.easeIn,
-            items: <BottomNavyBarItem>[
-              BottomNavyBarItem(
-                icon: const Icon(Icons.people),
-                title: Text(LocaleKeys.beneficiaries.tr().capitalize),
-                activeColor: Colors.red,
-                textAlign: TextAlign.center,
-              ),
-              BottomNavyBarItem(
-                icon: const Badge(
-                  backgroundColor: Colors.deepOrange,
-                  label: null,
-                  child: Icon(Icons.sync),
-                ),
-                title: const Text('Beneficiaries'),
-                activeColor: Colors.green,
-                textAlign: TextAlign.center,
-              )
-            ],
-            onItemSelected: (int value) {},
+          bottomNavigationBar: BlocBuilder<HomeBottomBarIndexCubit, int>(
+            builder: (context, state) {
+              return BottomNavyBar(
+                selectedIndex: context.read<HomeBottomBarIndexCubit>().state,
+                showElevation: true,
+                itemCornerRadius: 10,
+                curve: Curves.easeIn,
+                items: <BottomNavyBarItem>[
+                  BottomNavyBarItem(
+                    icon: const Icon(Icons.people),
+                    title: Text(LocaleKeys.beneficiaries.tr().capitalize),
+                    activeColor: Colors.red,
+                    textAlign: TextAlign.center,
+                  ),
+                  BottomNavyBarItem(
+                    icon: const Badge(
+                      backgroundColor: Colors.deepOrange,
+                      label: null,
+                      child: Icon(Icons.sync),
+                    ),
+                    title: Text(LocaleKeys.sync.tr().capitalize),
+                    activeColor: Colors.green,
+                    textAlign: TextAlign.center,
+                  )
+                ],
+                onItemSelected: (int index) =>
+                    context.read<HomeBottomBarIndexCubit>().changeIndex(index),
+              );
+            },
           ),
           floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.person_add),

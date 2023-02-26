@@ -26,7 +26,7 @@
     "previous": "Previous",
     "beneficiary": "Beneficiary",
     "beneficiaries": "Beneficiaries",
-    "Sync": "Sync",
+    "sync": "sync",
     "allRightsReserved": "All rights reserved.",
     "emailAddress": "Email Address",
     "changeLanguage": "Change language",
@@ -105,5 +105,7 @@
     "about": "About",
     "privacyPolicy": "Privacy policy",
     "termsOfService": "Terms of service",
-    "contactUs": "Contact us"
+    "contactUs": "Contact us",
+    "required" : "The {attribute} field is required.",
+    "numeric" : "The {attribute} must be a number."
 }

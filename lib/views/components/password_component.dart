@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/components/cubit/hidden_passowrd_cubit.dart';
+import '../../bloc/components/cubit/hidden_password_cubit.dart';
+import '../../bloc/components/cubit/hidden_password_state.dart';
 
 @immutable
 class PasswordComponent extends StatelessWidget {
@@ -29,7 +30,7 @@ class PasswordComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.only(left: 35, right: 35, top: 10),
-        child: BlocBuilder<HiddenPassowrdCubit, HiddenPassowrdState>(
+        child: BlocBuilder<HiddenPasswordCubit, HiddenPasswordState>(
           builder: (context, state) {
             return TextFormField(
               decoration: InputDecoration(
@@ -37,7 +38,7 @@ class PasswordComponent extends StatelessWidget {
                   icon: state.hidden
                       ? const Icon(Icons.key)
                       : const Icon(Icons.remove_red_eye_outlined),
-                  onPressed: () => context.read<HiddenPassowrdCubit>().change(),
+                  onPressed: () => context.read<HiddenPasswordCubit>().change(),
                 ),
                 border: const OutlineInputBorder(),
                 hintText: hintText,

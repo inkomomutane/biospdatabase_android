@@ -13,9 +13,8 @@ part 'beneficiary.g.dart';
 @Collection(accessor: 'beneficiaries')
 class Beneficiary {
   Id? id;
-  
+
   @Index(unique: true)
-  
   late String ulid;
   late String fullName;
   late int numberOfVisits;
@@ -27,6 +26,7 @@ class Beneficiary {
   late String otherReasonOfOpeningCase;
   late String otherDocumentType;
   late String otherForwardedService;
+  late String specifyForwardedService;
   late String specifyPurposeOfVisit;
   late String visitProposes;
   late bool status;
