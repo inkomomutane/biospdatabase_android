@@ -292,7 +292,7 @@ class CreateUpdateScreen extends StatelessWidget {
                           builder: (_, snap) {
                             List<DocumentTypeEntity>? items;
                             if (snap.hasData) {
-                              snap.data?.fold((l) => null, (r) => r);
+                              items = snap.data?.fold((l) => null, (r) => r);
                             }
                             return SelectComponent<DocumentTypeEntity>(
                               hintText:
@@ -301,6 +301,7 @@ class CreateUpdateScreen extends StatelessWidget {
                               selectedItem: (items == null || items.isEmpty)
                                   ? null
                                   : items.first,
+                              itemAsString: (p0) => p0!.name,
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.documentNeeded.tr(), item),
                               onChanged: (documentNeeded) => context
@@ -455,11 +456,14 @@ class CreateUpdateScreen extends StatelessWidget {
                         .changeIndex(-1);
                     Navigator.of(context).pop();
                   } else if (index == 1) {
-                    if (formKey.currentState != null &&
-                        formKey.currentState!.validate() == true) {
-                      context.read<CreateUpdateBeneficiaryCubit>().store(
-                          context.read<CreateUpdateBeneficiaryCubit>().state);
-                    }
+                    formKey.currentState!.validate();
+                    context.read<CreateUpdateBeneficiaryCubit>().store(
+                        context.read<CreateUpdateBeneficiaryCubit>().state);
+                    // if (formKey.currentState != null &&
+                    //     formKey.currentState!.validate() == true) {
+                    //   context.read<CreateUpdateBeneficiaryCubit>().store(
+                    //       context.read<CreateUpdateBeneficiaryCubit>().state);
+                    // }
                   }
                 },
                 items: <BottomNavyBarItem>[

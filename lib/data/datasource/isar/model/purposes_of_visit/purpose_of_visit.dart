@@ -5,7 +5,7 @@ part 'purpose_of_visit.g.dart';
 @collection
 class PurposeOfVisit {
   Id? id;
-  @Index(unique: true)
+  @Index(unique: true, replace: true)
   late String ulid;
   late String name;
 }

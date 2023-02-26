@@ -1,4 +1,6 @@
 import 'package:biosp/domain/actions/app_sync_count.dart';
+import 'package:biosp/sync/app_sync.dart';
+import 'package:isar/isar.dart';
 
 import '../../../bloc/components/cubit/home_bottom_bar_index_cubit.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
@@ -123,8 +125,18 @@ class HomeScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   )
                 ],
-                onItemSelected: (int index) =>
-                    context.read<HomeBottomBarIndexCubit>().changeIndex(index),
+                onItemSelected: (int index) {
+                  context.read<HomeBottomBarIndexCubit>().changeIndex(index);
+                  if (index == 1) {
+                    AppSync(GetIt.I<Isar>())().then((value) {
+                      value.fold((l) {
+                        debugPrint(l);
+                      }, (r) {
+                        context.read<HomeBottomBarIndexCubit>().changeIndex(0);
+                      });
+                    });
+                  }
+                },
               );
             },
           ),
