@@ -1,6 +1,3 @@
-
-
-
 abstract class Synchronization {
 
 }

@@ -1,3 +1,5 @@
+import 'package:biosp/domain/actions/app_sync_count.dart';
+
 import '../../../bloc/components/cubit/home_bottom_bar_index_cubit.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -98,11 +100,24 @@ class HomeScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   BottomNavyBarItem(
-                    icon: const Badge(
-                      backgroundColor: Colors.deepOrange,
-                      label: null,
-                      child: Icon(Icons.sync),
-                    ),
+                    icon: FutureBuilder(
+                        future: GetIt.I<AppSyncCount>()(),
+                        builder: (_, snap) {
+                          int count = 0;
+
+                          if (snap.hasData) {
+                            count = snap.data!.fold((l) => 0, (r) => r);
+                          }
+                          return Badge(
+                            label: Text(
+                              count.toString(),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            child: const Icon(Icons.sync),
+                          );
+                        }),
                     title: Text(LocaleKeys.sync.tr().capitalize),
                     activeColor: Colors.green,
                     textAlign: TextAlign.center,

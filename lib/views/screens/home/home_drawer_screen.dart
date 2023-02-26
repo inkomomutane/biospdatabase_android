@@ -49,7 +49,7 @@ class HomeDrawerScreen extends StatelessWidget {
               ),
               const AboutListTile(
                 icon: Icon(
-                  Icons.info_outline_rounded,
+                  Icons.info,
                 ),
                 applicationVersion: "v2.0.1",
                 aboutBoxChildren: [],
@@ -57,7 +57,7 @@ class HomeDrawerScreen extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.settings),
                 title: Text(LocaleKeys.appSettings.tr()),
-                onTap: () => Navigator.of(context).pushNamed('settings'),
+                onTap: () => Navigator.of(context).popAndPushNamed('settings'),
               )
             ],
           ),

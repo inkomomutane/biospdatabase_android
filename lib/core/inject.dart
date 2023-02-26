@@ -1,3 +1,6 @@
+import 'package:biosp/data/datasource/isar/datasource/app_sync_count_datasource.dart';
+import 'package:biosp/domain/actions/app_sync_count.dart';
+import 'package:biosp/domain/repository/app_sync_count_repository.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:graphql/client.dart';
@@ -26,6 +29,7 @@ import '../data/datasource/isar/model/genres/genre.dart';
 import '../data/datasource/isar/model/provenances/provenance.dart';
 import '../data/datasource/isar/model/purposes_of_visit/purpose_of_visit.dart';
 import '../data/datasource/isar/model/reasons_of_opening_case/reason_of_opening_case.dart';
+import '../data/datasource/isar/model/sync.dart';
 import '../domain/actions/beneficiary/create_beneficiary.dart';
 import '../domain/actions/beneficiary/delete_beneficiary.dart';
 import '../domain/actions/beneficiary/get_beneficiaries.dart';
@@ -68,6 +72,7 @@ class Inject {
           PurposeOfVisitSchema,
           ReasonOfOpeningCaseSchema,
           AuthSchema,
+          LWinMapSyncSchema
         ]));
     getIt.registerLazySingleton<AuthLink>(() => AuthLink(
         getToken: () => 'Bearer ${GetIt.I<Isar>().auths.getSync(1)?.token}'));
@@ -87,6 +92,13 @@ class Inject {
         GetIt.I<Isar>(),
       ),
     );
+
+    getIt.registerLazySingleton<AppSyncCountDatasource>(
+      () => AppSyncCountDatasource(
+        GetIt.I<Isar>(),
+      ),
+    );
+
     getIt.registerLazySingleton<GetAllBiospsDatasource>(
       () => GetAllBiospsDatasource(
         GetIt.I<Isar>(),
@@ -158,6 +170,11 @@ class Inject {
     getIt.registerLazySingleton<GetAuthUserRepository>(
       () => GetIt.I<GetAuthUserDatasource>(),
     );
+
+    getIt.registerLazySingleton<AppSyncCountRepository>(
+      () => GetIt.I<AppSyncCountDatasource>(),
+    );
+
     getIt.registerLazySingleton<GetAllBiospsRepository>(
       () => GetIt.I<GetAllBiospsDatasource>(),
     );
@@ -205,6 +222,13 @@ class Inject {
         GetIt.I<GetAuthUserRepository>(),
       ),
     );
+
+    getIt.registerLazySingleton<AppSyncCount>(
+      () => AppSyncCount(
+        GetIt.I<AppSyncCountRepository>(),
+      ),
+    );
+
     getIt.registerLazySingleton<GetAllBiosps>(
       () => GetAllBiosps(
         GetIt.I<GetAllBiospsRepository>(),
@@ -282,4 +306,19 @@ class Inject {
           image: AssetImage("assets/splash/splash.png"),
         ),
       );
+
+  static int fastHash(String string) {
+    var hash = 0xcbf29ce484222325;
+
+    var i = 0;
+    while (i < string.length) {
+      final codeUnit = string.codeUnitAt(i++);
+      hash ^= codeUnit >> 8;
+      hash *= 0x100000001b3;
+      hash ^= codeUnit & 0xFF;
+      hash *= 0x100000001b3;
+    }
+
+    return hash;
+  }
 }

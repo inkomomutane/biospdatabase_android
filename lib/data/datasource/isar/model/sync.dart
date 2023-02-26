@@ -1,12 +1,21 @@
 import 'package:isar/isar.dart';
 
-part 'sync.g.dart'
+import '../../../../core/enums.dart';
+import '../../../../core/inject.dart';
 
-@collection()
-class Sync {
-  Id? id;
-  @Index(unique: true)
-  late String ulid;
-  late String name;
-  late String projectName;
+part 'sync.g.dart';
+
+@collection
+class LWinMapSync {
+  @enumerated
+  final SyncOperations operation;
+  @Index(unique: true, replace: true)
+  final String ulid;
+  Id get id => Inject.fastHash(ulid);
+  final DateTime operationDateTime;
+  LWinMapSync({
+    required this.operation,
+    required this.ulid,
+    required this.operationDateTime,
+  });
 }
