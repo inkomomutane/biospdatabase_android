@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 
+import '../../../../../core/inject.dart';
 import '../biosps/biosp.dart';
 import '../document_types/document_type.dart';
 import '../forwarded_services/forwarded_service.dart';
@@ -12,10 +13,9 @@ part 'beneficiary.g.dart';
 
 @Collection(accessor: 'beneficiaries')
 class Beneficiary {
-  Id? id;
-
-  @Index(unique: true)
+  @Index(unique: true,replace:true)
   late String ulid;
+  Id get id => Inject.fastHash(ulid);
   late String fullName;
   late int numberOfVisits;
   late DateTime birthDate;

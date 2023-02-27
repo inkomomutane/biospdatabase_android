@@ -15,7 +15,7 @@ abstract class BiospDto {
     ..name = biospEntity!.name
     ..ulid = biospEntity.ulid.toString()
     ..projectName = biospEntity.projectName
-    ..id = biospEntity.id;
+  ;
 
   static Biosp fromGraphql(Map<String,dynamic> graphql) => Biosp()
     ..name = graphql['name']..ulid =  Inject.toUppercase(graphql['ulid'] as String)

@@ -1,4 +1,3 @@
-import 'package:ulid4d/ulid4d.dart';
 
 import 'bloc/components/cubit/beneficiary_crud_bottom_bar_index_cubit.dart';
 import 'bloc/components/cubit/create_update_beneficiary_cubit.dart';
@@ -74,7 +73,7 @@ Future<void> main() async {
 
 class MainEntry extends StatelessWidget {
   MainEntry({super.key});
-  final ThemeMode mode = ThemeMode.light;
+  final ThemeMode mode = ThemeMode.dark;
   final BiospgeneratedRouting biospgeneratedRouting = BiospgeneratedRouting();
   @override
   Widget build(BuildContext context) {

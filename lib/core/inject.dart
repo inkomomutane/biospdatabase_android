@@ -1,10 +1,12 @@
 import 'package:biosp/data/datasource/isar/datasource/app_sync_count_datasource.dart';
 import 'package:biosp/domain/actions/app_sync_count.dart';
+import 'package:biosp/domain/entity/beneficiaries/beneficiary_entity.dart';
 import 'package:biosp/domain/repository/app_sync_count_repository.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:graphql/client.dart';
 import 'package:isar/isar.dart';
+import 'package:ulid4d/ulid4d.dart';
 
 import '../data/datasource/isar/datasource/create_beneficiary_datasource.dart';
 import '../data/datasource/isar/datasource/delete_beneficiary_datasource.dart';
@@ -85,6 +87,23 @@ class Inject {
         link: GetIt.instance<Link>(),
       ),
     );
+
+    getIt.registerFactory<BeneficiaryEntity>(() => BeneficiaryEntity(
+          biospEntity: null,
+          ulid: ULID.nextULID(),
+          genreEntity: null,
+          birthDate: DateTime.now(),
+          serviceDate: DateTime.now(),
+          dateReceived: DateTime.now(),
+          provenanceEntity: null,
+          reasonOfOpeningCaseEntity: null,
+          documentTypeEntity: null,
+          forwardedServiceEntity: null,
+          purposeOfVisitEntity: null,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+          specifyForwardedService: '',
+        ));
 
     /// Datasource Injecting.
     getIt.registerLazySingleton<GetAuthUserDatasource>(
@@ -306,7 +325,6 @@ class Inject {
           image: AssetImage("assets/splash/splash.png"),
         ),
       );
-
   static int fastHash(String string) {
     var hash = 0xcbf29ce484222325;
 

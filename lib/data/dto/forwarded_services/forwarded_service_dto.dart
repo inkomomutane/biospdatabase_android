@@ -14,8 +14,7 @@ abstract class ForwardedServiceDto {
   static ForwardedService fromEntity(
           ForwardedServiceEntity? forwardedServiceEntity) =>
       ForwardedService()
-        ..id = forwardedServiceEntity!.id
-        ..name = forwardedServiceEntity.name
+        ..name = forwardedServiceEntity!.name
         ..ulid = forwardedServiceEntity.ulid.toString();
   static ForwardedService fromGraphql(Map<String,dynamic> graphql) => ForwardedService()
     ..name = graphql['name']..ulid =  Inject.toUppercase(graphql['ulid'] as String);

@@ -1,4 +1,3 @@
-import 'package:fpdart/fpdart.dart';
 
 import '../../core/error_handler.dart';
 import '../repository/app_sync_count_repository.dart';

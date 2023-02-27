@@ -17,7 +17,7 @@ abstract class ReasonOfOpeningCaseDto {
       ReasonOfOpeningCase()
         ..name = reasonOfOpeningCaseEntity!.name
         ..ulid = reasonOfOpeningCaseEntity.ulid.toString()
-        ..id = reasonOfOpeningCaseEntity.id;
+  ;
 
   static ReasonOfOpeningCase fromGraphql(Map<String,dynamic> graphql) => ReasonOfOpeningCase()
     ..name = graphql['name']..ulid =  Inject.toUppercase(graphql['ulid'] as String);

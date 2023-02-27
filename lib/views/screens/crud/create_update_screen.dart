@@ -85,11 +85,9 @@ class CreateUpdateScreen extends StatelessWidget {
                             return SelectComponent<BiospEntity>(
                               hintText: LocaleKeys.neighborhoods.tr(),
                               items: items ?? <BiospEntity>[],
-                              selectedItem: (items == null || items.isEmpty)
-                                  ? null
-                                  : items.first,
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.neighborhoods.tr(), item),
+                              itemAsString: (p0) => p0!.name,
                               onChanged: (biosp) => context
                                   .read<CreateUpdateBeneficiaryCubit>()
                                   .validate(
@@ -111,9 +109,6 @@ class CreateUpdateScreen extends StatelessWidget {
                             return SelectComponent<GenreEntity>(
                               hintText: LocaleKeys.genres.tr().capitalize,
                               items: items ?? <GenreEntity>[],
-                              selectedItem: (items == null || items.isEmpty)
-                                  ? null
-                                  : items.first,
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.genres.tr(), item),
                               onChanged: (genre) => context
@@ -151,9 +146,6 @@ class CreateUpdateScreen extends StatelessWidget {
                             return SelectComponent<ProvenanceEntity>(
                               hintText: LocaleKeys.provenances.tr().capitalize,
                               items: items ?? <ProvenanceEntity>[],
-                              selectedItem: (items == null || items.isEmpty)
-                                  ? null
-                                  : items.first,
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.provenances.tr(), item),
                               onChanged: (provenance) => context
@@ -215,9 +207,6 @@ class CreateUpdateScreen extends StatelessWidget {
                               hintText:
                                   LocaleKeys.purposesOfVisit.tr().capitalize,
                               items: items ?? <PurposeOfVisitEntity>[],
-                              selectedItem: (items == null || items.isEmpty)
-                                  ? null
-                                  : items.first,
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.purposesOfVisit.tr(), item),
                               onChanged: (purposesOfVisit) => context
@@ -258,9 +247,6 @@ class CreateUpdateScreen extends StatelessWidget {
                                   .tr()
                                   .capitalize,
                               items: items ?? <ReasonOfOpeningCaseEntity>[],
-                              selectedItem: (items == null || items.isEmpty)
-                                  ? null
-                                  : items.first,
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.reasonsOfOpeningCase.tr(), item),
                               onChanged: (reasonsOfOpeningCase) => context
@@ -298,9 +284,6 @@ class CreateUpdateScreen extends StatelessWidget {
                               hintText:
                                   LocaleKeys.documentNeeded.tr().capitalize,
                               items: items ?? <DocumentTypeEntity>[],
-                              selectedItem: (items == null || items.isEmpty)
-                                  ? null
-                                  : items.first,
                               itemAsString: (p0) => p0!.name,
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.documentNeeded.tr(), item),
@@ -334,15 +317,13 @@ class CreateUpdateScreen extends StatelessWidget {
                           builder: (_, snap) {
                             List<ForwardedServiceEntity>? items;
                             if (snap.hasData) {
-                              snap.data?.fold((l) => null, (r) => r);
+                              items = snap.data?.fold((l) => null, (r) => r);
                             }
                             return SelectComponent<ForwardedServiceEntity>(
                               hintText:
                                   LocaleKeys.forwardedServices.tr().capitalize,
                               items: items ?? <ForwardedServiceEntity>[],
-                              selectedItem: (items == null || items.isEmpty)
-                                  ? null
-                                  : items.first,
+                              itemAsString: (p0) => p0!.name,
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.forwardedServices.tr(), item),
                               onChanged: (forwardedServices) => context
@@ -383,7 +364,6 @@ class CreateUpdateScreen extends StatelessWidget {
                         SelectComponent(
                           hintText: "Necessita de acompanhamento domiciliar?",
                           items: trueFalse,
-                          selectedItem: trueFalse.last,
                           itemAsString: (item) => item!.value,
                           validator: (item) => Validation.selectValidation(
                               "Necessita de acompanhamento domiciliar?", item),
@@ -422,7 +402,6 @@ class CreateUpdateScreen extends StatelessWidget {
                           hintText: "Resolveu o seu problema?",
                           items: trueFalse,
                           itemAsString: (item) => item!.value,
-                          selectedItem: trueFalse.last,
                           onChanged: (status) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(

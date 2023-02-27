@@ -14,7 +14,8 @@ class DocumentTypeDto {
       DocumentType()
         ..name = documentTypeEntity!.name
         ..ulid = documentTypeEntity.ulid.toString()
-        ..id = documentTypeEntity.id;
+
+  ;
 
   static DocumentType fromGraphql(Map<String,dynamic> graphql) => DocumentType()
     ..name = graphql['name']..ulid =  Inject.toUppercase(graphql['ulid'] as String);

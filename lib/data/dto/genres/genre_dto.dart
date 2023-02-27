@@ -11,7 +11,7 @@ abstract class GenreDto {
   static Genre fromEntity(GenreEntity? genreEntity) => Genre()
     ..name = genreEntity!.name
     ..ulid = genreEntity.ulid.toString()
-    ..id = genreEntity.id;
+  ;
 
   static Genre fromGraphql(Map<String,dynamic> graphql) => Genre()
     ..name = graphql['name']..ulid =  Inject.toUppercase(graphql['ulid'] as String);

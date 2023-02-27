@@ -14,7 +14,7 @@ abstract class ProvenanceDto {
       Provenance()
         ..name = provenanceEntity!.name
         ..ulid = provenanceEntity.ulid.toString()
-        ..id = provenanceEntity.id;
+  ;
 
   static Provenance fromGraphql(Map<String,dynamic> graphql) => Provenance()
     ..name = graphql['name']..ulid =  Inject.toUppercase(graphql['ulid'] as String);

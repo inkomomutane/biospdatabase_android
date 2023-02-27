@@ -83,7 +83,6 @@ abstract class BeneficiaryDto {
         ..visitProposes = beneficiaryEntity.visitProposes
         ..status = beneficiaryEntity.status
         ..specifyForwardedService = beneficiaryEntity.specifyForwardedService
-        ..id = beneficiaryEntity.id
         ..createdAt = beneficiaryEntity.createdAt
         ..updatedAt = beneficiaryEntity.updatedAt;
 

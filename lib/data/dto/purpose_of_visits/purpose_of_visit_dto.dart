@@ -16,7 +16,7 @@ abstract class PurposeOfVisitDto {
       PurposeOfVisit()
         ..name = purposeOfVisitEntity!.name
         ..ulid = purposeOfVisitEntity.ulid.toString()
-        ..id = purposeOfVisitEntity.id;
+  ;
 
   static PurposeOfVisit fromGraphql(Map<String,dynamic> graphql) => PurposeOfVisit()
     ..name = graphql['name']..ulid =  Inject.toUppercase(graphql['ulid'] as String);
