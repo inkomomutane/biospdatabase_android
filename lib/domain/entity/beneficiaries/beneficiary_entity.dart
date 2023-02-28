@@ -11,7 +11,6 @@ import '../purposes_of_visit/purpose_of_visit_entity.dart';
 import '../reasons_of_opening_case/reason_of_opening_case_entity.dart';
 
 part 'beneficiary_entity.freezed.dart';
-
 @freezed
 class BeneficiaryEntity extends Equatable with _$BeneficiaryEntity {
   const BeneficiaryEntity._();
@@ -42,7 +41,6 @@ class BeneficiaryEntity extends Equatable with _$BeneficiaryEntity {
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _BeneficiaryEntity;
-
   @override
   List<Object?> get props => [
         id,

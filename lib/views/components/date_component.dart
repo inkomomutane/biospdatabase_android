@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 class DateComponent extends StatelessWidget {
   DateComponent(
       {Key? key,
-        this.onSubmited,
+        this.onSubmitted,
         this.onChanged,
         this.onSaved,
         this.initialValue,
         this.controller})
       : super(key: key);
-  void Function(DateTime?)? onSubmited;
+  void Function(DateTime?)? onSubmitted;
   void Function(DateTime?)? onChanged;
   void Function(DateTime?)? onSaved;
   TextEditingController? controller;
@@ -26,7 +26,7 @@ class DateComponent extends StatelessWidget {
         child: DateTimeField(
           format: format,
           controller: controller,
-          onFieldSubmitted: onSubmited,
+          onFieldSubmitted: onSubmitted,
           onChanged: onChanged,
           onSaved: onSaved,
           initialValue: initialValue ?? DateTime.now(),

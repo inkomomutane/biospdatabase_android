@@ -1,4 +1,6 @@
+import 'package:biosp/bloc/components/cubit/create_update_beneficiary_cubit.dart';
 import 'package:biosp/domain/actions/app_sync_count.dart';
+import 'package:biosp/domain/entity/beneficiaries/beneficiary_entity.dart';
 import 'package:biosp/sync/app_sync.dart';
 import 'package:isar/isar.dart';
 
@@ -21,72 +23,81 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LanguageCubit, LanguageEntity>(
+    return BlocConsumer<LanguageCubit, LanguageEntity>(
+      listener: (context, state)  => context.setLocale(Locale(state.lang)),
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(),
           drawer: const HomeDrawerScreen(),
-          body: FutureBuilder(
-              future: Future.delayed(const Duration(seconds: 5),
-                  () => GetIt.I<GetBeneficiaries>()()),
-              builder: (_, snap) {
-                if (snap.hasData) {
-                  return snap.data!.fold(
-                      (l) => Inject.placeholder(),
-                      (r) => ListView(
-                            children: r
-                                .map(
-                                  (beneficiary) => ListTile(
-                                    tileColor: Theme.of(context).canvasColor,
-                                    shape: Border(
-                                      bottom: BorderSide(
-                                        color: Theme.of(context).dividerColor,
-                                      ),
-                                    ),
-                                    leading: ClipRRect(
-                                      borderRadius:
-                                          BorderRadius.circular(5.0), //or 15.0
-                                      child: Container(
-                                        height: 40.0,
-                                        width: 40.0,
-                                        color: Theme.of(context).hoverColor,
-                                        child: const Icon(
-                                          Icons.volume_up,
-                                        ),
-                                      ),
-                                    ),
-                                    onTap: () {},
-                                    title: Text(
-                                      beneficiary.fullName,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                    subtitle: Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.phone_android_rounded,
-                                          size: 14,
-                                        ),
-                                        const SizedBox(
-                                          width: 4,
-                                        ),
-                                        Text(
-                                          beneficiary.phone,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        )
-                                      ],
-                                    ),
+          body: BlocBuilder<CreateUpdateBeneficiaryCubit, BeneficiaryEntity>(
+            builder: (context, state) {
+              return FutureBuilder(
+                future:GetIt.I<GetBeneficiaries>()(),
+                builder: (_, snap) {
+                  if (snap.hasData) {
+                    return snap.data!.fold(
+                            (l) => Inject.placeholder(),
+                            (r) => ListView(
+                          children: r
+                              .map(
+                                (beneficiary) => ListTile(
+                              tileColor: Theme.of(context).canvasColor,
+                              shape: Border(
+                                bottom: BorderSide(
+                                  color: Theme.of(context).dividerColor,
+                                ),
+                              ),
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                    5.0), //or 15.0
+                                child: Container(
+                                  height: 40.0,
+                                  width: 40.0,
+                                  color: Theme.of(context).hoverColor,
+                                  child: const Icon(
+                                    Icons.volume_up,
                                   ),
-                                )
-                                .toList(),
-                          ));
-                } else {
-                  return Inject.placeholder();
-                }
-              }),
+                                ),
+                              ),
+                              onTap: () {
+                                context.read<CreateUpdateBeneficiaryCubit>().validate(beneficiary);
+                                Navigator.of(context).pushNamed('create_update');
+
+                              },
+                              title: Text(
+                                beneficiary.fullName,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              subtitle: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.phone_android_rounded,
+                                    size: 14,
+                                  ),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  Text(
+                                    beneficiary.phone,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                              .toList(),
+                        ));
+                  } else {
+                    return Inject.placeholder();
+                  }
+                },
+              );
+            },
+          ),
           bottomNavigationBar: BlocBuilder<HomeBottomBarIndexCubit, int>(
             builder: (context, state) {
               return BottomNavyBar(

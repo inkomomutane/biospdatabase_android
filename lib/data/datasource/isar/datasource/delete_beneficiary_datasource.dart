@@ -2,7 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:isar/isar.dart';
 import 'package:ulid4d/ulid4d.dart';
 
-import '../../../../core/enums.dart';
+import '../../../../core/constants.dart';
 import '../../../../core/error_handler.dart';
 import '../../../../domain/repository/delete_beneficiary_repository.dart';
 import '../model/beneficiaries/beneficiary.dart';

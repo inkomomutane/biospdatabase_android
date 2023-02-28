@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/components/cubit/language_cubit.dart';
-import '../../../domain/entity/language_entity.dart';
 import '../../../translations/locale_keys.g.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -18,37 +17,37 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LanguageCubit, LanguageEntity>(
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: Text(
-              LocaleKeys.appSettings.tr(),
-              style: const TextStyle(fontSize: 14),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          LocaleKeys.appSettings.tr(),
+          style: const TextStyle(fontSize: 14),
+        ),
+      ),
+      body: Column(
+        children: [
+          ListTile(
+            leading: const CircleAvatar(
+              backgroundColor: Colors.transparent,
+              child: Icon(Icons.translate_sharp),
             ),
-          ),
-          body: Column(
-            children: [
-              ListTile(
-                leading: const CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  child: Icon(Icons.translate_sharp),
-                ),
-                title: Text(
-                  LocaleKeys.language.tr(),
-                ),
-                subtitle:
-                    Text(language(context.read<LanguageCubit>().state.lang)),
-                onTap: () => showGeneralDialog(
-                  barrierDismissible: true,
-                  barrierLabel: MaterialLocalizations.of(context)
-                      .modalBarrierDismissLabel,
-                  transitionDuration: const Duration(milliseconds: 400),
-                  barrierColor: const Color(0x80000000),
-                  context: context,
-                  pageBuilder: (context, animation, secondaryAnimation) {
-                    return SafeArea(
+            title: Text(
+              LocaleKeys.language.tr(),
+            ),
+            subtitle: Text(language(context.read<LanguageCubit>().state.lang)),
+            onTap: ()  =>
+              showGeneralDialog(
+                barrierDismissible: true,
+                barrierLabel:
+                MaterialLocalizations.of(context).modalBarrierDismissLabel,
+                transitionDuration: const Duration(milliseconds: 400),
+                barrierColor: const Color(0x80000000),
+                context: context,
+                pageBuilder: (_, animation, secondaryAnimation) {
+                  return BlocProvider.value(value: 
+                      BlocProvider.of<LanguageCubit>(context)
+                      ,child: SafeArea(
                       right: true,
                       minimum: const EdgeInsets.all(16),
                       child: AlertDialog(
@@ -65,35 +64,35 @@ class SettingsScreen extends StatelessWidget {
                           children: _languages.entries
                               .map(
                                 (language) => ListTile(
-                                  leading: const CircleAvatar(
-                                    backgroundColor: Colors.transparent,
-                                    child: Icon(Icons.translate_sharp),
-                                  ),
-                                  title: Text(language.value),
-                                  onTap: () {
-                                    context
-                                        .read<LanguageCubit>()
-                                        .change(language.key);
-                                    Navigator.pop(context);
-                                  },
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(14),
-                                    ),
-                                  ),
+                              leading: const CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: Icon(Icons.translate_sharp),
+                              ),
+                              title: Text(language.value),
+                              onTap: () {
+                                context
+                                    .read<LanguageCubit>()
+                                    .change(language.key);
+                                Navigator.pop(context);
+                              },
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(14),
                                 ),
-                              )
+                              ),
+                            ),
+                          )
                               .toList(),
                         ),
                       ),
-                    );
-                  },
-                ),
-              ),
-            ],
+                    ),
+                  );
+                },
+              )
+            ,
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 

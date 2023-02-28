@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 
-import '../../../../core/enums.dart';
+import '../../../../core/constants.dart';
 import '../../../../core/inject.dart';
 
 part 'sync.g.dart';

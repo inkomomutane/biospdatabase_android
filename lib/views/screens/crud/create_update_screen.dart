@@ -56,15 +56,16 @@ class CreateUpdateScreen extends StatelessWidget {
           body: Form(
             key: formKey,
             child: SingleChildScrollView(
-              child:
-                  BlocBuilder<CreateUpdateBeneficiaryCubit, BeneficiaryEntity>(
-                builder: (context, state) {
-                  return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        LabelComponent(labelText: LocaleKeys.projectName.tr()),
-                        TextComponent(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LabelComponent(labelText: LocaleKeys.projectName.tr()),
+                    BlocBuilder<CreateUpdateBeneficiaryCubit,
+                        BeneficiaryEntity>(
+                      builder: (context, state) {
+                        return TextComponent(
                           hintText: "Nome completo",
+                          initialValue: state.fullName,
                           validator: (fullName) => Validation.textValidation(
                               'Nome completo', fullName ?? ''),
                           onChanged: (fullName) => context
@@ -72,22 +73,27 @@ class CreateUpdateScreen extends StatelessWidget {
                               .validate(
                                 state.copyWith(fullName: fullName),
                               ),
-                        ),
-                        LabelComponent(
-                            labelText: LocaleKeys.neighborhoods.tr()),
-                        FutureBuilder(
-                          future: GetIt.I<GetAllBiosps>()(),
-                          builder: (_, snap) {
-                            List<BiospEntity>? items;
-                            if (snap.hasData) {
-                              items = snap.data?.fold((l) => null, (r) => r);
-                            }
+                        );
+                      },
+                    ),
+                    LabelComponent(labelText: LocaleKeys.neighborhoods.tr()),
+                    FutureBuilder(
+                      future: GetIt.I<GetAllBiosps>()(),
+                      builder: (_, snap) {
+                        List<BiospEntity>? items;
+                        if (snap.hasData) {
+                          items = snap.data?.fold((l) => null, (r) => r);
+                        }
+                        return BlocBuilder<CreateUpdateBeneficiaryCubit,
+                            BeneficiaryEntity>(
+                          builder: (context, state) {
                             return SelectComponent<BiospEntity>(
                               hintText: LocaleKeys.neighborhoods.tr(),
                               items: items ?? <BiospEntity>[],
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.neighborhoods.tr(), item),
                               itemAsString: (p0) => p0!.name,
+                              selectedItem: state.biospEntity,
                               onChanged: (biosp) => context
                                   .read<CreateUpdateBeneficiaryCubit>()
                                   .validate(
@@ -95,22 +101,29 @@ class CreateUpdateScreen extends StatelessWidget {
                                   ),
                             );
                           },
-                        ),
-                        LabelComponent(
-                          labelText: LocaleKeys.genres.tr().capitalize,
-                        ),
-                        FutureBuilder(
-                          future: GetIt.I<GetAllGenres>()(),
-                          builder: (_, snap) {
-                            List<GenreEntity>? items;
-                            if (snap.hasData) {
-                              items = snap.data?.fold((l) => null, (r) => r);
-                            }
+                        );
+                      },
+                    ),
+                    LabelComponent(
+                      labelText: LocaleKeys.genres.tr().capitalize,
+                    ),
+                    FutureBuilder(
+                      future: GetIt.I<GetAllGenres>()(),
+                      builder: (_, snap) {
+                        List<GenreEntity>? items;
+                        if (snap.hasData) {
+                          items = snap.data?.fold((l) => null, (r) => r);
+                        }
+                        return BlocBuilder<CreateUpdateBeneficiaryCubit,
+                            BeneficiaryEntity>(
+                          builder: (context, state) {
                             return SelectComponent<GenreEntity>(
                               hintText: LocaleKeys.genres.tr().capitalize,
                               items: items ?? <GenreEntity>[],
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.genres.tr(), item),
+                              itemAsString: (p0) => p0!.name,
+                              selectedItem: state.genreEntity,
                               onChanged: (genre) => context
                                   .read<CreateUpdateBeneficiaryCubit>()
                                   .validate(
@@ -118,12 +131,18 @@ class CreateUpdateScreen extends StatelessWidget {
                                   ),
                             );
                           },
-                        ),
-                        const LabelComponent(
-                          labelText: "Frequência",
-                        ),
-                        NumberComponent(
+                        );
+                      },
+                    ),
+                    const LabelComponent(
+                      labelText: "Frequência",
+                    ),
+                    BlocBuilder<CreateUpdateBeneficiaryCubit,
+                        BeneficiaryEntity>(
+                      builder: (context, state) {
+                        return NumberComponent(
                           hintText: "Frequência",
+                          initialValue: state.numberOfVisits.toString(),
                           validator: (item) => Validation.numberValidation(
                               "Frequência", item ?? ""),
                           onChanged: (frequencia) => context
@@ -132,22 +151,28 @@ class CreateUpdateScreen extends StatelessWidget {
                                 state.copyWith(
                                     numberOfVisits: int.parse(frequencia)),
                               ),
-                        ),
-                        LabelComponent(
-                          labelText: LocaleKeys.provenance.tr().capitalize,
-                        ),
-                        FutureBuilder(
-                          future: GetIt.I<GetAllProvenances>()(),
-                          builder: (_, snap) {
-                            List<ProvenanceEntity>? items;
-                            if (snap.hasData) {
-                              items = snap.data?.fold((l) => null, (r) => r);
-                            }
+                        );
+                      },
+                    ),
+                    LabelComponent(
+                      labelText: LocaleKeys.provenance.tr().capitalize,
+                    ),
+                    FutureBuilder(
+                      future: GetIt.I<GetAllProvenances>()(),
+                      builder: (_, snap) {
+                        List<ProvenanceEntity>? items;
+                        if (snap.hasData) {
+                          items = snap.data?.fold((l) => null, (r) => r);
+                        }
+                        return BlocBuilder<CreateUpdateBeneficiaryCubit,
+                            BeneficiaryEntity>(
+                          builder: (context, state) {
                             return SelectComponent<ProvenanceEntity>(
                               hintText: LocaleKeys.provenances.tr().capitalize,
                               items: items ?? <ProvenanceEntity>[],
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.provenances.tr(), item),
+                              itemAsString: (p0) => p0!.name,selectedItem: state.provenanceEntity,
                               onChanged: (provenance) => context
                                   .read<CreateUpdateBeneficiaryCubit>()
                                   .validate(
@@ -156,11 +181,16 @@ class CreateUpdateScreen extends StatelessWidget {
                                   ),
                             );
                           },
-                        ),
-                        const LabelComponent(
-                          labelText: "Data de nascimento",
-                        ),
-                        DateComponent(
+                        );
+                      },
+                    ),
+                    const LabelComponent(
+                      labelText: "Data de nascimento",
+                    ),
+                    BlocBuilder<CreateUpdateBeneficiaryCubit,
+                        BeneficiaryEntity>(
+                      builder: (context, state) {
+                        return DateComponent(
                           onChanged: (birthDate) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
@@ -168,14 +198,21 @@ class CreateUpdateScreen extends StatelessWidget {
                                   birthDate: birthDate ?? DateTime.now(),
                                 ),
                               ),
-                        ),
-                        const LabelComponent(
-                          labelText: "Contacto",
-                        ),
-                        PhoneNumberComponent(
+                          initialValue: state.birthDate,
+                        );
+                      },
+                    ),
+                    const LabelComponent(
+                      labelText: "Contacto",
+                    ),
+                    BlocBuilder<CreateUpdateBeneficiaryCubit,
+                        BeneficiaryEntity>(
+                      builder: (context, state) {
+                        return PhoneNumberComponent(
                           hintText: "Contacto",
                           validator: (contacto) => Validation.phoneValidation(
                               'Contacto', contacto ?? ''),
+                          initialValue: state.phone,
                           onChanged: (contacto) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
@@ -183,32 +220,45 @@ class CreateUpdateScreen extends StatelessWidget {
                                   phone: contacto,
                                 ),
                               ),
-                        ),
-                        const LabelComponent(
-                          labelText: "Data de atendimento",
-                        ),
-                        DateTimeComponent(
+                        );
+                      },
+                    ),
+                    const LabelComponent(
+                      labelText: "Data de atendimento",
+                    ),
+                    BlocBuilder<CreateUpdateBeneficiaryCubit,
+                        BeneficiaryEntity>(
+                      builder: (context, state) {
+                        return DateTimeComponent(
                           onChanged: (serviceDate) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(state.copyWith(
                                   serviceDate: serviceDate ?? DateTime.now())),
-                        ),
-                        LabelComponent(
-                          labelText: LocaleKeys.purposeOfVisit.tr().capitalize,
-                        ),
-                        FutureBuilder(
-                          future: GetIt.I<GetAllPurposeOfVisits>()(),
-                          builder: (_, snap) {
-                            List<PurposeOfVisitEntity>? items;
-                            if (snap.hasData) {
-                              snap.data?.fold((l) => null, (r) => r);
-                            }
+                          initialValue: state.serviceDate,
+                        );
+                      },
+                    ),
+                    LabelComponent(
+                      labelText: LocaleKeys.purposeOfVisit.tr().capitalize,
+                    ),
+                    FutureBuilder(
+                      future: GetIt.I<GetAllPurposeOfVisits>()(),
+                      builder: (_, snap) {
+                        List<PurposeOfVisitEntity>? items;
+                        if (snap.hasData) {
+                          items = snap.data?.fold((l) => null, (r) => r);
+                        }
+                        return BlocBuilder<CreateUpdateBeneficiaryCubit,
+                            BeneficiaryEntity>(
+                          builder: (context, state) {
                             return SelectComponent<PurposeOfVisitEntity>(
                               hintText:
                                   LocaleKeys.purposesOfVisit.tr().capitalize,
                               items: items ?? <PurposeOfVisitEntity>[],
+                              selectedItem: state.purposeOfVisitEntity,
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.purposesOfVisit.tr(), item),
+                              itemAsString: (p0) => p0!.name,
                               onChanged: (purposesOfVisit) => context
                                   .read<CreateUpdateBeneficiaryCubit>()
                                   .validate(
@@ -218,37 +268,48 @@ class CreateUpdateScreen extends StatelessWidget {
                                   ),
                             );
                           },
-                        ),
-                        const LabelComponent(
-                          labelText:
-                              "Se tiver formação profissional Especificar",
-                        ),
-                        TextComponent(
+                        );
+                      },
+                    ),
+                    const LabelComponent(
+                      labelText: "Se tiver formação profissional Especificar",
+                    ),
+                    BlocBuilder<CreateUpdateBeneficiaryCubit,
+                        BeneficiaryEntity>(
+                      builder: (context, state) {
+                        return TextComponent(
                           hintText:
                               "Se tiver formação profissional Especificar",
+                          initialValue: state.specifyPurposeOfVisit,
                           onChanged: (formacao) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(state.copyWith(
                                   specifyPurposeOfVisit: formacao)),
-                        ),
-                        LabelComponent(
-                          labelText:
-                              LocaleKeys.reasonOfOpeningCase.tr().capitalize,
-                        ),
-                        FutureBuilder(
-                          future: GetIt.I<GetAllReasonOfOpeningCases>()(),
-                          builder: (_, snap) {
-                            List<ReasonOfOpeningCaseEntity>? items;
-                            if (snap.hasData) {
-                              snap.data?.fold((l) => null, (r) => r);
-                            }
+                        );
+                      },
+                    ),
+                    LabelComponent(
+                      labelText: LocaleKeys.reasonOfOpeningCase.tr().capitalize,
+                    ),
+                    FutureBuilder(
+                      future: GetIt.I<GetAllReasonOfOpeningCases>()(),
+                      builder: (_, snap) {
+                        List<ReasonOfOpeningCaseEntity>? items;
+                        if (snap.hasData) {
+                          items = snap.data?.fold((l) => null, (r) => r);
+                        }
+                        return BlocBuilder<CreateUpdateBeneficiaryCubit,
+                            BeneficiaryEntity>(
+                          builder: (context, state) {
                             return SelectComponent<ReasonOfOpeningCaseEntity>(
                               hintText: LocaleKeys.reasonOfOpeningCase
                                   .tr()
                                   .capitalize,
                               items: items ?? <ReasonOfOpeningCaseEntity>[],
+                              selectedItem: state.reasonOfOpeningCaseEntity,
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.reasonsOfOpeningCase.tr(), item),
+                              itemAsString: (p0) => p0!.name,
                               onChanged: (reasonsOfOpeningCase) => context
                                   .read<CreateUpdateBeneficiaryCubit>()
                                   .validate(
@@ -259,31 +320,43 @@ class CreateUpdateScreen extends StatelessWidget {
                                   ),
                             );
                           },
-                        ),
-                        const LabelComponent(labelText: "Outro motivo"),
-                        TextComponent(
+                        );
+                      },
+                    ),
+                    const LabelComponent(labelText: "Outro motivo"),
+                    BlocBuilder<CreateUpdateBeneficiaryCubit,
+                        BeneficiaryEntity>(
+                      builder: (context, state) {
+                        return TextComponent(
                           hintText: "Outro motivo",
+                          initialValue: state.otherReasonOfOpeningCase,
                           onChanged: (motivo) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
                                 state.copyWith(
                                     otherReasonOfOpeningCase: motivo),
                               ),
-                        ),
-                        LabelComponent(
-                          labelText: LocaleKeys.documentNeeded.tr().capitalize,
-                        ),
-                        FutureBuilder(
-                          future: GetIt.I<GetAllDocumentTypes>()(),
-                          builder: (_, snap) {
-                            List<DocumentTypeEntity>? items;
-                            if (snap.hasData) {
-                              items = snap.data?.fold((l) => null, (r) => r);
-                            }
+                        );
+                      },
+                    ),
+                    LabelComponent(
+                      labelText: LocaleKeys.documentNeeded.tr().capitalize,
+                    ),
+                    FutureBuilder(
+                      future: GetIt.I<GetAllDocumentTypes>()(),
+                      builder: (_, snap) {
+                        List<DocumentTypeEntity>? items;
+                        if (snap.hasData) {
+                          items = snap.data?.fold((l) => null, (r) => r);
+                        }
+                        return BlocBuilder<CreateUpdateBeneficiaryCubit,
+                            BeneficiaryEntity>(
+                          builder: (context, state) {
                             return SelectComponent<DocumentTypeEntity>(
                               hintText:
                                   LocaleKeys.documentNeeded.tr().capitalize,
                               items: items ?? <DocumentTypeEntity>[],
+                              selectedItem: state.documentTypeEntity,
                               itemAsString: (p0) => p0!.name,
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.documentNeeded.tr(), item),
@@ -296,10 +369,16 @@ class CreateUpdateScreen extends StatelessWidget {
                                   ),
                             );
                           },
-                        ),
-                        const LabelComponent(labelText: "Outro documento"),
-                        TextComponent(
+                        );
+                      },
+                    ),
+                    const LabelComponent(labelText: "Outro documento"),
+                    BlocBuilder<CreateUpdateBeneficiaryCubit,
+                        BeneficiaryEntity>(
+                      builder: (context, state) {
+                        return TextComponent(
                           hintText: "Outro documento",
+                          initialValue: state.otherDocumentType,
                           onChanged: (documento) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
@@ -307,22 +386,27 @@ class CreateUpdateScreen extends StatelessWidget {
                                   otherDocumentType: documento,
                                 ),
                               ),
-                        ),
-                        LabelComponent(
-                          labelText:
-                              LocaleKeys.forwardedService.tr().capitalize,
-                        ),
-                        FutureBuilder(
-                          future: GetIt.I<GetAllForwardedServices>()(),
-                          builder: (_, snap) {
-                            List<ForwardedServiceEntity>? items;
-                            if (snap.hasData) {
-                              items = snap.data?.fold((l) => null, (r) => r);
-                            }
+                        );
+                      },
+                    ),
+                    LabelComponent(
+                      labelText: LocaleKeys.forwardedService.tr().capitalize,
+                    ),
+                    FutureBuilder(
+                      future: GetIt.I<GetAllForwardedServices>()(),
+                      builder: (_, snap) {
+                        List<ForwardedServiceEntity>? items;
+                        if (snap.hasData) {
+                          items = snap.data?.fold((l) => null, (r) => r);
+                        }
+                        return BlocBuilder<CreateUpdateBeneficiaryCubit,
+                            BeneficiaryEntity>(
+                          builder: (context, state) {
                             return SelectComponent<ForwardedServiceEntity>(
                               hintText:
                                   LocaleKeys.forwardedServices.tr().capitalize,
                               items: items ?? <ForwardedServiceEntity>[],
+                              selectedItem: state.forwardedServiceEntity,
                               itemAsString: (p0) => p0!.name,
                               validator: (item) => Validation.selectValidation(
                                   LocaleKeys.forwardedServices.tr(), item),
@@ -335,10 +419,16 @@ class CreateUpdateScreen extends StatelessWidget {
                                   ),
                             );
                           },
-                        ),
-                        const LabelComponent(labelText: "Outro serviço"),
-                        TextComponent(
+                        );
+                      },
+                    ),
+                    const LabelComponent(labelText: "Outro serviço"),
+                    BlocBuilder<CreateUpdateBeneficiaryCubit,
+                        BeneficiaryEntity>(
+                      builder: (context, state) {
+                        return TextComponent(
                           hintText: "Outro serviço",
+                          initialValue: state.otherForwardedService,
                           onChanged: (servico) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
@@ -346,10 +436,16 @@ class CreateUpdateScreen extends StatelessWidget {
                                   otherForwardedService: servico,
                                 ),
                               ),
-                        ),
-                        const LabelComponent(labelText: "Especificar Serviço"),
-                        TextComponent(
+                        );
+                      },
+                    ),
+                    const LabelComponent(labelText: "Especificar Serviço"),
+                    BlocBuilder<CreateUpdateBeneficiaryCubit,
+                        BeneficiaryEntity>(
+                      builder: (context, state) {
+                        return TextComponent(
                           hintText: "Especificar Serviço",
+                          initialValue: state.specifyForwardedService,
                           onChanged: (specifyService) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
@@ -357,14 +453,20 @@ class CreateUpdateScreen extends StatelessWidget {
                                   specifyForwardedService: specifyService,
                                 ),
                               ),
-                        ),
-                        const LabelComponent(
-                          labelText: "Necessita de acompanhamento domiciliar?",
-                        ),
-                        SelectComponent(
+                        );
+                      },
+                    ),
+                    const LabelComponent(
+                      labelText: "Necessita de acompanhamento domiciliar?",
+                    ),
+                    BlocBuilder<CreateUpdateBeneficiaryCubit,
+                        BeneficiaryEntity>(
+                      builder: (context, state) {
+                        return SelectComponent(
                           hintText: "Necessita de acompanhamento domiciliar?",
                           items: trueFalse,
                           itemAsString: (item) => item!.value,
+                          selectedItem: trueFalse.where((element) => element.key == state.homeCare).first,
                           validator: (item) => Validation.selectValidation(
                               "Necessita de acompanhamento domiciliar?", item),
                           onChanged: (homeCare) => context
@@ -374,20 +476,31 @@ class CreateUpdateScreen extends StatelessWidget {
                                   homeCare: homeCare!.key,
                                 ),
                               ),
-                        ),
-                        LabelComponent(
-                          labelText: LocaleKeys.purposeOfVisit.tr().capitalize,
-                        ),
-                        TextComponent(
+                        );
+                      },
+                    ),
+                    LabelComponent(
+                      labelText: LocaleKeys.purposeOfVisit.tr().capitalize,
+                    ),
+                    BlocBuilder<CreateUpdateBeneficiaryCubit,
+                        BeneficiaryEntity>(
+                      builder: (context, state) {
+                        return TextComponent(
                           hintText: LocaleKeys.purposeOfVisit.tr().capitalize,
+                          initialValue: state.visitProposes,
                           onChanged: (visitProposes) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
                                   state.copyWith(visitProposes: visitProposes)),
-                        ),
-                        const LabelComponent(
-                            labelText: "Data que foi recebida pelo serviço"),
-                        DateTimeComponent(
+                        );
+                      },
+                    ),
+                    const LabelComponent(
+                        labelText: "Data que foi recebida pelo serviço"),
+                    BlocBuilder<CreateUpdateBeneficiaryCubit,
+                        BeneficiaryEntity>(
+                      builder: (context, state) {
+                        return DateTimeComponent(
                           onChanged: (datareceived) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
@@ -395,13 +508,19 @@ class CreateUpdateScreen extends StatelessWidget {
                                   dateReceived: datareceived ?? DateTime.now(),
                                 ),
                               ),
-                        ),
-                        const LabelComponent(
-                            labelText: "Resolveu o seu problema?"),
-                        SelectComponent(
+                          initialValue: state.dateReceived,
+                        );
+                      },
+                    ),
+                    const LabelComponent(labelText: "Resolveu o seu problema?"),
+                    BlocBuilder<CreateUpdateBeneficiaryCubit,
+                        BeneficiaryEntity>(
+                      builder: (context, state) {
+                        return SelectComponent(
                           hintText: "Resolveu o seu problema?",
                           items: trueFalse,
                           itemAsString: (item) => item!.value,
+                          selectedItem: trueFalse.where((element) => element.key == state.status).first,
                           onChanged: (status) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
@@ -409,11 +528,11 @@ class CreateUpdateScreen extends StatelessWidget {
                                   status: status!.key,
                                 ),
                               ),
-                        ),
-                        const LabelComponent(labelText: ""),
-                      ]);
-                },
-              ),
+                        );
+                      },
+                    ),
+                    const LabelComponent(labelText: ""),
+                  ]),
             ),
           ),
           bottomNavigationBar:
@@ -435,14 +554,12 @@ class CreateUpdateScreen extends StatelessWidget {
                         .changeIndex(-1);
                     Navigator.of(context).pop();
                   } else if (index == 1) {
-                    formKey.currentState!.validate();
-                    context.read<CreateUpdateBeneficiaryCubit>().store(
-                        context.read<CreateUpdateBeneficiaryCubit>().state);
-                    // if (formKey.currentState != null &&
-                    //     formKey.currentState!.validate() == true) {
-                    //   context.read<CreateUpdateBeneficiaryCubit>().store(
-                    //       context.read<CreateUpdateBeneficiaryCubit>().state);
-                    // }
+                    if (formKey.currentState != null &&
+                        formKey.currentState!.validate() == true) {
+                      context.read<CreateUpdateBeneficiaryCubit>().store(
+                          context.read<CreateUpdateBeneficiaryCubit>().state);
+                      Navigator.of(context).pop();
+                    }
                   }
                 },
                 items: <BottomNavyBarItem>[

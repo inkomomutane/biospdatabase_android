@@ -1,4 +1,4 @@
-import 'package:biosp/core/enums.dart';
+import 'package:biosp/core/constants.dart';
 import 'package:biosp/data/datasource/isar/model/sync.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:isar/isar.dart';
