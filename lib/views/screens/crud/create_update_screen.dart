@@ -40,9 +40,9 @@ class CreateUpdateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-    const trueFalse = [
-      TrueFalseEntity(key: true, value: "Sim"),
-      TrueFalseEntity(key: true, value: "Não")
+    final trueFalse = [
+      TrueFalseEntity(key: true, value: LocaleKeys.yes.tr().capitalize ),
+      TrueFalseEntity(key: true, value: LocaleKeys.no.tr().capitalize )
     ];
 
     return BlocBuilder<LanguageCubit, LanguageEntity>(
@@ -51,7 +51,7 @@ class CreateUpdateScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text(LocaleKeys.createResource.tr(namedArgs: {
               'resource': LocaleKeys.beneficiary.tr().toLowerCase()
-            })),
+            }).capitalize),
           ),
           body: Form(
             key: formKey,
@@ -59,15 +59,15 @@ class CreateUpdateScreen extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    LabelComponent(labelText: LocaleKeys.projectName.tr()),
+                    LabelComponent(labelText: LocaleKeys.fullName.tr().capitalize),
                     BlocBuilder<CreateUpdateBeneficiaryCubit,
                         BeneficiaryEntity>(
                       builder: (context, state) {
                         return TextComponent(
-                          hintText: "Nome completo",
+                          hintText: LocaleKeys.fullName.tr().capitalize,
                           initialValue: state.fullName,
                           validator: (fullName) => Validation.textValidation(
-                              'Nome completo', fullName ?? ''),
+                              LocaleKeys.fullName.tr().capitalize, fullName ?? ''),
                           onChanged: (fullName) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
@@ -76,7 +76,7 @@ class CreateUpdateScreen extends StatelessWidget {
                         );
                       },
                     ),
-                    LabelComponent(labelText: LocaleKeys.neighborhoods.tr()),
+                    LabelComponent(labelText: LocaleKeys.neighborhoods.tr().capitalize),
                     FutureBuilder(
                       future: GetIt.I<GetAllBiosps>()(),
                       builder: (_, snap) {
@@ -88,10 +88,10 @@ class CreateUpdateScreen extends StatelessWidget {
                             BeneficiaryEntity>(
                           builder: (context, state) {
                             return SelectComponent<BiospEntity>(
-                              hintText: LocaleKeys.neighborhoods.tr(),
+                              hintText: LocaleKeys.neighborhoods.tr().capitalize,
                               items: items ?? <BiospEntity>[],
                               validator: (item) => Validation.selectValidation(
-                                  LocaleKeys.neighborhoods.tr(), item),
+                                  LocaleKeys.neighborhoods.tr().capitalize, item),
                               itemAsString: (p0) => p0!.name,
                               selectedItem: state.biospEntity,
                               onChanged: (biosp) => context
@@ -119,9 +119,9 @@ class CreateUpdateScreen extends StatelessWidget {
                           builder: (context, state) {
                             return SelectComponent<GenreEntity>(
                               hintText: LocaleKeys.genres.tr().capitalize,
-                              items: items ?? <GenreEntity>[],
+                              items: items?.map((genre) => genre.copyWith(name: genre.name.toLowerCase().tr()) ).toList() ?? <GenreEntity>[],
                               validator: (item) => Validation.selectValidation(
-                                  LocaleKeys.genres.tr(), item),
+                                  LocaleKeys.genres.tr().capitalize, item),
                               itemAsString: (p0) => p0!.name,
                               selectedItem: state.genreEntity,
                               onChanged: (genre) => context
@@ -134,22 +134,22 @@ class CreateUpdateScreen extends StatelessWidget {
                         );
                       },
                     ),
-                    const LabelComponent(
-                      labelText: "Frequência",
+                     LabelComponent(
+                      labelText: LocaleKeys.frequency.tr().capitalize,
                     ),
                     BlocBuilder<CreateUpdateBeneficiaryCubit,
                         BeneficiaryEntity>(
                       builder: (context, state) {
                         return NumberComponent(
-                          hintText: "Frequência",
+                          hintText: LocaleKeys.frequency.tr().capitalize,
                           initialValue: state.numberOfVisits.toString(),
                           validator: (item) => Validation.numberValidation(
-                              "Frequência", item ?? ""),
-                          onChanged: (frequencia) => context
+                              LocaleKeys.frequency.tr().capitalize, item ?? ""),
+                          onChanged: (frequency) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
                                 state.copyWith(
-                                    numberOfVisits: int.parse(frequencia)),
+                                    numberOfVisits: int.parse(frequency)),
                               ),
                         );
                       },
@@ -171,7 +171,7 @@ class CreateUpdateScreen extends StatelessWidget {
                               hintText: LocaleKeys.provenances.tr().capitalize,
                               items: items ?? <ProvenanceEntity>[],
                               validator: (item) => Validation.selectValidation(
-                                  LocaleKeys.provenances.tr(), item),
+                                  LocaleKeys.provenances.tr().capitalize, item),
                               itemAsString: (p0) => p0!.name,selectedItem: state.provenanceEntity,
                               onChanged: (provenance) => context
                                   .read<CreateUpdateBeneficiaryCubit>()
@@ -184,8 +184,8 @@ class CreateUpdateScreen extends StatelessWidget {
                         );
                       },
                     ),
-                    const LabelComponent(
-                      labelText: "Data de nascimento",
+                    LabelComponent(
+                      labelText: LocaleKeys.birthDate.tr().capitalize,
                     ),
                     BlocBuilder<CreateUpdateBeneficiaryCubit,
                         BeneficiaryEntity>(
@@ -202,29 +202,29 @@ class CreateUpdateScreen extends StatelessWidget {
                         );
                       },
                     ),
-                    const LabelComponent(
-                      labelText: "Contacto",
+                     LabelComponent(
+                      labelText: LocaleKeys.contact.tr().capitalize,
                     ),
                     BlocBuilder<CreateUpdateBeneficiaryCubit,
                         BeneficiaryEntity>(
                       builder: (context, state) {
                         return PhoneNumberComponent(
-                          hintText: "Contacto",
-                          validator: (contacto) => Validation.phoneValidation(
-                              'Contacto', contacto ?? ''),
+                          hintText:  LocaleKeys.contact.tr().capitalize,
+                          validator: (contact) => Validation.phoneValidation(
+                              LocaleKeys.contact.tr().capitalize, contact ?? ''),
                           initialValue: state.phone,
-                          onChanged: (contacto) => context
+                          onChanged: (contact) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
                                 state.copyWith(
-                                  phone: contacto,
+                                  phone: contact,
                                 ),
                               ),
                         );
                       },
                     ),
-                    const LabelComponent(
-                      labelText: "Data de atendimento",
+                    LabelComponent(
+                      labelText:  LocaleKeys.serviceDate.tr().capitalize,
                     ),
                     BlocBuilder<CreateUpdateBeneficiaryCubit,
                         BeneficiaryEntity>(
@@ -257,7 +257,7 @@ class CreateUpdateScreen extends StatelessWidget {
                               items: items ?? <PurposeOfVisitEntity>[],
                               selectedItem: state.purposeOfVisitEntity,
                               validator: (item) => Validation.selectValidation(
-                                  LocaleKeys.purposesOfVisit.tr(), item),
+                                  LocaleKeys.purposesOfVisit.tr().capitalize, item),
                               itemAsString: (p0) => p0!.name,
                               onChanged: (purposesOfVisit) => context
                                   .read<CreateUpdateBeneficiaryCubit>()
@@ -271,15 +271,16 @@ class CreateUpdateScreen extends StatelessWidget {
                         );
                       },
                     ),
-                    const LabelComponent(
-                      labelText: "Se tiver formação profissional Especificar",
+                    LabelComponent(
+                      labelText:  LocaleKeys.profTrainingSpec.tr().capitalize,
                     ),
                     BlocBuilder<CreateUpdateBeneficiaryCubit,
                         BeneficiaryEntity>(
                       builder: (context, state) {
                         return TextComponent(
                           hintText:
-                              "Se tiver formação profissional Especificar",
+                              LocaleKeys.profTrainingSpec.tr().capitalize
+                          ,
                           initialValue: state.specifyPurposeOfVisit,
                           onChanged: (formacao) => context
                               .read<CreateUpdateBeneficiaryCubit>()
@@ -308,7 +309,7 @@ class CreateUpdateScreen extends StatelessWidget {
                               items: items ?? <ReasonOfOpeningCaseEntity>[],
                               selectedItem: state.reasonOfOpeningCaseEntity,
                               validator: (item) => Validation.selectValidation(
-                                  LocaleKeys.reasonsOfOpeningCase.tr(), item),
+                                  LocaleKeys.reasonsOfOpeningCase.tr().capitalize, item),
                               itemAsString: (p0) => p0!.name,
                               onChanged: (reasonsOfOpeningCase) => context
                                   .read<CreateUpdateBeneficiaryCubit>()
@@ -323,18 +324,18 @@ class CreateUpdateScreen extends StatelessWidget {
                         );
                       },
                     ),
-                    const LabelComponent(labelText: "Outro motivo"),
+                     LabelComponent(labelText: LocaleKeys.otherReason.tr().capitalize),
                     BlocBuilder<CreateUpdateBeneficiaryCubit,
                         BeneficiaryEntity>(
                       builder: (context, state) {
                         return TextComponent(
-                          hintText: "Outro motivo",
+                          hintText: LocaleKeys.otherReason.tr().capitalize,
                           initialValue: state.otherReasonOfOpeningCase,
-                          onChanged: (motivo) => context
+                          onChanged: (otherReason) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
                                 state.copyWith(
-                                    otherReasonOfOpeningCase: motivo),
+                                    otherReasonOfOpeningCase: otherReason),
                               ),
                         );
                       },
@@ -359,7 +360,7 @@ class CreateUpdateScreen extends StatelessWidget {
                               selectedItem: state.documentTypeEntity,
                               itemAsString: (p0) => p0!.name,
                               validator: (item) => Validation.selectValidation(
-                                  LocaleKeys.documentNeeded.tr(), item),
+                                  LocaleKeys.documentNeeded.tr().capitalize, item),
                               onChanged: (documentNeeded) => context
                                   .read<CreateUpdateBeneficiaryCubit>()
                                   .validate(
@@ -372,18 +373,18 @@ class CreateUpdateScreen extends StatelessWidget {
                         );
                       },
                     ),
-                    const LabelComponent(labelText: "Outro documento"),
+                    LabelComponent(labelText: LocaleKeys.otherDoc.tr().capitalize),
                     BlocBuilder<CreateUpdateBeneficiaryCubit,
                         BeneficiaryEntity>(
                       builder: (context, state) {
                         return TextComponent(
-                          hintText: "Outro documento",
+                          hintText: LocaleKeys.otherDoc.tr().capitalize,
                           initialValue: state.otherDocumentType,
-                          onChanged: (documento) => context
+                          onChanged: (doc) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
                                 state.copyWith(
-                                  otherDocumentType: documento,
+                                  otherDocumentType: doc,
                                 ),
                               ),
                         );
@@ -409,7 +410,7 @@ class CreateUpdateScreen extends StatelessWidget {
                               selectedItem: state.forwardedServiceEntity,
                               itemAsString: (p0) => p0!.name,
                               validator: (item) => Validation.selectValidation(
-                                  LocaleKeys.forwardedServices.tr(), item),
+                                  LocaleKeys.forwardedServices.tr().capitalize, item),
                               onChanged: (forwardedServices) => context
                                   .read<CreateUpdateBeneficiaryCubit>()
                                   .validate(
@@ -422,29 +423,29 @@ class CreateUpdateScreen extends StatelessWidget {
                         );
                       },
                     ),
-                    const LabelComponent(labelText: "Outro serviço"),
+                    LabelComponent(labelText: LocaleKeys.otherService.tr().capitalize),
                     BlocBuilder<CreateUpdateBeneficiaryCubit,
                         BeneficiaryEntity>(
                       builder: (context, state) {
                         return TextComponent(
-                          hintText: "Outro serviço",
+                          hintText: LocaleKeys.otherService.tr().capitalize,
                           initialValue: state.otherForwardedService,
-                          onChanged: (servico) => context
+                          onChanged: (service) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
                                 state.copyWith(
-                                  otherForwardedService: servico,
+                                  otherForwardedService: service,
                                 ),
                               ),
                         );
                       },
                     ),
-                    const LabelComponent(labelText: "Especificar Serviço"),
+                     LabelComponent(labelText: LocaleKeys.serviceSpec.tr().capitalize ),
                     BlocBuilder<CreateUpdateBeneficiaryCubit,
                         BeneficiaryEntity>(
                       builder: (context, state) {
                         return TextComponent(
-                          hintText: "Especificar Serviço",
+                          hintText: LocaleKeys.serviceSpec.tr().capitalize,
                           initialValue: state.specifyForwardedService,
                           onChanged: (specifyService) => context
                               .read<CreateUpdateBeneficiaryCubit>()
@@ -456,19 +457,19 @@ class CreateUpdateScreen extends StatelessWidget {
                         );
                       },
                     ),
-                    const LabelComponent(
-                      labelText: "Necessita de acompanhamento domiciliar?",
+                    LabelComponent(
+                      labelText:LocaleKeys.needsHomeFollowUp.tr().capitalize,
                     ),
                     BlocBuilder<CreateUpdateBeneficiaryCubit,
                         BeneficiaryEntity>(
                       builder: (context, state) {
                         return SelectComponent(
-                          hintText: "Necessita de acompanhamento domiciliar?",
+                          hintText:LocaleKeys.needsHomeFollowUp.tr().capitalize,
                           items: trueFalse,
                           itemAsString: (item) => item!.value,
                           selectedItem: trueFalse.where((element) => element.key == state.homeCare).first,
                           validator: (item) => Validation.selectValidation(
-                              "Necessita de acompanhamento domiciliar?", item),
+                              LocaleKeys.needsHomeFollowUp.tr().capitalize, item),
                           onChanged: (homeCare) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
@@ -495,31 +496,33 @@ class CreateUpdateScreen extends StatelessWidget {
                         );
                       },
                     ),
-                    const LabelComponent(
-                        labelText: "Data que foi recebida pelo serviço"),
+                    LabelComponent(
+                        labelText: LocaleKeys.receivedDate.tr().capitalize),
                     BlocBuilder<CreateUpdateBeneficiaryCubit,
                         BeneficiaryEntity>(
                       builder: (context, state) {
                         return DateTimeComponent(
-                          onChanged: (datareceived) => context
+                          onChanged: (dataReceived) => context
                               .read<CreateUpdateBeneficiaryCubit>()
                               .validate(
                                 state.copyWith(
-                                  dateReceived: datareceived ?? DateTime.now(),
+                                  dateReceived: dataReceived ?? DateTime.now(),
                                 ),
                               ),
                           initialValue: state.dateReceived,
                         );
                       },
                     ),
-                    const LabelComponent(labelText: "Resolveu o seu problema?"),
+                     LabelComponent(labelText:LocaleKeys.problemSolved.tr().capitalize),
                     BlocBuilder<CreateUpdateBeneficiaryCubit,
                         BeneficiaryEntity>(
                       builder: (context, state) {
                         return SelectComponent(
-                          hintText: "Resolveu o seu problema?",
+                          hintText: LocaleKeys.problemSolved.tr().capitalize,
                           items: trueFalse,
                           itemAsString: (item) => item!.value,
+                          validator: (item) => Validation.selectValidation(
+                            LocaleKeys.problemSolved.tr().capitalize, item),
                           selectedItem: trueFalse.where((element) => element.key == state.status).first,
                           onChanged: (status) => context
                               .read<CreateUpdateBeneficiaryCubit>()
@@ -574,7 +577,7 @@ class CreateUpdateScreen extends StatelessWidget {
                     title: Text(
                       LocaleKeys.storeResource.tr(
                         namedArgs: {'resource': ''},
-                      ),
+                      ).capitalize,
                     ),
                     activeColor: Colors.green,
                     textAlign: TextAlign.center,

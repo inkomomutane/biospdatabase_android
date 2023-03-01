@@ -7,6 +7,7 @@ import 'package:biosp/data/datasource/isar/model/genres/genre.dart';
 import 'package:biosp/data/datasource/isar/model/provenances/provenance.dart';
 import 'package:biosp/data/datasource/isar/model/purposes_of_visit/purpose_of_visit.dart';
 import 'package:biosp/data/datasource/isar/model/reasons_of_opening_case/reason_of_opening_case.dart';
+import 'package:biosp/data/datasource/isar/model/sync.dart';
 import 'package:biosp/domain/actions/beneficiary/create_beneficiary.dart';
 import 'package:biosp/domain/actions/beneficiary/delete_beneficiary.dart';
 import 'package:biosp/domain/actions/beneficiary/get_beneficiaries.dart';
@@ -36,7 +37,8 @@ class TestingInject {
           ProvenanceSchema,
           PurposeOfVisitSchema,
           ReasonOfOpeningCaseSchema,
-          AuthSchema
+          AuthSchema,
+          LWinMapSyncSchema
         ]));
     //Repositories Implementations
     getIt.registerLazySingleton<MockCreateBeneficiaryRepository>(
