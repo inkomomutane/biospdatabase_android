@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class About extends StatelessWidget {
   const About({Key? key}) : super(key: key);
@@ -51,7 +51,7 @@ class About extends StatelessWidget {
               backgroundColor: Colors.white,
               child: IconButton(
                 onPressed: () {
-                  launch("mailto:nelsonmutane@gmail.com");
+                  launchUrlString("mailto:nelsonmutane@gmail.com");
                 },
                 icon: Icon(Icons.mail),
                 color: Colors.grey.shade600,
@@ -59,7 +59,7 @@ class About extends StatelessWidget {
             ),
             trailing: IconButton(
                 onPressed: () {
-                  launch("tel:+258847607095");
+                  launchUrlString("tel:+258847607095");
                 },
                 icon: Icon(
                   Icons.call,

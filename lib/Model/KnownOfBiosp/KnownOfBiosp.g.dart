@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'DocumentType.dart';
+part of 'KnownOfBiosp.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class DocumentTypeAdapter extends TypeAdapter<DocumentType> {
+class KnownOfBiospAdapter extends TypeAdapter<KnownOfBiosp> {
   @override
-  final int typeId = 2;
+  final int typeId = 10;
 
   @override
-  DocumentType read(BinaryReader reader) {
+  KnownOfBiosp read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return DocumentType(
+    return KnownOfBiosp(
       uuid: fields[0] as String,
       name: fields[1] as String,
       createdAt: fields[2] as DateTime?,
@@ -25,7 +25,7 @@ class DocumentTypeAdapter extends TypeAdapter<DocumentType> {
   }
 
   @override
-  void write(BinaryWriter writer, DocumentType obj) {
+  void write(BinaryWriter writer, KnownOfBiosp obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -44,7 +44,7 @@ class DocumentTypeAdapter extends TypeAdapter<DocumentType> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DocumentTypeAdapter &&
+      other is KnownOfBiospAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
@@ -53,7 +53,7 @@ class DocumentTypeAdapter extends TypeAdapter<DocumentType> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-DocumentType _$DocumentTypeFromJson(Map<String, dynamic> json) => DocumentType(
+KnownOfBiosp _$KnownOfBiospFromJson(Map<String, dynamic> json) => KnownOfBiosp(
       uuid: json['uuid'] as String,
       name: json['name'] as String,
       createdAt: json['created_at'] == null
@@ -64,7 +64,7 @@ DocumentType _$DocumentTypeFromJson(Map<String, dynamic> json) => DocumentType(
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$DocumentTypeToJson(DocumentType instance) =>
+Map<String, dynamic> _$KnownOfBiospToJson(KnownOfBiosp instance) =>
     <String, dynamic>{
       'uuid': instance.uuid,
       'name': instance.name,

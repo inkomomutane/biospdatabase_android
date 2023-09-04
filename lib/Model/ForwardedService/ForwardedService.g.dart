@@ -53,18 +53,17 @@ class ForwardedServiceAdapter extends TypeAdapter<ForwardedService> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-ForwardedService _$ForwardedServiceFromJson(Map<String, dynamic> json) {
-  return ForwardedService(
-    uuid: json['uuid'] as String?,
-    name: json['name'] as String,
-    createdAt: json['created_at'] == null
-        ? null
-        : DateTime.parse(json['created_at'] as String),
-    updatedAt: json['updated_at'] == null
-        ? null
-        : DateTime.parse(json['updated_at'] as String),
-  );
-}
+ForwardedService _$ForwardedServiceFromJson(Map<String, dynamic> json) =>
+    ForwardedService(
+      uuid: json['uuid'] as String?,
+      name: json['name'] as String,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+    );
 
 Map<String, dynamic> _$ForwardedServiceToJson(ForwardedService instance) =>
     <String, dynamic>{

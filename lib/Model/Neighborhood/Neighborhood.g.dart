@@ -53,18 +53,16 @@ class NeighborhoodAdapter extends TypeAdapter<Neighborhood> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-Neighborhood _$NeighborhoodFromJson(Map<String, dynamic> json) {
-  return Neighborhood(
-    uuid: json['uuid'] as String,
-    name: json['name'] as String,
-    createdAt: json['created_at'] == null
-        ? null
-        : DateTime.parse(json['created_at'] as String),
-    updatedAt: json['updated_at'] == null
-        ? null
-        : DateTime.parse(json['updated_at'] as String),
-  );
-}
+Neighborhood _$NeighborhoodFromJson(Map<String, dynamic> json) => Neighborhood(
+      uuid: json['uuid'] as String,
+      name: json['name'] as String,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+    );
 
 Map<String, dynamic> _$NeighborhoodToJson(Neighborhood instance) =>
     <String, dynamic>{

@@ -1,7 +1,8 @@
 import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
 import 'package:biospdatabase/Controller/BenificiaryController.dart';
+import 'package:biospdatabase/helpers/AgeCalculator.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ContentTile extends StatefulWidget {
   const ContentTile({Key? key, required this.benificiary}) : super(key: key);
@@ -75,7 +76,7 @@ class _ContentTileState extends State<ContentTile> {
             subtitle: Text("Contacto"),
             trailing: IconButton(
                 onPressed: () {
-                  launch(benificiary.phone != null
+                  launchUrlString(benificiary.phone != null
                       ? "tel:${benificiary.phone}"
                       : "tel:");
                 },
@@ -85,12 +86,10 @@ class _ContentTileState extends State<ContentTile> {
         Card(
           child: ListTile(
             title: Text(
-              benificiary.birthDate != null
-                  ? "${benificiary.birthDate!.day}/${benificiary.birthDate!.month}/${benificiary.birthDate!.year}"
-                  : "",
+              AgeCalculator.calculateAge(benificiary.birthDate).toString(),
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
-            subtitle: Text("Data de nascimento"),
+            subtitle: Text("Idade"),
           ),
         ),
         Card(
@@ -111,6 +110,26 @@ class _ContentTileState extends State<ContentTile> {
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             subtitle: Text("Proviniência"),
+          ),
+        ),
+        Card(
+          child: ListTile(
+            title: Text(
+              Syncronization.getKnownOfBiosps()
+                      .values
+                      .where((element) =>
+                          element.uuid == benificiary.knownOfBiospUuid)
+                      .isNotEmpty
+                  ? Syncronization.getKnownOfBiosps()
+                      .values
+                      .where((element) =>
+                          element.uuid == benificiary.knownOfBiospUuid)
+                      .first
+                      .name
+                  : "",
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            subtitle: Text("Como teve conhecimento de BIOSP"),
           ),
         ),
         Card(

@@ -53,18 +53,17 @@ class PurposeOfVisitAdapter extends TypeAdapter<PurposeOfVisit> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-PurposeOfVisit _$PurposeOfVisitFromJson(Map<String, dynamic> json) {
-  return PurposeOfVisit(
-    uuid: json['uuid'] as String,
-    name: json['name'] as String,
-    createdAt: json['created_at'] == null
-        ? null
-        : DateTime.parse(json['created_at'] as String),
-    updatedAt: json['updated_at'] == null
-        ? null
-        : DateTime.parse(json['updated_at'] as String),
-  );
-}
+PurposeOfVisit _$PurposeOfVisitFromJson(Map<String, dynamic> json) =>
+    PurposeOfVisit(
+      uuid: json['uuid'] as String,
+      name: json['name'] as String,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+    );
 
 Map<String, dynamic> _$PurposeOfVisitToJson(PurposeOfVisit instance) =>
     <String, dynamic>{

@@ -20,7 +20,6 @@ class _HomeState extends State<Home> {
       theme: ThemeData.light().copyWith(
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.deepPurple,
-          primaryColorDark: Colors.deepPurple,
           accentColor: Colors.deepPurple,
         ),
         focusColor: Colors.deepPurple,

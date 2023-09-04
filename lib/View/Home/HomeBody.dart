@@ -19,8 +19,8 @@ class HomeBody extends StatelessWidget {
         builder: (context, box, _) {
           final benificiaries = box.values.toList().cast<Benificiary>();
           mergeSort(benificiaries, compare: (a, b) {
-            a = a as Benificiary;
-            b = b as Benificiary;
+            a = a;
+            b = b;
             return -a.createdAt.compareTo(b.createdAt);
           });
           return ListView.builder(

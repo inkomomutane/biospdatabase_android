@@ -2,20 +2,21 @@ import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
 import 'package:biospdatabase/Model/DocumentType/DocumentType.dart';
 import 'package:biospdatabase/Model/ForwardedService/ForwardedService.dart';
 import 'package:biospdatabase/Model/Genre/Genre.dart';
+import 'package:biospdatabase/Model/KnownOfBiosp/KnownOfBiosp.dart';
 import 'package:biospdatabase/Model/Neighborhood/Neighborhood.dart';
 import 'package:biospdatabase/Model/Provenace/Provenace.dart';
 import 'package:biospdatabase/Model/PurposeOfVisit/PurposeOfVisit.dart';
 import 'package:biospdatabase/Model/ReasonOpeningCase/ReasonOpeningCase.dart';
 import 'package:biospdatabase/Controller/BenificiaryController.dart';
 import 'package:biospdatabase/View/FormComponents/DateComponent.dart';
-import 'package:biospdatabase/View/FormComponents/DateTimeComponent.dart';
 import 'package:biospdatabase/View/FormComponents/LabelComponent.dart';
 import 'package:biospdatabase/View/FormComponents/NumberComponent.dart';
 import 'package:biospdatabase/View/FormComponents/PhoneNumberComponent.dart';
 import 'package:biospdatabase/View/FormComponents/SelectComponent.dart';
 import 'package:biospdatabase/View/FormComponents/TextComponent.dart';
+import 'package:biospdatabase/helpers/AgeCalculator.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:dropdown_search2/dropdown_search2.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -78,6 +79,11 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
     var forwarded = Syncronization.getForwardedServices().values.toList();
     if (forwarded.isNotEmpty) {
       forwarded.sort((a, b) => a.name.compareTo(b.name));
+    }
+
+    var knownOfBiosps = Syncronization.getKnownOfBiosps().values.toList();
+    if (knownOfBiosps.isNotEmpty) {
+      knownOfBiosps.sort((a, b) => a.name.compareTo(b.name));
     }
 
     return Scaffold(
@@ -270,25 +276,94 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                   });
                 },
               ),
-              LabelComponent(labelText: "Data de nascimento"),
-              DateComponent(
-                initialValue: benificiaryForEdit != null
-                    ? benificiaryForEdit!.birthDate
-                    : DateTime.now(),
-                onSubmited: (dataDeNascimento) {
+              LabelComponent(labelText: "Como teve o conhecimento do biosp?"),
+              SelectComponent(
+                hintText: "Como teve o conhecimento do biosp?",
+                showSearchBox: true,
+                mode: Mode.DIALOG,
+                selectedItem: knownOfBiosps.isNotEmpty
+                    ? (Syncronization.getKnownOfBiosps()
+                            .values
+                            .toList()
+                            .where((element) {
+                        if (benificiaryForEdit != null) {
+                          return "${benificiaryForEdit!.knownOfBiospUuid}" ==
+                              "${element.uuid}";
+                        }
+                        return false;
+                      }).isNotEmpty
+                        ? Syncronization.getKnownOfBiosps()
+                            .values
+                            .toList()
+                            .where((element) {
+                            return "${benificiaryForEdit!.knownOfBiospUuid}" ==
+                                "${element.uuid}";
+                          }).first
+                        : null)
+                    : null,
+                items:
+                    Syncronization.getKnownOfBiosps().values.toList().isNotEmpty
+                        ? knownOfBiosps
+                        : <KnownOfBiosp>[],
+                onChanged: (KnownOfBiosp? knownOfBiosp) {
                   setState(() {
-                    if (dataDeNascimento != null) {
-                      this.benificiary['birth_date'] =
-                          dataDeNascimento.toIso8601String();
+                    if (knownOfBiosp != null) {
+                      this.benificiary['known_of_biosp_uuid'] =
+                          knownOfBiosp.uuid;
                     }
                   });
                 },
-                onSaved: (dataDeNascimento) {
+                onSaved: (KnownOfBiosp? knownOfBiosp) {
                   setState(() {
-                    if (dataDeNascimento != null) {
-                      this.benificiary['birth_date'] =
-                          dataDeNascimento.toIso8601String();
+                    if (knownOfBiosp != null) {
+                      this.benificiary['known_of_biosp_uuid'] =
+                          knownOfBiosp.uuid;
                     }
+                  });
+                },
+              ),
+              LabelComponent(labelText: "Outra forma"),
+              TextComponent(
+                hintText: "Outra forma",
+                initialValue: benificiaryForEdit != null
+                    ? benificiaryForEdit!.otherKnownOfBiosp
+                    : "",
+                onChanged: (otherKnownOfBiosp) {
+                  setState(() {
+                    this.benificiary['other_known_of_biosp'] =
+                        otherKnownOfBiosp;
+                  });
+                },
+                onSaved: (otherKnownOfBiosp) {
+                  setState(() {
+                    if (otherKnownOfBiosp != null) {
+                      this.benificiary['other_known_of_biosp'] =
+                          otherKnownOfBiosp;
+                    }
+                  });
+                },
+              ),
+              LabelComponent(labelText: "Idade"),
+              NumberComponent(
+                hintText: "Idade",
+                initialValue: benificiaryForEdit != null
+                    ? AgeCalculator.calculateAge(benificiaryForEdit?.birthDate)
+                        .toString()
+                    : "",
+                onChanged: (age) {
+                  print(AgeCalculator.calculateAge(
+                      benificiaryForEdit?.birthDate));
+                  setState(() {
+                    this.benificiary['birth_date'] =
+                        AgeCalculator.calculateAgeInverse(age)
+                            .toIso8601String();
+                  });
+                },
+                onSaved: (age) {
+                  setState(() {
+                    this.benificiary['birth_date'] =
+                        AgeCalculator.calculateAgeInverse(age)
+                            .toIso8601String();
                   });
                 },
               ),
@@ -309,7 +384,7 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                 },
               ),
               LabelComponent(labelText: "Data de atendimento"),
-              DateTimeComponent(
+              DateComponent(
                 initialValue: benificiaryForEdit != null
                     ? benificiaryForEdit!.serviceDate
                     : DateTime.now(),
@@ -666,7 +741,7 @@ class _BenificiaryFormState extends State<BenificiaryForm> {
                 },
               ),
               LabelComponent(labelText: "Data que foi recebida pelo serviço"),
-              DateTimeComponent(
+              DateComponent(
                 initialValue: benificiaryForEdit != null
                     ? benificiaryForEdit!.dateReceived
                     : DateTime.now(),

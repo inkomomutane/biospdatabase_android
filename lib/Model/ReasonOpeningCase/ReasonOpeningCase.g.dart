@@ -53,18 +53,17 @@ class ReasonOpeningCaseAdapter extends TypeAdapter<ReasonOpeningCase> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-ReasonOpeningCase _$ReasonOpeningCaseFromJson(Map<String, dynamic> json) {
-  return ReasonOpeningCase(
-    uuid: json['uuid'] as String,
-    name: json['name'] as String,
-    createdAt: json['created_at'] == null
-        ? null
-        : DateTime.parse(json['created_at'] as String),
-    updatedAt: json['updated_at'] == null
-        ? null
-        : DateTime.parse(json['updated_at'] as String),
-  );
-}
+ReasonOpeningCase _$ReasonOpeningCaseFromJson(Map<String, dynamic> json) =>
+    ReasonOpeningCase(
+      uuid: json['uuid'] as String,
+      name: json['name'] as String,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+    );
 
 Map<String, dynamic> _$ReasonOpeningCaseToJson(ReasonOpeningCase instance) =>
     <String, dynamic>{

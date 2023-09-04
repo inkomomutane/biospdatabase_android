@@ -102,6 +102,14 @@ class Benificiary extends Model {
   @JsonKey(name: 'updated_at')
   late DateTime updatedAt;
 
+  @HiveField(24)
+  @JsonKey(name: 'known_of_biosp_uuid')
+  late String? knownOfBiospUuid;
+
+  @HiveField(25)
+  @JsonKey(name: 'other_known_of_biosp')
+  late String? otherKnownOfBiosp;
+
   Benificiary({
     required this.uuid,
     this.fullName,
@@ -125,6 +133,8 @@ class Benificiary extends Model {
     this.otherDocumentType,
     this.visitProposes,
     this.status,
+    this.knownOfBiospUuid,
+    this.otherKnownOfBiosp,
     required this.createdAt,
     required this.updatedAt,
   });

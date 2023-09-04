@@ -3,7 +3,7 @@ import 'package:biospdatabase/Controller/BenificiaryController.dart';
 import 'package:biospdatabase/View/BenificiaryForm/BenificiaryForm.dart';
 import 'package:biospdatabase/View/BenificiaryUI/ContentTile.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class MobileTile extends StatefulWidget {
   const MobileTile({Key? key, required this.benificiary}) : super(key: key);
@@ -37,12 +37,12 @@ class _MobileTileState extends State<MobileTile> {
                       children: [
                         IconButton(
                             onPressed: () {
-                              launch("sms:${benificiary.phone}");
+                              launchUrlString("sms:${benificiary.phone}");
                             },
                             icon: Icon(Icons.message)),
                         IconButton(
                             onPressed: () {
-                              launch("tel:${benificiary.phone}");
+                              launchUrlString("tel:${benificiary.phone}");
                             },
                             icon: Icon(Icons.call)),
                         IconButton(

@@ -9,6 +9,7 @@ void main() async {
   await Syncronization.boot();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
+    
     home: Hive.box('token').get("token") != null ? Home() : LoginPage(),
   ));
 }

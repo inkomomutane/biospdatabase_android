@@ -5,7 +5,7 @@ import 'package:diacritic/diacritic.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 
 class SyncData extends StatefulWidget {
   const SyncData({Key? key}) : super(key: key);
@@ -50,8 +50,8 @@ class _SyncDataState extends State<SyncData> {
         .toList());
 
     mergeSort(benificiaries, compare: (a, b) {
-      a = a as BenificiaryListTile;
-      b = b as BenificiaryListTile;
+      a = a;
+      b = b;
       return -a.benificiary.updatedAt.compareTo(b.benificiary.updatedAt);
     });
     super.initState();
@@ -101,8 +101,8 @@ class _SyncDataState extends State<SyncData> {
                       .toList());
 
                   mergeSort(benificiaries, compare: (a, b) {
-                    a = a as BenificiaryListTile;
-                    b = b as BenificiaryListTile;
+                    a = a;
+                    b = b;
                     return -a.benificiary.updatedAt
                         .compareTo(b.benificiary.updatedAt);
                   });

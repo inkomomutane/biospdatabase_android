@@ -4,6 +4,7 @@ import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
 import 'package:biospdatabase/Model/DocumentType/DocumentType.dart';
 import 'package:biospdatabase/Model/ForwardedService/ForwardedService.dart';
 import 'package:biospdatabase/Model/Genre/Genre.dart';
+import 'package:biospdatabase/Model/KnownOfBiosp/KnownOfBiosp.dart';
 import 'package:biospdatabase/Model/Neighborhood/Neighborhood.dart';
 import 'package:biospdatabase/Model/Provenace/Provenace.dart';
 import 'package:biospdatabase/Model/PurposeOfVisit/PurposeOfVisit.dart';
@@ -11,7 +12,7 @@ import 'package:biospdatabase/Model/ReasonOpeningCase/ReasonOpeningCase.dart';
 import 'package:biospdatabase/Controller/BenificiaryController.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ServerSyncController {
   final headers = {
@@ -29,7 +30,7 @@ class ServerSyncController {
       http.StreamedResponse response = await request.send();
       if (response.statusCode == 200 || response.statusCode == 201) {
         var data = await response.stream.bytesToString();
-        return await launch(data);
+        return await launchUrlString(data);
       } else
         return false;
     } catch (e) {
@@ -130,6 +131,22 @@ class ServerSyncController {
 
           listReasonOfOpeningCases.forEach((element) {
             Syncronization.getReasonsOfOpeningCases()
+                .put(element.uuid, element);
+          });
+
+
+          //known_of_biosps
+
+          var knownOfBiosps = data['known_of_biosps'];
+          var listKnownOfBiosps =
+              List.generate(knownOfBiosps.length, (index) {
+            return KnownOfBiosp.fromJson(knownOfBiosps[index]);
+          });
+          Syncronization.getKnownOfBiosps()
+              .deleteAll(Syncronization.getKnownOfBiosps().keys);
+
+          listKnownOfBiosps.forEach((element) {
+            Syncronization.getKnownOfBiosps ()
                 .put(element.uuid, element);
           });
 

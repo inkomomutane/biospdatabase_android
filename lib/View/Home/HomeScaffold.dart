@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as CustomBadge;
 import 'package:biospdatabase/Controller/BenificiaryController.dart';
 import 'package:biospdatabase/Controller/ServerSyncController.dart';
 import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
@@ -9,7 +9,7 @@ import 'package:biospdatabase/View/Home/HomeDrawer.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 import 'package:diacritic/diacritic.dart';
 
 class HomeScaffold extends StatefulWidget {
@@ -94,9 +94,10 @@ class _HomeScaffoldState extends State<HomeScaffold> {
                 int size = Syncronization.getCreatedBeneficiaries().length +
                     Syncronization.getUpdatedBeneficiaries().length +
                     Syncronization.getDeletedBeneficiaries().length;
-                return Badge(
-                  badgeColor:
-                      size > 0 ? Colors.orange.shade500 : Colors.green.shade500,
+                return CustomBadge.Badge(
+                  badgeStyle: CustomBadge.BadgeStyle(
+                    badgeColor:  size > 0 ? Colors.orange.shade500 : Colors.green.shade500
+                  ),
                   badgeContent: Text(
                     size > 0 ? "$size" : "",
                     style: TextStyle(fontSize: 11),

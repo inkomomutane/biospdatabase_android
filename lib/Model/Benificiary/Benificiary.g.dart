@@ -39,6 +39,8 @@ class BenificiaryAdapter extends TypeAdapter<Benificiary> {
       otherDocumentType: fields[14] as String?,
       visitProposes: fields[19] as String?,
       status: fields[21] as bool?,
+      knownOfBiospUuid: fields[24] as String?,
+      otherKnownOfBiosp: fields[25] as String?,
       createdAt: fields[22] as DateTime,
       updatedAt: fields[23] as DateTime,
     );
@@ -47,7 +49,7 @@ class BenificiaryAdapter extends TypeAdapter<Benificiary> {
   @override
   void write(BinaryWriter writer, Benificiary obj) {
     writer
-      ..writeByte(24)
+      ..writeByte(26)
       ..writeByte(0)
       ..write(obj.uuid)
       ..writeByte(1)
@@ -95,7 +97,11 @@ class BenificiaryAdapter extends TypeAdapter<Benificiary> {
       ..writeByte(22)
       ..write(obj.createdAt)
       ..writeByte(23)
-      ..write(obj.updatedAt);
+      ..write(obj.updatedAt)
+      ..writeByte(24)
+      ..write(obj.knownOfBiospUuid)
+      ..writeByte(25)
+      ..write(obj.otherKnownOfBiosp);
   }
 
   @override
@@ -113,41 +119,40 @@ class BenificiaryAdapter extends TypeAdapter<Benificiary> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-Benificiary _$BenificiaryFromJson(Map<String, dynamic> json) {
-  return Benificiary(
-    uuid: json['uuid'] as String,
-    fullName: json['full_name'] as String?,
-    numberOfVisits: json['number_of_visits'] as String?,
-    birthDate: json['birth_date'] == null
-        ? null
-        : DateTime.parse(json['birth_date'] as String),
-    phone: json['phone'] as String?,
-    serviceDate: json['service_date'] == null
-        ? null
-        : DateTime.parse(json['service_date'] as String),
-    homeCare: json['home_care'] as bool?,
-    purposeOfVisit: json['purpose_of_visit_uuid'] as String?,
-    specifyPurposeOfVisit: json['specify_purpose_of_visit'] as String?,
-    dateReceived: json['date_received'] == null
-        ? null
-        : DateTime.parse(json['date_received'] as String),
-    neighborhoodUuid: json['neighborhood_uuid'] as String?,
-    genreUuid: json['genre_uuid'] as String?,
-    provenaceUuid: json['provenace_uuid'] as String?,
-    forwardedServiceUuid: json['forwarded_service_uuid'] as String?,
-    otherForwardedService: json['other_forwarded_service'] as String?,
-    specifyForwardedService: json['specify_forwarded_service'] as String?,
-    reasonOpeningCaseUuid: json['reason_opening_case_uuid'] as String?,
-    otherReasonOpeningCase: json['other_reason_opening_case'] as String?,
-    documentTypeUuid: json['document_type_uuid'] as String?,
-    otherDocumentType: json['other_document_type'] as String?,
-    visitProposes: json['visit_proposes'] as String?,
-    status: json['status'] as bool?,
-    createdAt: 
-         DateTime.parse(json['created_at'] as String),
-    updatedAt: DateTime.parse(json['updated_at'] as String),
-  );
-}
+Benificiary _$BenificiaryFromJson(Map<String, dynamic> json) => Benificiary(
+      uuid: json['uuid'] as String,
+      fullName: json['full_name'] as String?,
+      numberOfVisits: json['number_of_visits'] as String?,
+      birthDate: json['birth_date'] == null
+          ? null
+          : DateTime.parse(json['birth_date'] as String),
+      phone: json['phone'] as String?,
+      serviceDate: json['service_date'] == null
+          ? null
+          : DateTime.parse(json['service_date'] as String),
+      homeCare: json['home_care'] as bool?,
+      purposeOfVisit: json['purpose_of_visit_uuid'] as String?,
+      specifyPurposeOfVisit: json['specify_purpose_of_visit'] as String?,
+      dateReceived: json['date_received'] == null
+          ? null
+          : DateTime.parse(json['date_received'] as String),
+      neighborhoodUuid: json['neighborhood_uuid'] as String?,
+      genreUuid: json['genre_uuid'] as String?,
+      provenaceUuid: json['provenace_uuid'] as String?,
+      forwardedServiceUuid: json['forwarded_service_uuid'] as String?,
+      otherForwardedService: json['other_forwarded_service'] as String?,
+      specifyForwardedService: json['specify_forwarded_service'] as String?,
+      reasonOpeningCaseUuid: json['reason_opening_case_uuid'] as String?,
+      otherReasonOpeningCase: json['other_reason_opening_case'] as String?,
+      documentTypeUuid: json['document_type_uuid'] as String?,
+      otherDocumentType: json['other_document_type'] as String?,
+      visitProposes: json['visit_proposes'] as String?,
+      status: json['status'] as bool?,
+      knownOfBiospUuid: json['known_of_biosp_uuid'] as String?,
+      otherKnownOfBiosp: json['other_known_of_biosp'] as String?,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      updatedAt: DateTime.parse(json['updated_at'] as String),
+    );
 
 Map<String, dynamic> _$BenificiaryToJson(Benificiary instance) =>
     <String, dynamic>{
@@ -175,4 +180,6 @@ Map<String, dynamic> _$BenificiaryToJson(Benificiary instance) =>
       'status': instance.status,
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
+      'known_of_biosp_uuid': instance.knownOfBiospUuid,
+      'other_known_of_biosp': instance.otherKnownOfBiosp,
     };

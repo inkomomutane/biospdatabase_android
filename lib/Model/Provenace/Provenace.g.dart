@@ -53,18 +53,16 @@ class ProvenaceAdapter extends TypeAdapter<Provenace> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-Provenace _$ProvenaceFromJson(Map<String, dynamic> json) {
-  return Provenace(
-    uuid: json['uuid'] as String,
-    name: json['name'] as String,
-    createdAt: json['created_at'] == null
-        ? null
-        : DateTime.parse(json['created_at'] as String),
-    updatedAt: json['updated_at'] == null
-        ? null
-        : DateTime.parse(json['updated_at'] as String),
-  );
-}
+Provenace _$ProvenaceFromJson(Map<String, dynamic> json) => Provenace(
+      uuid: json['uuid'] as String,
+      name: json['name'] as String,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+    );
 
 Map<String, dynamic> _$ProvenaceToJson(Provenace instance) => <String, dynamic>{
       'uuid': instance.uuid,

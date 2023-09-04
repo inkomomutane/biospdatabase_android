@@ -2,6 +2,7 @@ import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
 import 'package:biospdatabase/Model/DocumentType/DocumentType.dart';
 import 'package:biospdatabase/Model/ForwardedService/ForwardedService.dart';
 import 'package:biospdatabase/Model/Genre/Genre.dart';
+import 'package:biospdatabase/Model/KnownOfBiosp/KnownOfBiosp.dart';
 import 'package:biospdatabase/Model/Neighborhood/Neighborhood.dart';
 import 'package:biospdatabase/Model/Provenace/Provenace.dart';
 import 'package:biospdatabase/Model/PurposeOfVisit/PurposeOfVisit.dart';
@@ -44,6 +45,9 @@ class Syncronization {
   static Box<ReasonOpeningCase> getReasonsOfOpeningCases() =>
       Hive.box<ReasonOpeningCase>('reasons_of_opening_cases');
 
+    static Box<KnownOfBiosp> getKnownOfBiosps() =>
+      Hive.box<KnownOfBiosp>('known_of_biosps');
+
   ///Initialization of box storage
   static Future<void> boot() async {
     await Hive.initFlutter();
@@ -55,6 +59,7 @@ class Syncronization {
     Hive.registerAdapter(ProvenaceAdapter());
     Hive.registerAdapter(PurposeOfVisitAdapter());
     Hive.registerAdapter(ReasonOpeningCaseAdapter());
+    Hive.registerAdapter(KnownOfBiospAdapter());
     //
     await Hive.openBox<Benificiary>('createdBenificiaries');
     await Hive.openBox<Benificiary>('updatedBenificiaries');
@@ -70,6 +75,7 @@ class Syncronization {
     await Hive.openBox<Provenace>('provenances');
     await Hive.openBox<PurposeOfVisit>('propose_of_visits');
     await Hive.openBox<ReasonOpeningCase>('reasons_of_opening_cases');
+    await Hive.openBox<KnownOfBiosp>('known_of_biosps');
   }
 
   Benificiary? getBenificiary(String uuid) {
@@ -143,8 +149,8 @@ class Syncronization {
     if (getBeneficiaries().isEmpty) return <Benificiary>[];
     var benificiaries = getBeneficiaries().values.toList();
     mergeSort(benificiaries, compare: (a, b) {
-      a = a as Benificiary;
-      b = b as Benificiary;
+      a = a;
+      b = b;
       return -a.createdAt.compareTo(b.createdAt);
     });
     return benificiaries;
@@ -154,8 +160,8 @@ class Syncronization {
     if (list.isEmpty) return <Benificiary>[];
     List<Benificiary> benificiaries = list;
     mergeSort(benificiaries, compare: (a, b) {
-      a = a as Benificiary;
-      b = b as Benificiary;
+      a = a;
+      b = b;
       return a.createdAt.compareTo(b.createdAt);
     });
     return benificiaries;
