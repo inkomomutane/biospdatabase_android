@@ -23,6 +23,7 @@ class DateTimeComponent extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.only(left: 35, right: 35, top: 10),
         child: DateTimeField(
+          autofocus: true,
           format: format,
           onChanged: onChanged,
           onSaved: onSaved,

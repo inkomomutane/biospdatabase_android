@@ -25,6 +25,7 @@ class PasswordComponent extends StatefulWidget {
   @override
   _PasswordComponentState createState() => _PasswordComponentState(
         onChanged: onChanged,
+        
         onSaved: onSaved,
         controller: controller,
         onSubmited: onSubmited,
@@ -61,9 +62,11 @@ class _PasswordComponentState extends State<PasswordComponent> {
         alignment: Alignment.centerRight,
         children: <Widget>[
           TextFormField(
+            autofocus: true,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: hintText,
+              
               hintStyle: TextStyle(
                 fontSize: 15,
                 color: Colors.black54,

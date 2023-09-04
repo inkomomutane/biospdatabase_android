@@ -35,6 +35,7 @@ class SelectComponent<T> extends StatelessWidget {
         child: DropdownSearch<T>(
           mode: mode,
           items: items,
+          autoFocusSearchBox: true,
           showSearchBox: showSearchBox,
           selectedItem: selectedItem != null ? selectedItem : null,
           hint: hintText,

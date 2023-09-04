@@ -1,6 +1,7 @@
 import 'package:biospdatabase/Controller/BenificiaryController.dart';
 import 'package:biospdatabase/Model/Benificiary/Benificiary.dart';
 import 'package:biospdatabase/View/Home/BenificiaryListTile.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -14,17 +15,44 @@ class SyncData extends StatefulWidget {
 }
 
 class _SyncDataState extends State<SyncData> {
-  List<Benificiary> benificiaries = <Benificiary>[];
+  List<BenificiaryListTile> benificiaries = <BenificiaryListTile>[];
 
   @override
   void initState() {
-    benificiaries = Syncronization.getCreatedBeneficiaries().values.toList();
-    benificiaries
-        .addAll(Syncronization.getUpdatedBeneficiaries().values.toList());
+    benificiaries = Syncronization.getCreatedBeneficiaries()
+        .values
+        .map((e) => BenificiaryListTile(
+              benificiary: e,
+              icon: Icon(
+                Icons.person_add_sharp,
+                color: Colors.green,
+              ),
+            ))
+        .toList();
+    benificiaries.addAll(Syncronization.getUpdatedBeneficiaries()
+        .values
+        .map((e) => BenificiaryListTile(
+              benificiary: e,
+              icon: Icon(Icons.mode_edit_outline, color: Colors.amber),
+            ))
+        .toList());
+
+    benificiaries.addAll(Syncronization.getDeletedBeneficiaries()
+        .values
+        .map((e) => BenificiaryListTile(
+              benificiary: e,
+              icon: Icon(
+                Icons.auto_delete_outlined,
+                color: Colors.red.shade500,
+              ),
+              isDisabled: true,
+            ))
+        .toList());
+
     mergeSort(benificiaries, compare: (a, b) {
-      a = a as Benificiary;
-      b = b as Benificiary;
-      return -a.updatedAt.compareTo(b.updatedAt);
+      a = a as BenificiaryListTile;
+      b = b as BenificiaryListTile;
+      return -a.benificiary.updatedAt.compareTo(b.benificiary.updatedAt);
     });
     super.initState();
   }
@@ -41,25 +69,44 @@ class _SyncDataState extends State<SyncData> {
             child: ValueListenableBuilder<Box<Benificiary>>(
                 valueListenable: Syncronization.getBeneficiaries().listenable(),
                 builder: (context, box, _) {
-                  benificiaries =
-                      Syncronization.getCreatedBeneficiaries().values.toList();
-                  benificiaries.addAll(
-                      Syncronization.getUpdatedBeneficiaries().values.toList());
+                  benificiaries = Syncronization.getCreatedBeneficiaries()
+                      .values
+                      .map((e) => BenificiaryListTile(
+                            benificiary: e,
+                            icon: Icon(
+                              Icons.person_add_sharp,
+                              color: Colors.green,
+                            ),
+                          ))
+                      .toList();
+                  benificiaries.addAll(Syncronization.getUpdatedBeneficiaries()
+                      .values
+                      .map((e) => BenificiaryListTile(
+                            benificiary: e,
+                            icon: Icon(Icons.mode_edit_outline,
+                                color: Colors.amber),
+                          ))
+                      .toList());
+
+                  benificiaries.addAll(Syncronization.getDeletedBeneficiaries()
+                      .values
+                      .map((e) => BenificiaryListTile(
+                            benificiary: e,
+                            icon: Icon(
+                              Icons.auto_delete_outlined,
+                              color: Colors.red.shade500,
+                            ),
+                            isDisabled: true,
+                          ))
+                      .toList());
+
                   mergeSort(benificiaries, compare: (a, b) {
-                    a = a as Benificiary;
-                    b = b as Benificiary;
-                    return -a.updatedAt.compareTo(b.updatedAt);
+                    a = a as BenificiaryListTile;
+                    b = b as BenificiaryListTile;
+                    return -a.benificiary.updatedAt
+                        .compareTo(b.benificiary.updatedAt);
                   });
-                  return ListView(
-                      children: benificiaries.map((e) {
-                    return BenificiaryListTile(
-                      benificiary: e,
-                      icon: Icon(
-                        Icons.sync_problem_outlined,
-                        color: Colors.red.shade300,
-                      ),
-                    );
-                  }).toList());
+                  return ListView(children: benificiaries);
                 }),
           ),
           buildFloatingSearchBar(),
@@ -70,7 +117,7 @@ class _SyncDataState extends State<SyncData> {
 
   Widget buildFloatingSearchBar() {
     return FloatingSearchBar(
-      hint: 'Dados não sync..',
+      hint: 'Dados não sincronizados',
       scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
       transitionDuration: const Duration(milliseconds: 400),
       transitionCurve: Curves.easeInOut,
@@ -80,15 +127,17 @@ class _SyncDataState extends State<SyncData> {
       debounceDelay: const Duration(milliseconds: 200),
       onQueryChanged: (query) {
         setState(() {
-          benificiaries = Syncronization.sortedBenificiaries()
+          this.benificiaries = Syncronization.sortedBenificiaries()
               .where((element) =>
-                  element.fullName!
-                      .toLowerCase()
-                      .contains(query.toLowerCase()) ||
-                  element.fullName!
-                          .toLowerCase()
-                          .compareTo(query.toLowerCase()) ==
+                  removeDiacritics(element.fullName!.toLowerCase())
+                      .contains(removeDiacritics(query.toLowerCase())) ||
+                  removeDiacritics(element.fullName!.toLowerCase())
+                          .compareTo(removeDiacritics(query.toLowerCase())) ==
                       0)
+              .map((e) => BenificiaryListTile(
+                    benificiary: e,
+                    icon: Icon(Icons.lock_clock),
+                  ))
               .toList();
         });
       },
@@ -113,14 +162,8 @@ class _SyncDataState extends State<SyncData> {
           child: Material(
             color: Colors.white,
             elevation: 4.0,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: benificiaries.map((color) {
-                return BenificiaryListTile(
-                  benificiary: color,
-                );
-              }).toList(),
-            ),
+            child:
+                Column(mainAxisSize: MainAxisSize.min, children: benificiaries),
           ),
         );
       },

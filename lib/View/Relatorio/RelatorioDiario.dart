@@ -24,8 +24,26 @@ class RelatorioDiario extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          LabelComponent(labelText: "Último benificiario"),
+          LabelComponent(labelText: "Último benificiario atendido"),
           ultimoBenificiario(),
+          CardRelatorioUI(
+            color: Colors.grey.shade300,
+            letter: Icon(
+              Icons.group,
+              color: Colors.grey.shade500,
+            ),
+            title: Text(
+              'Total atendidos mês passado',
+              style: TextStyle(
+                  fontWeight: FontWeight.w800, color: Colors.grey.shade800),
+            ),
+            subtitle: Text(
+                ' ${Syncronization.getBeneficiaries().values.where((element) {
+              var dateTime = DateTime.now();
+              return (element.serviceDate!.year > (dateTime.year - 1)) &&
+                  element.serviceDate!.month == DateTime.now().month - 1;
+            }).length}'),
+          ),
           CardRelatorioUI(
             color: Colors.grey.shade300,
             letter: Icon(
@@ -38,7 +56,12 @@ class RelatorioDiario extends StatelessWidget {
                   fontWeight: FontWeight.w800, color: Colors.grey.shade800),
             ),
             subtitle: Text(
-                ' ${Syncronization.getBeneficiaries().values.where((element) => element.createdAt.day == DateTime.now().day).length}'),
+                ' ${Syncronization.getBeneficiaries().values.where((element) {
+              var dateTime = DateTime.now();
+              dateTime = dateTime.subtract(Duration(days: dateTime.weekday));
+              return element.serviceDate!.isAfter(dateTime) &&
+                  element.serviceDate!.day == DateTime.now().day;
+            }).length}'),
           ),
           CardRelatorioUI(
             color: Colors.grey.shade300,
@@ -81,7 +104,12 @@ class RelatorioDiario extends StatelessWidget {
                   fontWeight: FontWeight.w800, color: Colors.grey.shade800),
             ),
             subtitle: Text(
-                'Total atendidos este mês: ${Syncronization.getBeneficiaries().values.where((element) => element.createdAt.month == DateTime.now().month).length}'),
+                'Total atendidos este mês: ${Syncronization.getBeneficiaries().values.where((element) {
+              var dateTime = DateTime.now();
+
+              return (element.serviceDate!.year > (dateTime.year - 1)) &&
+                  element.serviceDate!.month == DateTime.now().month;
+            }).length}'),
           ),
           graph()
         ],
@@ -100,13 +128,14 @@ class RelatorioDiario extends StatelessWidget {
     var weekDay = d.weekday;
     var firstDayOfWeek = d.subtract(Duration(days: weekDay));
     var bens = Syncronization.sortedBenificiaries().where((element) {
-      return element.createdAt.isAfter(firstDayOfWeek);
+      return element.serviceDate!.isAfter(firstDayOfWeek);
     }).toList();
-    print(bens.where((element) => element.createdAt.weekday == 5).length);
+    print(bens.where((element) => element.serviceDate!.weekday == 5).length);
     return Container(
       child: Column(
         children: [
-          LabelComponent(labelText: "Gráfico de dados inseridos na semana."),
+          LabelComponent(
+              labelText: "Gráfico benificiarios atendidos nesta semana."),
           SfCartesianChart(
               primaryXAxis: CategoryAxis(),
               primaryYAxis: NumericAxis(),
@@ -117,32 +146,32 @@ class RelatorioDiario extends StatelessWidget {
                       SalesData(
                           'Seg',
                           bens
-                              .where(
-                                  (element) => element.createdAt.weekday == 1)
+                              .where((element) =>
+                                  element.serviceDate!.weekday == 1)
                               .length),
                       SalesData(
                           'Ter',
                           bens
-                              .where(
-                                  (element) => element.createdAt.weekday == 2)
+                              .where((element) =>
+                                  element.serviceDate!.weekday == 2)
                               .length),
                       SalesData(
                           'Qua',
                           bens
-                              .where(
-                                  (element) => element.createdAt.weekday == 3)
+                              .where((element) =>
+                                  element.serviceDate!.weekday == 3)
                               .length),
                       SalesData(
                           'Qui',
                           bens
-                              .where(
-                                  (element) => element.createdAt.weekday == 4)
+                              .where((element) =>
+                                  element.serviceDate!.weekday == 4)
                               .length),
                       SalesData(
                           'Sex',
                           bens
-                              .where(
-                                  (element) => element.createdAt.weekday == 5)
+                              .where((element) =>
+                                  element.serviceDate!.weekday == 5)
                               .length)
                     ],
                     xValueMapper: (SalesData sales, _) => sales.year,

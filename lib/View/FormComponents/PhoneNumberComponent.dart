@@ -26,6 +26,7 @@ class PhoneNumberComponent extends StatelessWidget {
         padding: EdgeInsets.only(left: 35, right: 35, top: 10),
         child: TextFormField(
           keyboardType: TextInputType.phone,
+          autofocus: true,
           initialValue: initialValue != null ? initialValue : "",
           decoration: InputDecoration(
               border: OutlineInputBorder(),
