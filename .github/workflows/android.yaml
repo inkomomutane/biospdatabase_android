@@ -19,3 +19,7 @@ jobs:
         - run: flutter clean
         - run: flutter pub get
         - run: flutter build apk
+        - uses: actions/download-artifact@v3
+          with:
+            name: Biosp APK
+            path: build/app/outputs/flutter-apk/app-reliese.apk
